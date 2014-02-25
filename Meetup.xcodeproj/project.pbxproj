@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B13E10718959AA7002E14BE /* ConfirmationViewController.m */; };
+		6B13E10B1895C9F7002E14BE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E1091895C9F7002E14BE /* logo.png */; };
+		6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E10A1895C9F7002E14BE /* logo@2x.png */; };
+		6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA6135718AE471500B61A6E /* QuartzCore.framework */; };
+		6BA6135B18AE5FC200B61A6E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */; };
+		6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135C18AE7A4E00B61A6E /* settings.png */; };
+		6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135D18AE7A4E00B61A6E /* settings@2x.png */; };
+		6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */; };
+		6BABDCAB187DA5CA00F15E8B /* RouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */; };
+		6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */; };
+		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
+		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
+		6BABDCB4187EF5E800F15E8B /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABDCB3187EF5E800F15E8B /* CalloutView.m */; };
 		6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
 		6BABF50E183A9EB900A6988B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50D183A9EB900A6988B /* CoreGraphics.framework */; };
 		6BABF510183A9EB900A6988B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50F183A9EB900A6988B /* UIKit.framework */; };
@@ -39,7 +52,9 @@
 		6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DDA1184D3D8100BBA9A8 /* taxiKurirNy@2x.png */; };
 		6BB2DDA6184D3FDC00BBA9A8 /* taxiGoteborgNy.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DDA4184D3FDC00BBA9A8 /* taxiGoteborgNy.png */; };
 		6BB2DDA7184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DDA5184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png */; };
-		6BB2DDAD184F395100BBA9A8 /* SearchLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DDAC184F395100BBA9A8 /* SearchLocationViewController.m */; };
+		6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */; };
+		6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */; };
+		E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACBD26CE1B64C9E9325F5DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +68,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B13E10618959AA7002E14BE /* ConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmationViewController.h; sourceTree = "<group>"; };
+		6B13E10718959AA7002E14BE /* ConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationViewController.m; sourceTree = "<group>"; };
+		6B13E1091895C9F7002E14BE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Graphics/logo.png; sourceTree = "<group>"; };
+		6B13E10A1895C9F7002E14BE /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "Graphics/logo@2x.png"; sourceTree = "<group>"; };
+		6BA6135718AE471500B61A6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6BA6135918AE5FC200B61A6E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		6BA6135C18AE7A4E00B61A6E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Graphics/settings.png; sourceTree = "<group>"; };
+		6BA6135D18AE7A4E00B61A6E /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@2x.png"; path = "Graphics/settings@2x.png"; sourceTree = "<group>"; };
+		6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxiAnnotation.h; sourceTree = "<group>"; };
+		6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxiAnnotation.m; sourceTree = "<group>"; };
+		6BABDCA9187DA5CA00F15E8B /* RouteAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteAnnotation.h; sourceTree = "<group>"; };
+		6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteAnnotation.m; sourceTree = "<group>"; };
+		6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalloutView.xib; sourceTree = "<group>"; };
+		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
+		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
+		6BABDCB2187EF5E800F15E8B /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
+		6BABDCB3187EF5E800F15E8B /* CalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutView.m; sourceTree = "<group>"; };
 		6BABF508183A9EB900A6988B /* Meetup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meetup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BABF50B183A9EB900A6988B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6BABF50D183A9EB900A6988B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -95,8 +128,12 @@
 		6BB2DDA1184D3D8100BBA9A8 /* taxiKurirNy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiKurirNy@2x.png"; path = "Graphics/taxiKurirNy@2x.png"; sourceTree = "<group>"; };
 		6BB2DDA4184D3FDC00BBA9A8 /* taxiGoteborgNy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiGoteborgNy.png; path = Graphics/taxiGoteborgNy.png; sourceTree = "<group>"; };
 		6BB2DDA5184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiGoteborgNy@2x.png"; path = "Graphics/taxiGoteborgNy@2x.png"; sourceTree = "<group>"; };
-		6BB2DDAB184F395100BBA9A8 /* SearchLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchLocationViewController.h; sourceTree = "<group>"; };
-		6BB2DDAC184F395100BBA9A8 /* SearchLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchLocationViewController.m; sourceTree = "<group>"; };
+		6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPickupViewController.h; sourceTree = "<group>"; };
+		6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPickupViewController.m; sourceTree = "<group>"; };
+		6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDestinationViewController.h; sourceTree = "<group>"; };
+		6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDestinationViewController.m; sourceTree = "<group>"; };
+		9ACBD26CE1B64C9E9325F5DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +141,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */,
 				6BABF541183AA2BD00A6988B /* MapKit.framework in Frameworks */,
 				6BABF50E183A9EB900A6988B /* CoreGraphics.framework in Frameworks */,
 				6BABF510183A9EB900A6988B /* UIKit.framework in Frameworks */,
 				6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */,
+				E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +170,7 @@
 				6BABF530183A9EB900A6988B /* MeetupTests */,
 				6BABF50A183A9EB900A6988B /* Frameworks */,
 				6BABF509183A9EB900A6988B /* Products */,
+				DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,11 +186,13 @@
 		6BABF50A183A9EB900A6988B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BA6135718AE471500B61A6E /* QuartzCore.framework */,
 				6BABF540183AA2BD00A6988B /* MapKit.framework */,
 				6BABF50B183A9EB900A6988B /* Foundation.framework */,
 				6BABF50D183A9EB900A6988B /* CoreGraphics.framework */,
 				6BABF50F183A9EB900A6988B /* UIKit.framework */,
 				6BABF52A183A9EB900A6988B /* XCTest.framework */,
+				9ACBD26CE1B64C9E9325F5DD /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,15 +202,28 @@
 			children = (
 				6BABF51A183A9EB900A6988B /* AppDelegate.h */,
 				6BABF51B183A9EB900A6988B /* AppDelegate.m */,
-				6BB2DDAB184F395100BBA9A8 /* SearchLocationViewController.h */,
-				6BB2DDAC184F395100BBA9A8 /* SearchLocationViewController.m */,
+				6BA6135918AE5FC200B61A6E /* SettingsViewController.h */,
+				6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */,
+				6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */,
+				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
 				6BABF51D183A9EB900A6988B /* Main.storyboard */,
+				6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */,
+				6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */,
 				6BABF520183A9EB900A6988B /* ViewController.h */,
 				6BABF521183A9EB900A6988B /* ViewController.m */,
+				6B13E10618959AA7002E14BE /* ConfirmationViewController.h */,
+				6B13E10718959AA7002E14BE /* ConfirmationViewController.m */,
+				6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */,
+				6BABDCB2187EF5E800F15E8B /* CalloutView.h */,
+				6BABDCB3187EF5E800F15E8B /* CalloutView.m */,
 				6BB2DD881840226700BBA9A8 /* Vehicle.h */,
 				6BB2DD891840226700BBA9A8 /* Vehicle.m */,
+				6BABDCA9187DA5CA00F15E8B /* RouteAnnotation.h */,
+				6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */,
 				6BB2DD8C18402A5200BBA9A8 /* Company.h */,
 				6BB2DD8D18402A5200BBA9A8 /* Company.m */,
+				6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */,
+				6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */,
 				6BABF542183AA50400A6988B /* NavigationBar.h */,
 				6BABF543183AA50400A6988B /* NavigationBar.m */,
 				6BB2DD8F1847F1B200BBA9A8 /* MapTileOverlay.h */,
@@ -214,6 +269,12 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BA6135C18AE7A4E00B61A6E /* settings.png */,
+				6BA6135D18AE7A4E00B61A6E /* settings@2x.png */,
+				6B13E1091895C9F7002E14BE /* logo.png */,
+				6B13E10A1895C9F7002E14BE /* logo@2x.png */,
+				6BABDCAE187EF4ED00F15E8B /* callout.png */,
+				6BABDCAF187EF4ED00F15E8B /* callout@2x.png */,
 				6BB2DDA4184D3FDC00BBA9A8 /* taxiGoteborgNy.png */,
 				6BB2DDA5184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png */,
 				6BB2DDA0184D3D8100BBA9A8 /* taxiKurirNy.png */,
@@ -237,9 +298,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6BABF53A183A9EB900A6988B /* Build configuration list for PBXNativeTarget "Meetup" */;
 			buildPhases = (
+				CA96DC4D78754620B3E184D5 /* Check Pods Manifest.lock */,
 				6BABF504183A9EB900A6988B /* Sources */,
 				6BABF505183A9EB900A6988B /* Frameworks */,
 				6BABF506183A9EB900A6988B /* Resources */,
+				E526508B424D442E91D70437 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -310,17 +373,24 @@
 				6BB2DD80183ED30900BBA9A8 /* taxiGoteborg@2x.png in Resources */,
 				6BB2DD7F183ED30900BBA9A8 /* taxiGoteborg.png in Resources */,
 				6BABF54B183AA7A500A6988B /* Profile@2x.png in Resources */,
+				6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */,
+				6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */,
 				6BB2DDA6184D3FDC00BBA9A8 /* taxiGoteborgNy.png in Resources */,
 				6BB2DD86183EDA5400BBA9A8 /* taxiKurir.png in Resources */,
 				6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */,
 				6BB2DDA2184D3D8100BBA9A8 /* taxiKurirNy.png in Resources */,
+				6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */,
+				6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */,
 				6BB2DD9C1848039000BBA9A8 /* Arrow@2x.png in Resources */,
 				6BABF524183A9EB900A6988B /* Images.xcassets in Resources */,
+				6B13E10B1895C9F7002E14BE /* logo.png in Resources */,
 				6BB2DD9B1848039000BBA9A8 /* Arrow.png in Resources */,
+				6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
 				6BB2DD87183EDA5400BBA9A8 /* taxiKurir@2x.png in Resources */,
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
+				6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,20 +404,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CA96DC4D78754620B3E184D5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E526508B424D442E91D70437 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6BABF504183A9EB900A6988B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
 				6BB2DD941847F1FE00BBA9A8 /* MapTileOverlayView.m in Sources */,
+				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* ViewController.m in Sources */,
+				6BABDCB4187EF5E800F15E8B /* CalloutView.m in Sources */,
 				6BB2DD8E18402A5200BBA9A8 /* Company.m in Sources */,
-				6BB2DDAD184F395100BBA9A8 /* SearchLocationViewController.m in Sources */,
+				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
 				6BB2DD911847F1B200BBA9A8 /* MapTileOverlay.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,
 				6BABF544183AA50400A6988B /* NavigationBar.m in Sources */,
+				6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */,
+				6BABDCAB187DA5CA00F15E8B /* RouteAnnotation.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
+				6BA6135B18AE5FC200B61A6E /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +580,7 @@
 		};
 		6BABF53B183A9EB900A6988B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -478,12 +588,14 @@
 				GCC_PREFIX_HEADER = "Meetup/Meetup-Prefix.pch";
 				INFOPLIST_FILE = "Meetup/Meetup-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		6BABF53C183A9EB900A6988B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -491,6 +603,7 @@
 				GCC_PREFIX_HEADER = "Meetup/Meetup-Prefix.pch";
 				INFOPLIST_FILE = "Meetup/Meetup-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

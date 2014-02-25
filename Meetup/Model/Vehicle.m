@@ -10,6 +10,8 @@
 
 @implementation Vehicle
 
+@synthesize title;
+
 - (id)initWithCompany:(Company *)company andCarID:(NSString *)vehicleID andCoordinate:(CLLocationCoordinate2D)coordinate {
     if ((self = [super init])) {
         self.company = company;

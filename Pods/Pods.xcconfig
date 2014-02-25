@@ -1,0 +1,5 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/ADDropDownMenuView" "${PODS_ROOT}/Headers/PBFlatUI" "${PODS_ROOT}/Headers/SIAlertView" "${PODS_ROOT}/Headers/TWMessageBarManager" $(PODS_ROOT)/../../PBFlatUI/**
+OTHER_CFLAGS = $(inherited) "-isystem${PODS_ROOT}/Headers" "-isystem${PODS_ROOT}/Headers/ADDropDownMenuView" "-isystem${PODS_ROOT}/Headers/PBFlatUI" "-isystem${PODS_ROOT}/Headers/SIAlertView" "-isystem${PODS_ROOT}/Headers/TWMessageBarManager"
+OTHER_LDFLAGS = -ObjC -framework QuartzCore
+PODS_ROOT = ${SRCROOT}/Pods

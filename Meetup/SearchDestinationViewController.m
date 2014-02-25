@@ -1,14 +1,14 @@
 //
-//  SearchLocationViewController.m
+//  SearchDestinationViewController.m
 //  Meetup
 //
-//  Created by Daniel Larsson on 2013-12-04.
+//  Created by Daniel Larsson on 2013-12-28.
 //  Copyright (c) 2013 Meetup. All rights reserved.
 //
 
-#import "SearchLocationViewController.h"
+#import "SearchDestinationViewController.h"
 
-@interface SearchLocationViewController ()
+@interface SearchDestinationViewController ()
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) MKLocalSearchRequest *localSearchRequest;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation SearchLocationViewController
+@implementation SearchDestinationViewController
 
 @synthesize delegate = _delegate;
 
@@ -26,20 +26,30 @@
     self.data = [[NSMutableArray alloc] init];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
     return 1;
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    [self doSearch:searchString];
+    if (controller.searchBar.text.length > 1)
+        [self doSearch:searchString];
     return NO;
 }
 
 - (void)doSearch:(NSString *)query
 {
-    NSLog(@"doSearch");
     [self.data removeAllObjects];
     [self issueLocalSearchLookup:self.searchBar.text];
 }
@@ -48,7 +58,7 @@
 {
     NSUInteger tmp = [self.data count];
     int i = (int)tmp;
-    NSLog(@"numberOfRowsInSection = %i", i);
+    // NSLog(@"numberOfRowsInSection = %i", i);
     return [self.data count];
 }
 
@@ -65,14 +75,18 @@
     
     // Configure the cell.
     MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", mapItem.name];
+    
+    NSString *formattedAddress = [mapItem.placemark.addressDictionary valueForKey:@"Name"];
+    formattedAddress = [formattedAddress stringByAppendingString:[NSString stringWithFormat:@", %@", [mapItem.placemark.addressDictionary valueForKey:@"City"]]];
+    
+    cell.textLabel.text = formattedAddress;
     return cell;
 }
 
 -(void)issueLocalSearchLookup:(NSString *)searchString
 {
-    // Tell the search engine to start looking within 10 000 meters from the user
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.location.coordinate, 10000, 10000);
+    // Tell the search engine to start looking within 30 000 meters from the user
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.location.coordinate, 30000, 30000);
     
     // Create the search request
     self.localSearchRequest = [[MKLocalSearchRequest alloc] init];
@@ -84,12 +98,12 @@
     [self.localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
         
         if(error){
-            NSLog(@"localSearch startWithCompletionHandlerFailed! Error: %@", error);
+            NSLog(@"LocalSearch failed with error: %@", error);
             return;
         } else {
             for(MKMapItem *mapItem in response.mapItems){
                 [self.data addObject:mapItem];
-                NSLog(@"Name for result: = %@", mapItem.name);
+                //NSLog(@"Name for result: = %@", [[mapItem.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "]);
             }
             [self.searchDisplayController.searchResultsTableView reloadData];
         }
@@ -99,7 +113,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
-    [self.delegate addItemViewController:self didFinishEnteringItem:mapItem];
+    [self.delegate addItemViewController:self didFinishEnteringDestination:mapItem];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

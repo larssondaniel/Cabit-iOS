@@ -29,6 +29,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.searchBar setShowsCancelButton:YES animated:YES];
+    [self.searchBar becomeFirstResponder];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView

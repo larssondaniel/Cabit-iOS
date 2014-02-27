@@ -15,6 +15,12 @@
 		6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135C18AE7A4E00B61A6E /* settings.png */; };
 		6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135D18AE7A4E00B61A6E /* settings@2x.png */; };
 		6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */; };
+		6BA613B718BD0F4C00B61A6E /* taxiAnnotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613B518BD0F4B00B61A6E /* taxiAnnotation.png */; };
+		6BA613B818BD0F4C00B61A6E /* taxiAnnotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613B618BD0F4B00B61A6E /* taxiAnnotation@2x.png */; };
+		6BA613BB18BD1BFA00B61A6E /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613B918BD1BFA00B61A6E /* time.png */; };
+		6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BA18BD1BFA00B61A6E /* time@2x.png */; };
+		6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */; };
+		6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */; };
 		6BABDCAB187DA5CA00F15E8B /* RouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */; };
 		6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
@@ -79,6 +85,12 @@
 		6BA6135D18AE7A4E00B61A6E /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@2x.png"; path = "Graphics/settings@2x.png"; sourceTree = "<group>"; };
 		6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxiAnnotation.h; sourceTree = "<group>"; };
 		6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxiAnnotation.m; sourceTree = "<group>"; };
+		6BA613B518BD0F4B00B61A6E /* taxiAnnotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiAnnotation.png; path = Graphics/taxiAnnotation.png; sourceTree = "<group>"; };
+		6BA613B618BD0F4B00B61A6E /* taxiAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiAnnotation@2x.png"; path = "Graphics/taxiAnnotation@2x.png"; sourceTree = "<group>"; };
+		6BA613B918BD1BFA00B61A6E /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = time.png; path = Graphics/time.png; sourceTree = "<group>"; };
+		6BA613BA18BD1BFA00B61A6E /* time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "time@2x.png"; path = "Graphics/time@2x.png"; sourceTree = "<group>"; };
+		6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiAnnotation2.png; path = Graphics/taxiAnnotation2.png; sourceTree = "<group>"; };
+		6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiAnnotation2@2x.png"; path = "Graphics/taxiAnnotation2@2x.png"; sourceTree = "<group>"; };
 		6BABDCA9187DA5CA00F15E8B /* RouteAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteAnnotation.h; sourceTree = "<group>"; };
 		6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteAnnotation.m; sourceTree = "<group>"; };
 		6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalloutView.xib; sourceTree = "<group>"; };
@@ -269,6 +281,12 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */,
+				6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */,
+				6BA613B918BD1BFA00B61A6E /* time.png */,
+				6BA613BA18BD1BFA00B61A6E /* time@2x.png */,
+				6BA613B518BD0F4B00B61A6E /* taxiAnnotation.png */,
+				6BA613B618BD0F4B00B61A6E /* taxiAnnotation@2x.png */,
 				6BA6135C18AE7A4E00B61A6E /* settings.png */,
 				6BA6135D18AE7A4E00B61A6E /* settings@2x.png */,
 				6B13E1091895C9F7002E14BE /* logo.png */,
@@ -380,12 +398,18 @@
 				6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */,
 				6BB2DDA2184D3D8100BBA9A8 /* taxiKurirNy.png in Resources */,
 				6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */,
+				6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */,
+				6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */,
+				6BA613BB18BD1BFA00B61A6E /* time.png in Resources */,
+				6BA613B818BD0F4C00B61A6E /* taxiAnnotation@2x.png in Resources */,
 				6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */,
 				6BB2DD9C1848039000BBA9A8 /* Arrow@2x.png in Resources */,
 				6BABF524183A9EB900A6988B /* Images.xcassets in Resources */,
 				6B13E10B1895C9F7002E14BE /* logo.png in Resources */,
+				6BA613B718BD0F4C00B61A6E /* taxiAnnotation.png in Resources */,
 				6BB2DD9B1848039000BBA9A8 /* Arrow.png in Resources */,
 				6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */,
+				6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
 				6BB2DD87183EDA5400BBA9A8 /* taxiKurir@2x.png in Resources */,
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,

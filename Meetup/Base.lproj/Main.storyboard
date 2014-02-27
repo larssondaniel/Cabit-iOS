@@ -57,6 +57,22 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csQ-0y-sRh">
+                                <rect key="frame" x="0.0" y="472" width="80" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="taxiAnnotation.png" translatesAutoresizingMaskIntoConstraints="NO" id="C1Q-Jb-Pex">
+                                        <rect key="frame" x="20" y="5" width="40" height="12"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="284 st" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CrN-jh-gPL">
+                                        <rect key="frame" x="21" y="17" width="41" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a9p-CY-hT7">
                                 <rect key="frame" x="0.0" y="514" width="320" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -113,6 +129,7 @@
                         <outlet property="locateButton" destination="HcR-OS-qyS" id="LHg-V7-XiB"/>
                         <outlet property="locateIndicator" destination="bxH-OE-mLE" id="Jg3-Mv-I9j"/>
                         <outlet property="mapView" destination="u82-Ih-7ZO" id="BX6-yB-78s"/>
+                        <outlet property="numberOfCabsView" destination="csQ-0y-sRh" id="4LW-Pb-t50"/>
                         <outlet property="searchDestinationButton" destination="I74-Jr-VGc" id="O5v-AC-WPq"/>
                         <outlet property="searchDisplayController" destination="5CI-ee-ffK" id="hSy-qO-fWh"/>
                         <outlet property="searchPickupButton" destination="S4w-2I-Ayi" id="HZy-sh-mGs"/>
@@ -319,8 +336,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TIj-zs-NHM">
+                                <rect key="frame" x="0.0" y="64" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beräknad ankomsttid: 12 minuter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDN-j6-Q3F">
+                                        <rect key="frame" x="56" y="9" width="254" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="time.png" translatesAutoresizingMaskIntoConstraints="NO" id="x9t-Bo-TBt">
+                                        <rect key="frame" x="20" y="6" width="28" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEh-Cu-WVZ">
-                                <rect key="frame" x="0.0" y="65" width="320" height="503"/>
+                                <rect key="frame" x="0.0" y="103" width="320" height="465"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
                         </subviews>
@@ -393,6 +428,8 @@
     <resources>
         <image name="Arrow.png" width="32" height="32"/>
         <image name="settings.png" width="22" height="22"/>
+        <image name="taxiAnnotation.png" width="51" height="16"/>
+        <image name="time.png" width="28" height="28"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

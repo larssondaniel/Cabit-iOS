@@ -31,6 +31,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *searchDestinationButton;
 
 @property (nonatomic, strong) SIAlertView *searchingAlertView;
+@property (strong, nonatomic) IBOutlet UIView *numberOfCabsView;
 
 @end
 
@@ -45,9 +46,10 @@
     [self.mapView setDelegate:self];
     [self.mapView addSubview:self.searchView];
     [self.mapView addSubview:self.destionationView];
+    [self.mapView addSubview:self.numberOfCabsView];
     //[self.mapView addOverlay:[[MapTileOverlay alloc] init]];
     
-    self.pickupAnnotation = [[MKPointAnnotation alloc] init];
+    // self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
     
     self.searchPickupButton.titleLabel.adjustsFontSizeToFitWidth = TRUE;
@@ -63,12 +65,12 @@
                                           initWithTarget:self action:@selector(handleLongPress:)];
     lpgr.minimumPressDuration = 1.0;
     [self.mapView addGestureRecognizer:lpgr];
-    
-    [self plotTaxiLocations];
 }
 
 - (IBAction)clickedLocate
 {
+    CLLocationCoordinate2D myCoord = {self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.longitude};
+    [self setPickupLocation:myCoord];
     [self zoomToUserLocation];
     [self calculateLocationAddress];
 }
@@ -79,8 +81,6 @@
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
         
         // NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-        
-        NSLog(@"Adress you are at: %@", [placemark.addressDictionary valueForKey:@"Name"]);
         
         [self.searchPickupButton setTitle:[placemark.addressDictionary valueForKey:@"Name"] forState:UIControlStateNormal];
         [self.locateIndicator stopAnimating];
@@ -178,73 +178,8 @@
         return annotationView;
         
     }
-    /*else if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
-        static NSString *identifier = @"UserLocation";
-        MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (annotationView == nil) {
-            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            annotationView.enabled = YES;
-            annotationView.canShowCallout = YES;
-            annotationView.draggable = YES;
-        } else {
-            annotationView.annotation = annotation;
-        }
-        return annotationView;*/
-    //}
     
     return nil;
-}
-
-/*
--(MKOverlayView*)mapView:(MKMapView*)mapView viewForOverlay:(id<MKOverlay>)overlay
-{
-    if([overlay isKindOfClass:[MapTileOverlay class]]) {
-        //return [[MapTileOverlayView alloc] initWithOverlay:overlay];
-    }
-    return nil;
-}
- */
-
-- (void)plotTaxiLocations
-{
-    Company *taxiGoteborg = [[Company alloc] initWithName:@"Taxi Göteborg"];
-    Company *taxiKurir = [[Company alloc] initWithName:@"Taxi kurir"];
-    
-    CLLocationCoordinate2D coordinate;
-    coordinate.latitude = 57.69426;
-    coordinate.longitude = 11.97587;
-    Vehicle *annotation1 = [[Vehicle alloc] initWithCompany:taxiGoteborg andCarID:@"1" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation1];
-    
-    coordinate.latitude = 57.696396;
-    coordinate.longitude = 11.986084;
-    Vehicle *annotation2 = [[Vehicle alloc] initWithCompany:taxiGoteborg andCarID:@"2" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation2];
-    
-    coordinate.latitude = 57.691141;
-    coordinate.longitude = 11.992865;
-    Vehicle *annotation3 = [[Vehicle alloc] initWithCompany:taxiKurir andCarID:@"3" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation3];
-    
-    coordinate.latitude = 57.689948;
-    coordinate.longitude = 11.973295;
-    Vehicle *annotation4 = [[Vehicle alloc] initWithCompany:taxiKurir andCarID:@"4" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation4];
-    
-    coordinate.latitude = 57.678845;
-    coordinate.longitude = 11.994066;
-    Vehicle *annotation5 = [[Vehicle alloc] initWithCompany:taxiGoteborg andCarID:@"5" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation5];
-    
-    coordinate.latitude = 57.683494;
-    coordinate.longitude = 11.961365;
-    Vehicle *annotation6 = [[Vehicle alloc] initWithCompany:taxiGoteborg andCarID:@"6" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation6];
-    
-    coordinate.latitude = 57.686057;
-    coordinate.longitude = 11.954005;
-    Vehicle *annotation7 = [[Vehicle alloc] initWithCompany:taxiKurir andCarID:@"7" andCoordinate:coordinate];
-    [_mapView addAnnotation:annotation7];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -256,8 +191,17 @@
         SearchDestinationViewController *controller = (SearchDestinationViewController *)segue.destinationViewController;
         controller.delegate = self;
         controller.location = self.mapView.userLocation.location;
+        if (!self.pickupAnnotation) {
+            self.pickupAnnotation = [[MKPointAnnotation alloc] init];
+            CLLocationCoordinate2D myCoord = {self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.longitude};
+            [self setPickupLocation:myCoord];
+        }
     } else if([segue.identifier isEqualToString:@"displayConfirmation"]){
-        //ConfirmationViewController *controller = (ConfirmationViewController *)segue.destinationViewController;
+        ConfirmationViewController *controller = (ConfirmationViewController *)segue.destinationViewController;
+        controller.pickupMapItem = self.pickupMapItem;
+        controller.destinationMapItem = self.destinationMapItem;
+        controller.pickupAnnotation = self.pickupAnnotation;
+        controller.destinationAnnotation = self.destinationAnnotation;
     }
 }
 
@@ -277,17 +221,15 @@
 
 - (void)generateRoute {
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-    //request.source = [MKMapItem mapItemForCurrentLocation];
     request.source = [MKMapItem mapItemForCurrentLocation];
     
     NSLog(@"Pickup item is %@", self.pickupMapItem);
     
     if (self.pickupMapItem) {
-        request.source = self.pickupMapItem;
+    //    request.source = self.pickupMapItem;
     }
     
     request.destination = self.destinationMapItem;
-    // request.requestsAlternateRoutes = YES;
     MKDirections *directions =
     [[MKDirections alloc] initWithRequest:request];
     
@@ -315,7 +257,7 @@
     [self fitRegionToRoute];
     //[self showRouteCallout];
     NSTimer *timer;
-    timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
+    timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self
                                            selector:@selector(showFirstAlertView) userInfo:nil repeats:NO];
     
     //[self showFirstAlertView];
@@ -445,26 +387,6 @@
     
     [self.searchingAlertView show];
 }
-
-/*
-- (void) showThirdAlertView {
-    NSString *message = [NSString stringWithFormat:@"Registreringnummer: ABC 123\n Från: %@\nTill: %@\n\nFörväntad ankomsttid: 10 min", [[self.searchPickupButton titleLabel] text], [[self.searchDestinationButton titleLabel] text]];
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Göteborgstaxi är på väg" andMessage:message];
-    
-    alertView.willShowHandler = ^(SIAlertView *alertView) {
-    };
-    alertView.didShowHandler = ^(SIAlertView *alertView) {
-    };
-    alertView.willDismissHandler = ^(SIAlertView *alertView) {
-    };
-    alertView.didDismissHandler = ^(SIAlertView *alertView) {
-    };
-    
-    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-    
-    [alertView show];
-}
-*/
 
 - (void) updateActivityIndicator:(NSTimer *)incomingTimer
 {

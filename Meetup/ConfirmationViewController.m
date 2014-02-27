@@ -11,6 +11,7 @@
 #import "ADDropDownMenuItemView.h"
 #import "TaxiAnnotation.h"
 #import "RouteAnnotation.h"
+#import "Vehicle.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -18,11 +19,6 @@
 
 @property (nonatomic, strong) MKPointAnnotation *taxiAnnotation;
 @property (nonatomic, retain) CLLocation *initialLocation;
-
-@property (nonatomic, strong) MKPointAnnotation *destinationAnnotation;
-@property (nonatomic, strong) MKPointAnnotation *pickupAnnotation;
-@property (nonatomic, strong) MKMapItem *pickupMapItem;
-@property (nonatomic, strong) MKMapItem *destinationMapItem;
 
 @end
 
@@ -37,12 +33,20 @@
     self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
     
+    [self.pickupAnnotation setCoordinate:self.pickupMapItem.placemark.coordinate];
+    [self.destinationAnnotation setCoordinate:self.destinationMapItem.placemark.coordinate];
+    
+    //[self.mapView addAnnotation:self.destinationAnnotation];
+    //[self.mapView addAnnotation:self.pickupAnnotation];
+    
     [self.navigationController.navigationBar.backItem setTitle:@"Tillbaka"];
     
     self.taxiAnnotation = [[MKPointAnnotation alloc] init];
     
     ADDropDownMenuItemView *item = [[ADDropDownMenuItemView alloc] initWithSize: CGSizeMake(320, 44)];
     item.titleLabel.text = @"Beräknas vara framme om 12 minuter";
+    
+    //[self generateRoute];
     
     /*
     ADDropDownMenuItemView *item2 = [[ADDropDownMenuItemView alloc] initWithSize: CGSizeMake(320, 44)];
@@ -55,15 +59,11 @@
     ADDropDownMenuView *dropDownMenuView = [[ADDropDownMenuView alloc] initAtOrigin:CGPointMake(0, 64)
                                                                      withItemsViews:@[item]];
     dropDownMenuView.delegate = self;
-    [self.view addSubview: dropDownMenuView];
+    //[self.view addSubview: dropDownMenuView];
     
     // [dropDownMenuView expand];
     
     [self displayTaxiPosition];
-    
-    [self generateRoute];
-
-	// Do any additional setup after loading the view.
 }
 
 - (void)displayTaxiPosition
@@ -73,7 +73,10 @@
     coordinate.longitude = 11.970205;
     
     self.taxiAnnotation.coordinate = coordinate;
+    [self.taxiAnnotation setTitle:@"Taxi Göteborg"];
+    [self.taxiAnnotation setSubtitle:@"ABC-123"];
     [self.mapView addAnnotation:self.taxiAnnotation];
+    [self.mapView selectAnnotation:self.taxiAnnotation animated:YES];
     [self fitRegionToRoute];
 }
 
@@ -89,16 +92,16 @@
     [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) animated:YES];
 }
 
-/*
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[TaxiAnnotation class]]) {
+    if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
         static NSString *identifier = @"TaxiAnnotation";
         MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            [annotationView setImage:[UIImage imageNamed:@"taxiAnnotation2"]];
             annotationView.enabled = YES;
-            annotationView.canShowCallout = NO;
+            annotationView.canShowCallout = YES;
         } else {
             annotationView.annotation = annotation;
         }
@@ -106,7 +109,6 @@
     }
     return nil;
 }
-*/
 
 # pragma mark Directions
 
@@ -136,12 +138,10 @@
     for (MKRoute *route in response.routes)
     {
         [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-        MKMapPoint middlePoint = route.polyline.points[route.polyline.pointCount/2];
-        [self createAndAddAnnotationForCoordinate:MKCoordinateForMapPoint(middlePoint)];
+        // MKMapPoint middlePoint = route.polyline.points[route.polyline.pointCount/2];
+        // [self createAndAddAnnotationForCoordinate:MKCoordinateForMapPoint(middlePoint)];
     }
     [self fitRegionToRoute];
-    //[self showRouteCallout];
-    NSTimer *timer;
 }
 
 -(void) createAndAddAnnotationForCoordinate: (CLLocationCoordinate2D) coordinate {

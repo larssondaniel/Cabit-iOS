@@ -106,6 +106,15 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="qSI-Lv-lOF"/>
                                 </connections>
                             </mapView>
+                            <button alpha="0.69999999999999973" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zWq-ad-wdz">
+                                <rect key="frame" x="252" y="263" width="68" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="7 min" backgroundImage="bouncingCircle.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -125,6 +134,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bouncingCone" destination="zWq-ad-wdz" id="ibo-r5-q68"/>
                         <outlet property="destionationView" destination="a9p-CY-hT7" id="BD9-IK-xSL"/>
                         <outlet property="locateButton" destination="HcR-OS-qyS" id="LHg-V7-XiB"/>
                         <outlet property="locateIndicator" destination="bxH-OE-mLE" id="Jg3-Mv-I9j"/>
@@ -427,6 +437,7 @@
     </scenes>
     <resources>
         <image name="Arrow.png" width="32" height="32"/>
+        <image name="bouncingCircle.png" width="68" height="68"/>
         <image name="settings.png" width="22" height="22"/>
         <image name="taxiAnnotation.png" width="51" height="16"/>
         <image name="time.png" width="28" height="28"/>

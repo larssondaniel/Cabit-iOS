@@ -11,7 +11,6 @@
 #import "MapTileOverlay.h"
 #import "MapTileOverlayView.h"
 #import "SIAlertView.h"
-#import "RouteAnnotation.h"
 #import "CalloutView.h"
 #import "ConfirmationViewController.h"
 #import "TWMessageBarManager.h"
@@ -168,21 +167,6 @@
         }
         return annotationView;
     }
-    else if ([annotation isKindOfClass:[RouteAnnotation class]]) {
-        static NSString *identifier = @"RouteAnnotation";
-        MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (annotationView == nil) {
-            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            annotationView.enabled = YES;
-            annotationView.image = nil;
-            annotationView.canShowCallout = YES;
-        } else {
-            annotationView.annotation = annotation;
-        }
-        return annotationView;
-        
-    }
-    
     return nil;
 }
 
@@ -254,7 +238,6 @@
     {
         [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
         MKMapPoint middlePoint = route.polyline.points[route.polyline.pointCount/2];
-        [self createAndAddAnnotationForCoordinate:MKCoordinateForMapPoint(middlePoint)];
         //NSLog(@"x = %f", middlePoint.x);
         //NSLog(@"y = %f", middlePoint.y);
     }
@@ -265,38 +248,6 @@
                                            selector:@selector(showFirstAlertView) userInfo:nil repeats:NO];
     
     //[self showFirstAlertView];
-}
-
-- (void)showRouteCallout {
-    for (MKAnnotationView *av in self.mapView.annotations)
-    {
-        if ([av isKindOfClass:[RouteAnnotation class]]) {
-            [self.mapView selectAnnotation:av animated:NO];
-            // [self.mapView selectAnnotation:av.annotation animated:NO];
-            //Setting animated to YES for the user location
-            //gives strange results so setting it to NO.
-            return;
-        }
-    }
-}
-
--(void) createAndAddAnnotationForCoordinate: (CLLocationCoordinate2D) coordinate {
-    RouteAnnotation* annotation= [[RouteAnnotation alloc] init];
-    annotation.coordinate = coordinate;
-    
-    [self.mapView addAnnotation: annotation];
-}
-
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    if([view.annotation isKindOfClass:[RouteAnnotation class]]) {
-        CalloutView *calloutView = (CalloutView *)[[[NSBundle mainBundle] loadNibNamed:@"CalloutView" owner:self options:nil] objectAtIndex:0];
-        CGRect calloutViewFrame = calloutView.frame;
-        calloutViewFrame.origin = CGPointMake(0, -calloutViewFrame.size.height);
-        calloutView.frame = calloutViewFrame;
-        [calloutView setBackgroundColor:[UIColor clearColor]];
-        //[calloutView.calloutLabel setText:[(myAnnotation*)[view annotation] title]];
-        [view addSubview:calloutView];
-    }
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay {
@@ -411,6 +362,8 @@
                                                           type:TWMessageBarMessageTypeSuccess];
     [self performSegueWithIdentifier: @"displayConfirmation" sender: self];
 }
+
+#pragma Animation
 
 - (CAKeyframeAnimation *)dockBounceAnimationWithIconHeight:(CGFloat)iconHeight
 {

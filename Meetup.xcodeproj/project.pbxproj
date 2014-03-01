@@ -10,6 +10,8 @@
 		6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B13E10718959AA7002E14BE /* ConfirmationViewController.m */; };
 		6B13E10B1895C9F7002E14BE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E1091895C9F7002E14BE /* logo.png */; };
 		6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E10A1895C9F7002E14BE /* logo@2x.png */; };
+		6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BE918C20100008D0BD9 /* bouncingCircle.png */; };
+		6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */; };
 		6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA6135718AE471500B61A6E /* QuartzCore.framework */; };
 		6BA6135B18AE5FC200B61A6E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */; };
 		6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135C18AE7A4E00B61A6E /* settings.png */; };
@@ -78,6 +80,8 @@
 		6B13E10718959AA7002E14BE /* ConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationViewController.m; sourceTree = "<group>"; };
 		6B13E1091895C9F7002E14BE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Graphics/logo.png; sourceTree = "<group>"; };
 		6B13E10A1895C9F7002E14BE /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "Graphics/logo@2x.png"; sourceTree = "<group>"; };
+		6BA30BE918C20100008D0BD9 /* bouncingCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bouncingCircle.png; path = Graphics/bouncingCircle.png; sourceTree = "<group>"; };
+		6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bouncingCircle@2x.png"; path = "Graphics/bouncingCircle@2x.png"; sourceTree = "<group>"; };
 		6BA6135718AE471500B61A6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6BA6135918AE5FC200B61A6E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BA30BE918C20100008D0BD9 /* bouncingCircle.png */,
+				6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */,
 				6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */,
 				6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */,
 				6BA613B918BD1BFA00B61A6E /* time.png */,
@@ -411,8 +417,10 @@
 				6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */,
 				6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
+				6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */,
 				6BB2DD87183EDA5400BBA9A8 /* taxiKurir@2x.png in Resources */,
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,
+				6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
 				6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */,
 			);

@@ -10,7 +10,6 @@
 #import "ADDropDownMenuView.h"
 #import "ADDropDownMenuItemView.h"
 #import "TaxiAnnotation.h"
-#import "RouteAnnotation.h"
 #import "Vehicle.h"
 
 #import <CoreLocation/CoreLocation.h>
@@ -142,13 +141,6 @@
         // [self createAndAddAnnotationForCoordinate:MKCoordinateForMapPoint(middlePoint)];
     }
     [self fitRegionToRoute];
-}
-
--(void) createAndAddAnnotationForCoordinate: (CLLocationCoordinate2D) coordinate {
-    RouteAnnotation* annotation= [[RouteAnnotation alloc] init];
-    annotation.coordinate = coordinate;
-    
-    [self.mapView addAnnotation: annotation];
 }
 
 @end

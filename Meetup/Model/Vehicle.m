@@ -12,9 +12,9 @@
 
 @synthesize title;
 
-- (id)initWithCompany:(Company *)company andCarID:(NSString *)vehicleID andCoordinate:(CLLocationCoordinate2D)coordinate {
+- (id)initWithCarID:(NSString *)vehicleID andCoordinate:(CLLocationCoordinate2D)coordinate;
+ {
     if ((self = [super init])) {
-        self.company = company;
         self.vehicleID = vehicleID;
         self.coordinate = coordinate;
     }
@@ -22,7 +22,7 @@
 }
 
 - (NSString *)title {
-    return self.company.name;
+    return @"";
 }
 
 - (NSString *)subtitle {

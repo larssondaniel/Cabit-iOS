@@ -23,7 +23,6 @@
 		6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BA18BD1BFA00B61A6E /* time@2x.png */; };
 		6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */; };
 		6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */; };
-		6BABDCAB187DA5CA00F15E8B /* RouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */; };
 		6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
 		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
@@ -43,7 +42,6 @@
 		6BABF535183A9EB900A6988B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6BABF533183A9EB900A6988B /* InfoPlist.strings */; };
 		6BABF537183A9EB900A6988B /* MeetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABF536183A9EB900A6988B /* MeetupTests.m */; };
 		6BABF541183AA2BD00A6988B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF540183AA2BD00A6988B /* MapKit.framework */; };
-		6BABF544183AA50400A6988B /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABF543183AA50400A6988B /* NavigationBar.m */; };
 		6BABF54A183AA7A500A6988B /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABF548183AA7A500A6988B /* Profile.png */; };
 		6BABF54B183AA7A500A6988B /* Profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABF549183AA7A500A6988B /* Profile@2x.png */; };
 		6BB2DD7F183ED30900BBA9A8 /* taxiGoteborg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DD7D183ED30900BBA9A8 /* taxiGoteborg.png */; };
@@ -51,9 +49,6 @@
 		6BB2DD86183EDA5400BBA9A8 /* taxiKurir.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DD84183EDA5400BBA9A8 /* taxiKurir.png */; };
 		6BB2DD87183EDA5400BBA9A8 /* taxiKurir@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DD85183EDA5400BBA9A8 /* taxiKurir@2x.png */; };
 		6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DD891840226700BBA9A8 /* Vehicle.m */; };
-		6BB2DD8E18402A5200BBA9A8 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DD8D18402A5200BBA9A8 /* Company.m */; };
-		6BB2DD911847F1B200BBA9A8 /* MapTileOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DD901847F1B200BBA9A8 /* MapTileOverlay.m */; };
-		6BB2DD941847F1FE00BBA9A8 /* MapTileOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DD931847F1FE00BBA9A8 /* MapTileOverlayView.m */; };
 		6BB2DD9B1848039000BBA9A8 /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DD991848039000BBA9A8 /* Arrow.png */; };
 		6BB2DD9C1848039000BBA9A8 /* Arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DD9A1848039000BBA9A8 /* Arrow@2x.png */; };
 		6BB2DDA2184D3D8100BBA9A8 /* taxiKurirNy.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DDA0184D3D8100BBA9A8 /* taxiKurirNy.png */; };
@@ -95,8 +90,6 @@
 		6BA613BA18BD1BFA00B61A6E /* time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "time@2x.png"; path = "Graphics/time@2x.png"; sourceTree = "<group>"; };
 		6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiAnnotation2.png; path = Graphics/taxiAnnotation2.png; sourceTree = "<group>"; };
 		6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiAnnotation2@2x.png"; path = "Graphics/taxiAnnotation2@2x.png"; sourceTree = "<group>"; };
-		6BABDCA9187DA5CA00F15E8B /* RouteAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteAnnotation.h; sourceTree = "<group>"; };
-		6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteAnnotation.m; sourceTree = "<group>"; };
 		6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalloutView.xib; sourceTree = "<group>"; };
 		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
 		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
@@ -122,8 +115,6 @@
 		6BABF534183A9EB900A6988B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6BABF536183A9EB900A6988B /* MeetupTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetupTests.m; sourceTree = "<group>"; };
 		6BABF540183AA2BD00A6988B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		6BABF542183AA50400A6988B /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
-		6BABF543183AA50400A6988B /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		6BABF548183AA7A500A6988B /* Profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Profile.png; path = Graphics/Profile.png; sourceTree = "<group>"; };
 		6BABF549183AA7A500A6988B /* Profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Profile@2x.png"; path = "Graphics/Profile@2x.png"; sourceTree = "<group>"; };
 		6BB2DD7D183ED30900BBA9A8 /* taxiGoteborg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiGoteborg.png; path = Graphics/taxiGoteborg.png; sourceTree = "<group>"; };
@@ -132,12 +123,6 @@
 		6BB2DD85183EDA5400BBA9A8 /* taxiKurir@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiKurir@2x.png"; path = "Graphics/taxiKurir@2x.png"; sourceTree = "<group>"; };
 		6BB2DD881840226700BBA9A8 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vehicle.h; path = Model/Vehicle.h; sourceTree = "<group>"; };
 		6BB2DD891840226700BBA9A8 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vehicle.m; path = Model/Vehicle.m; sourceTree = "<group>"; };
-		6BB2DD8C18402A5200BBA9A8 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Company.h; path = Model/Company.h; sourceTree = "<group>"; };
-		6BB2DD8D18402A5200BBA9A8 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Company.m; path = Model/Company.m; sourceTree = "<group>"; };
-		6BB2DD8F1847F1B200BBA9A8 /* MapTileOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileOverlay.h; sourceTree = "<group>"; };
-		6BB2DD901847F1B200BBA9A8 /* MapTileOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileOverlay.m; sourceTree = "<group>"; };
-		6BB2DD921847F1FE00BBA9A8 /* MapTileOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileOverlayView.h; sourceTree = "<group>"; };
-		6BB2DD931847F1FE00BBA9A8 /* MapTileOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileOverlayView.m; sourceTree = "<group>"; };
 		6BB2DD991848039000BBA9A8 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arrow.png; path = Graphics/Arrow.png; sourceTree = "<group>"; };
 		6BB2DD9A1848039000BBA9A8 /* Arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Arrow@2x.png"; path = "Graphics/Arrow@2x.png"; sourceTree = "<group>"; };
 		6BB2DDA0184D3D8100BBA9A8 /* taxiKurirNy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiKurirNy.png; path = Graphics/taxiKurirNy.png; sourceTree = "<group>"; };
@@ -234,18 +219,8 @@
 				6BABDCB3187EF5E800F15E8B /* CalloutView.m */,
 				6BB2DD881840226700BBA9A8 /* Vehicle.h */,
 				6BB2DD891840226700BBA9A8 /* Vehicle.m */,
-				6BABDCA9187DA5CA00F15E8B /* RouteAnnotation.h */,
-				6BABDCAA187DA5CA00F15E8B /* RouteAnnotation.m */,
-				6BB2DD8C18402A5200BBA9A8 /* Company.h */,
-				6BB2DD8D18402A5200BBA9A8 /* Company.m */,
 				6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */,
 				6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */,
-				6BABF542183AA50400A6988B /* NavigationBar.h */,
-				6BABF543183AA50400A6988B /* NavigationBar.m */,
-				6BB2DD8F1847F1B200BBA9A8 /* MapTileOverlay.h */,
-				6BB2DD901847F1B200BBA9A8 /* MapTileOverlay.m */,
-				6BB2DD921847F1FE00BBA9A8 /* MapTileOverlayView.h */,
-				6BB2DD931847F1FE00BBA9A8 /* MapTileOverlayView.m */,
 				6BABF545183AA71000A6988B /* Graphics */,
 				6BABF523183A9EB900A6988B /* Images.xcassets */,
 				6BABF512183A9EB900A6988B /* Supporting Files */,
@@ -475,18 +450,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
-				6BB2DD941847F1FE00BBA9A8 /* MapTileOverlayView.m in Sources */,
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* ViewController.m in Sources */,
 				6BABDCB4187EF5E800F15E8B /* CalloutView.m in Sources */,
-				6BB2DD8E18402A5200BBA9A8 /* Company.m in Sources */,
 				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
-				6BB2DD911847F1B200BBA9A8 /* MapTileOverlay.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,
-				6BABF544183AA50400A6988B /* NavigationBar.m in Sources */,
 				6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */,
-				6BABDCAB187DA5CA00F15E8B /* RouteAnnotation.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
 				6BA6135B18AE5FC200B61A6E /* SettingsViewController.m in Sources */,
 			);

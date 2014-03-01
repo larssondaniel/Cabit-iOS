@@ -8,8 +8,6 @@
 
 #import "ViewController.h"
 #import "Vehicle.h"
-#import "MapTileOverlay.h"
-#import "MapTileOverlayView.h"
 #import "SIAlertView.h"
 #import "CalloutView.h"
 #import "ConfirmationViewController.h"
@@ -47,7 +45,6 @@
     [self.mapView addSubview:self.searchView];
     [self.mapView addSubview:self.destionationView];
     [self.mapView addSubview:self.numberOfCabsView];
-    //[self.mapView addOverlay:[[MapTileOverlay alloc] init]];
     
     // self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
@@ -157,11 +154,6 @@
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
             annotationView.enabled = YES;
             annotationView.canShowCallout = YES;
-            //Company *company = ((Vehicle *)annotation).company;
-            //if ([company.name isEqualToString:@"Taxi Göteborg"]) {
-            //    annotationView.image = [UIImage imageNamed:@"taxiKurirNy"];
-            //} else if ([company.name isEqualToString:@"Taxi kurir"])
-            //    annotationView.image = [UIImage imageNamed:@"taxiKurirNy"];
         } else {
             annotationView.annotation = annotation;
         }

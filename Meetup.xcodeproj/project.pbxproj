@@ -23,10 +23,8 @@
 		6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BA18BD1BFA00B61A6E /* time@2x.png */; };
 		6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */; };
 		6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */; };
-		6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
 		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
-		6BABDCB4187EF5E800F15E8B /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABDCB3187EF5E800F15E8B /* CalloutView.m */; };
 		6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
 		6BABF50E183A9EB900A6988B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50D183A9EB900A6988B /* CoreGraphics.framework */; };
 		6BABF510183A9EB900A6988B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50F183A9EB900A6988B /* UIKit.framework */; };
@@ -90,11 +88,8 @@
 		6BA613BA18BD1BFA00B61A6E /* time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "time@2x.png"; path = "Graphics/time@2x.png"; sourceTree = "<group>"; };
 		6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiAnnotation2.png; path = Graphics/taxiAnnotation2.png; sourceTree = "<group>"; };
 		6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiAnnotation2@2x.png"; path = "Graphics/taxiAnnotation2@2x.png"; sourceTree = "<group>"; };
-		6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalloutView.xib; sourceTree = "<group>"; };
 		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
 		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
-		6BABDCB2187EF5E800F15E8B /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
-		6BABDCB3187EF5E800F15E8B /* CalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutView.m; sourceTree = "<group>"; };
 		6BABF508183A9EB900A6988B /* Meetup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meetup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BABF50B183A9EB900A6988B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6BABF50D183A9EB900A6988B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -214,9 +209,6 @@
 				6BABF521183A9EB900A6988B /* ViewController.m */,
 				6B13E10618959AA7002E14BE /* ConfirmationViewController.h */,
 				6B13E10718959AA7002E14BE /* ConfirmationViewController.m */,
-				6BABDCAC187EF1FD00F15E8B /* CalloutView.xib */,
-				6BABDCB2187EF5E800F15E8B /* CalloutView.h */,
-				6BABDCB3187EF5E800F15E8B /* CalloutView.m */,
 				6BB2DD881840226700BBA9A8 /* Vehicle.h */,
 				6BB2DD891840226700BBA9A8 /* Vehicle.m */,
 				6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */,
@@ -397,7 +389,6 @@
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,
 				6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
-				6BABDCAD187EF1FD00F15E8B /* CalloutView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +443,6 @@
 				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* ViewController.m in Sources */,
-				6BABDCB4187EF5E800F15E8B /* CalloutView.m in Sources */,
 				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,

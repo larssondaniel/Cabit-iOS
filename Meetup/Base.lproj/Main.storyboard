@@ -118,7 +118,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Cabit" id="E3u-aS-ZYy">
+                    <navigationItem key="navigationItem" title="Boka" id="E3u-aS-ZYy">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Nq0-Mz-876">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4OK-ec-ju2">
                                 <rect key="frame" x="280" y="14" width="24" height="16"/>
@@ -202,11 +202,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Daniel Larsson" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vxp-sT-jjZ">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Daniel Larsson" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vxp-sT-jjZ">
                                                     <rect key="frame" x="62" y="12" width="248" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="name.png" translatesAutoresizingMaskIntoConstraints="NO" id="1ip-Ol-Stm">
                                                     <rect key="frame" x="20" y="14" width="22" height="22"/>
@@ -222,11 +222,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="072 245 13 37" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yeD-KP-aiU">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="072 245 13 37" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yeD-KP-aiU">
                                                     <rect key="frame" x="62" y="12" width="248" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 </textField>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="phone.png" translatesAutoresizingMaskIntoConstraints="NO" id="8qh-MU-50N">
                                                     <rect key="frame" x="20" y="14" width="22" height="22"/>
@@ -336,6 +336,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Alternativ" id="30H-9A-deG"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="vxp-sT-jjZ" id="7mP-cV-eYy"/>
+                        <outlet property="phoneTextField" destination="yeD-KP-aiU" id="Ll0-il-3AO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WgZ-Ob-zh4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

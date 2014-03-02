@@ -23,6 +23,7 @@
 		6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */; };
 		6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */; };
 		6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8930518C3D0C500CA099A /* SettingsCell.m */; };
+		6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8930918C3E30200CA099A /* SettingsHelper.m */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
 		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
 		6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
@@ -93,6 +94,8 @@
 		6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiAnnotation2@2x.png"; path = "Graphics/taxiAnnotation2@2x.png"; sourceTree = "<group>"; };
 		6BA8930418C3D0C500CA099A /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
 		6BA8930518C3D0C500CA099A /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
+		6BA8930818C3E30200CA099A /* SettingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHelper.h; path = Helper/SettingsHelper.h; sourceTree = "<group>"; };
+		6BA8930918C3E30200CA099A /* SettingsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsHelper.m; path = Helper/SettingsHelper.m; sourceTree = "<group>"; };
 		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
 		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
 		6BABF508183A9EB900A6988B /* Cabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +216,8 @@
 				6BABF51B183A9EB900A6988B /* AppDelegate.m */,
 				6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */,
 				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
+				6BA8930818C3E30200CA099A /* SettingsHelper.h */,
+				6BA8930918C3E30200CA099A /* SettingsHelper.m */,
 				6BABF51D183A9EB900A6988B /* Main.storyboard */,
 				6BA8930418C3D0C500CA099A /* SettingsCell.h */,
 				6BA8930518C3D0C500CA099A /* SettingsCell.m */,
@@ -470,6 +475,7 @@
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* ViewController.m in Sources */,
 				6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */,
+				6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */,
 				6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */,
 				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,

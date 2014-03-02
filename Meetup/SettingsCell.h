@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.h
+//  SettingsCell.h
 //  Cabit
 //
 //  Created by Daniel Larsson on 2014-03-02.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UITableViewController
+@interface SettingsCell : UITableViewCell
 
 @end

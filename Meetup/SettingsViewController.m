@@ -1,15 +1,12 @@
 //
 //  SettingsViewController.m
-//  Meetup
+//  Cabit
 //
-//  Created by Daniel Larsson on 2014-02-14.
+//  Created by Daniel Larsson on 2014-03-02.
 //  Copyright (c) 2014 Meetup. All rights reserved.
 //
 
 #import "SettingsViewController.h"
-#import "PBFlatRoundedImageView.h"
-#import <QuartzCore/QuartzCore.h>
-
 
 @interface SettingsViewController ()
 
@@ -17,132 +14,103 @@
 
 @implementation SettingsViewController
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
     return 2;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
     switch (section) {
         case 0:
-            return 1;
+            return 2;
         case 1:
-            return 6;
+            return 4;
         default:
             return 0;
             break;
     }
 }
 
--(void)configureCell:(PBFlatGroupedStyleCell *)cell forIndexPath:(NSIndexPath *)indexPath {
-    NSInteger section = indexPath.section;
-    NSString *text = @"";
-    
-    switch (section) {
-        case 0:
-            text = @"Storbil (4+ personer)";
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    text = @"Taxi Göteborg";
-                    break;
-                case 1:
-                    text = @"Minitaxi";
-                    break;
-                case 2:
-                    text = @"Taxi 020";
-                    break;
-                case 3:
-                    text = @"Taxi Kurir";
-                    break;
-                case 4:
-                    text = @"Easy Cab";
-                    break;
-                case 5:
-                    text = @"City Cab";
-                    break;
-            }
-    }
-    
-    [cell.textLabel setText:text];
-    
-    //[cell setIconImage:[[self exampleIcons] objectAtIndex:index]];
-    [cell setCellAccessoryView:[self exampleAccessoryViewForIndexPath:indexPath]];
-    
-    if (section == 2) {
-        
-        switch (indexPath.row) {
-            case 0: {
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"js"]]];
-                break;
-            }
-            case 1: {
-                
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"tl"]]];
-                break;
-            }
-            case 2: {
-                
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"cn"]]];
-                break;
-            }
-            default:
-                break;
-        }
-        
-    }
-    
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
 }
- 
-- (UIView *)exampleAccessoryViewForIndexPath:(NSIndexPath *)indexPath {
-    
-    UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+*/
 
-    [mySwitch setBackgroundColor:[UIColor clearColor]];
-    //mySwitch.onTintColor = [UIColor colorWithRed:67 green:67 blue:67 alpha:1];
-    [mySwitch setOnTintColor:[UIColor colorWithHue:0 saturation:0 brightness:0.26 alpha:1]];
-
-    /*
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    [label setTextColor:[UIColor darkGrayColor]];
-    [label setFont:[[[PBFlatSettings sharedInstance] font] fontWithSize:12.0f]];
-    [label setBackgroundColor:[UIColor clearColor]];
-     */
-    
-    switch (indexPath.section) {
-        case 0:
-            [mySwitch setOn:NO animated:YES];
-            return mySwitch;
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 1:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 2:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-                case 3:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 4:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-                case 5:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-            }
-    }
-    return nil;
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }   
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
 }
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+
+ */
 
 @end

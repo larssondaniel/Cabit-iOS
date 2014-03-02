@@ -36,7 +36,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
                                     <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcR-OS-qyS">
-                                        <rect key="frame" x="272" y="16" width="32" height="31"/>
+                                        <rect key="frame" x="280" y="26" width="24" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -121,7 +121,7 @@
                     <navigationItem key="navigationItem" title="Cabit" id="E3u-aS-ZYy">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Nq0-Mz-876">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4OK-ec-ju2">
-                                <rect key="frame" x="282" y="11" width="22" height="22"/>
+                                <rect key="frame" x="280" y="14" width="24" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="settings.png">
@@ -436,9 +436,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Arrow.png" width="32" height="32"/>
+        <image name="Arrow.png" width="24" height="24"/>
         <image name="bouncingCircle.png" width="68" height="68"/>
-        <image name="settings.png" width="22" height="22"/>
+        <image name="settings.png" width="24" height="16"/>
         <image name="taxiAnnotation.png" width="51" height="16"/>
         <image name="time.png" width="28" height="28"/>
     </resources>

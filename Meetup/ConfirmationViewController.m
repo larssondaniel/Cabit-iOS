@@ -45,22 +45,9 @@
     ADDropDownMenuItemView *item = [[ADDropDownMenuItemView alloc] initWithSize: CGSizeMake(320, 44)];
     item.titleLabel.text = @"Beräknas vara framme om 12 minuter";
     
-    //[self generateRoute];
-    
-    /*
-    ADDropDownMenuItemView *item2 = [[ADDropDownMenuItemView alloc] initWithSize: CGSizeMake(320, 44)];
-    item2.titleLabel.text = @"Taxi Göteborg";
-    
-    ADDropDownMenuItemView *item3 = [[ADDropDownMenuItemView alloc] initWithSize: CGSizeMake(320, 44)];
-    item3.titleLabel.text = @"Registreringsnummer: ABC-123";
-    */
-    
     ADDropDownMenuView *dropDownMenuView = [[ADDropDownMenuView alloc] initAtOrigin:CGPointMake(0, 64)
                                                                      withItemsViews:@[item]];
     dropDownMenuView.delegate = self;
-    //[self.view addSubview: dropDownMenuView];
-    
-    // [dropDownMenuView expand];
     
     [self displayTaxiPosition];
 }

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6BABF507183A9EB900A6988B"
-               BuildableName = "Meetup.app"
-               BlueprintName = "Meetup"
-               ReferencedContainer = "container:Meetup.xcodeproj">
+               BuildableName = "Cabit.app"
+               BlueprintName = "Cabit"
+               ReferencedContainer = "container:Cabit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6BABF528183A9EB900A6988B"
-               BuildableName = "MeetupTests.xctest"
-               BlueprintName = "MeetupTests"
-               ReferencedContainer = "container:Meetup.xcodeproj">
+               BuildableName = "CabitTests.xctest"
+               BlueprintName = "CabitTests"
+               ReferencedContainer = "container:Cabit.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6BABF507183A9EB900A6988B"
-            BuildableName = "Meetup.app"
-            BlueprintName = "Meetup"
-            ReferencedContainer = "container:Meetup.xcodeproj">
+            BuildableName = "Cabit.app"
+            BlueprintName = "Cabit"
+            ReferencedContainer = "container:Cabit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6BABF507183A9EB900A6988B"
-            BuildableName = "Meetup.app"
-            BlueprintName = "Meetup"
-            ReferencedContainer = "container:Meetup.xcodeproj">
+            BuildableName = "Cabit.app"
+            BlueprintName = "Cabit"
+            ReferencedContainer = "container:Cabit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -84,9 +84,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6BABF507183A9EB900A6988B"
-            BuildableName = "Meetup.app"
-            BlueprintName = "Meetup"
-            ReferencedContainer = "container:Meetup.xcodeproj">
+            BuildableName = "Cabit.app"
+            BlueprintName = "Cabit"
+            ReferencedContainer = "container:Cabit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -269,7 +269,7 @@
             </objects>
             <point key="canvasLocation" x="664" y="-731"/>
         </scene>
-        <!--Search Pickup View Controller - Meetup-->
+        <!--Search Pickup View Controller - Cabit-->
         <scene sceneID="Mru-tC-xPc">
             <objects>
                 <viewController id="O6A-o4-dbv" customClass="SearchPickupViewController" sceneMemberID="viewController">
@@ -297,7 +297,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Meetup" id="YDg-La-hIn"/>
+                    <navigationItem key="navigationItem" title="Cabit" id="YDg-La-hIn"/>
                     <connections>
                         <outlet property="searchBar" destination="Xti-VY-tcK" id="aAe-u2-Fc2"/>
                         <outlet property="searchDisplayController" destination="eC4-7P-wu4" id="a4F-CZ-Wpr"/>
@@ -380,7 +380,7 @@
             </objects>
             <point key="canvasLocation" x="1708" y="-10"/>
         </scene>
-        <!--Search Destination View Controller - Meetup-->
+        <!--Search Destination View Controller - Cabit-->
         <scene sceneID="gju-vf-9Pz">
             <objects>
                 <viewController id="4hA-XT-oCt" customClass="SearchDestinationViewController" sceneMemberID="viewController">
@@ -408,7 +408,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Meetup" id="qPh-PD-e9A"/>
+                    <navigationItem key="navigationItem" title="Cabit" id="qPh-PD-e9A"/>
                     <connections>
                         <outlet property="searchBar" destination="NtK-re-QM2" id="ipe-4O-hMW"/>
                         <outlet property="searchDisplayController" destination="HsE-b6-TOJ" id="WCq-51-LU8"/>

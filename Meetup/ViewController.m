@@ -61,7 +61,7 @@
                                           initWithTarget:self action:@selector(handleLongPress:)];
     lpgr.minimumPressDuration = 1.0;
     [self.mapView addGestureRecognizer:lpgr];
-    
+        
     NSTimer *bounceTimer;
     bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
                                            selector:@selector(bounce) userInfo:nil repeats:YES];}

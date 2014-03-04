@@ -13,7 +13,6 @@
 		6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BE918C20100008D0BD9 /* bouncingCircle.png */; };
 		6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */; };
 		6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA6135718AE471500B61A6E /* QuartzCore.framework */; };
-		6BA6135B18AE5FC200B61A6E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */; };
 		6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135C18AE7A4E00B61A6E /* settings.png */; };
 		6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA6135D18AE7A4E00B61A6E /* settings@2x.png */; };
 		6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */; };
@@ -23,6 +22,8 @@
 		6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BA18BD1BFA00B61A6E /* time@2x.png */; };
 		6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */; };
 		6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */; };
+		6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8930518C3D0C500CA099A /* SettingsCell.m */; };
+		6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8930918C3E30200CA099A /* SettingsHelper.m */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
 		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
 		6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
@@ -55,6 +56,11 @@
 		6BB2DDA7184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2DDA5184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png */; };
 		6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */; };
 		6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */; };
+		6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BF15A5018C3811100183C52 /* SettingsViewController.m */; };
+		6BF15A5418C3849900183C52 /* name.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5218C3849900183C52 /* name.png */; };
+		6BF15A5518C3849900183C52 /* name@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5318C3849900183C52 /* name@2x.png */; };
+		6BF15A5818C3868400183C52 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5618C3868400183C52 /* phone.png */; };
+		6BF15A5918C3868400183C52 /* phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5718C3868400183C52 /* phone@2x.png */; };
 		E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACBD26CE1B64C9E9325F5DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -76,8 +82,6 @@
 		6BA30BE918C20100008D0BD9 /* bouncingCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bouncingCircle.png; path = Graphics/bouncingCircle.png; sourceTree = "<group>"; };
 		6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bouncingCircle@2x.png"; path = "Graphics/bouncingCircle@2x.png"; sourceTree = "<group>"; };
 		6BA6135718AE471500B61A6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		6BA6135918AE5FC200B61A6E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6BA6135C18AE7A4E00B61A6E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Graphics/settings.png; sourceTree = "<group>"; };
 		6BA6135D18AE7A4E00B61A6E /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@2x.png"; path = "Graphics/settings@2x.png"; sourceTree = "<group>"; };
 		6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxiAnnotation.h; sourceTree = "<group>"; };
@@ -88,6 +92,10 @@
 		6BA613BA18BD1BFA00B61A6E /* time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "time@2x.png"; path = "Graphics/time@2x.png"; sourceTree = "<group>"; };
 		6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taxiAnnotation2.png; path = Graphics/taxiAnnotation2.png; sourceTree = "<group>"; };
 		6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "taxiAnnotation2@2x.png"; path = "Graphics/taxiAnnotation2@2x.png"; sourceTree = "<group>"; };
+		6BA8930418C3D0C500CA099A /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
+		6BA8930518C3D0C500CA099A /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
+		6BA8930818C3E30200CA099A /* SettingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHelper.h; path = Helper/SettingsHelper.h; sourceTree = "<group>"; };
+		6BA8930918C3E30200CA099A /* SettingsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsHelper.m; path = Helper/SettingsHelper.m; sourceTree = "<group>"; };
 		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
 		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
 		6BABF508183A9EB900A6988B /* Cabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +136,12 @@
 		6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPickupViewController.m; sourceTree = "<group>"; };
 		6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDestinationViewController.h; sourceTree = "<group>"; };
 		6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDestinationViewController.m; sourceTree = "<group>"; };
+		6BF15A4F18C3811100183C52 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		6BF15A5018C3811100183C52 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		6BF15A5218C3849900183C52 /* name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = name.png; path = Graphics/name.png; sourceTree = "<group>"; };
+		6BF15A5318C3849900183C52 /* name@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "name@2x.png"; path = "Graphics/name@2x.png"; sourceTree = "<group>"; };
+		6BF15A5618C3868400183C52 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = phone.png; path = Graphics/phone.png; sourceTree = "<group>"; };
+		6BF15A5718C3868400183C52 /* phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phone@2x.png"; path = "Graphics/phone@2x.png"; sourceTree = "<group>"; };
 		9ACBD26CE1B64C9E9325F5DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,13 +210,17 @@
 		6BABF511183A9EB900A6988B /* Cabit */ = {
 			isa = PBXGroup;
 			children = (
+				6BF15A4F18C3811100183C52 /* SettingsViewController.h */,
+				6BF15A5018C3811100183C52 /* SettingsViewController.m */,
 				6BABF51A183A9EB900A6988B /* AppDelegate.h */,
 				6BABF51B183A9EB900A6988B /* AppDelegate.m */,
-				6BA6135918AE5FC200B61A6E /* SettingsViewController.h */,
-				6BA6135A18AE5FC200B61A6E /* SettingsViewController.m */,
 				6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */,
 				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
+				6BA8930818C3E30200CA099A /* SettingsHelper.h */,
+				6BA8930918C3E30200CA099A /* SettingsHelper.m */,
 				6BABF51D183A9EB900A6988B /* Main.storyboard */,
+				6BA8930418C3D0C500CA099A /* SettingsCell.h */,
+				6BA8930518C3D0C500CA099A /* SettingsCell.m */,
 				6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */,
 				6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */,
 				6BABF520183A9EB900A6988B /* ViewController.h */,
@@ -254,6 +272,10 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BF15A5618C3868400183C52 /* phone.png */,
+				6BF15A5718C3868400183C52 /* phone@2x.png */,
+				6BF15A5218C3849900183C52 /* name.png */,
+				6BF15A5318C3849900183C52 /* name@2x.png */,
 				6BA30BE918C20100008D0BD9 /* bouncingCircle.png */,
 				6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */,
 				6BA613BD18BD720200B61A6E /* taxiAnnotation2.png */,
@@ -333,6 +355,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Meetup;
 				TargetAttributes = {
+					6BABF507183A9EB900A6988B = {
+						DevelopmentTeam = 85JQFL47E9;
+					};
 					6BABF528183A9EB900A6988B = {
 						TestTargetID = 6BABF507183A9EB900A6988B;
 					};
@@ -366,6 +391,7 @@
 				6BB2DD80183ED30900BBA9A8 /* taxiGoteborg@2x.png in Resources */,
 				6BB2DD7F183ED30900BBA9A8 /* taxiGoteborg.png in Resources */,
 				6BABF54B183AA7A500A6988B /* Profile@2x.png in Resources */,
+				6BF15A5518C3849900183C52 /* name@2x.png in Resources */,
 				6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */,
 				6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */,
 				6BB2DDA6184D3FDC00BBA9A8 /* taxiGoteborgNy.png in Resources */,
@@ -383,14 +409,17 @@
 				6B13E10B1895C9F7002E14BE /* logo.png in Resources */,
 				6BA613B718BD0F4C00B61A6E /* taxiAnnotation.png in Resources */,
 				6BB2DD9B1848039000BBA9A8 /* Arrow.png in Resources */,
+				6BF15A5818C3868400183C52 /* phone.png in Resources */,
 				6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */,
 				6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
 				6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */,
 				6BB2DD87183EDA5400BBA9A8 /* taxiKurir@2x.png in Resources */,
+				6BF15A5418C3849900183C52 /* name.png in Resources */,
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,
 				6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
+				6BF15A5918C3868400183C52 /* phone@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,12 +474,14 @@
 				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* ViewController.m in Sources */,
+				6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */,
+				6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */,
+				6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */,
 				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,
 				6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
-				6BA6135B18AE5FC200B61A6E /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,10 +609,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Meetup/Cabit-Prefix.pch";
 				INFOPLIST_FILE = "Meetup/Cabit-Info.plist";
 				PRODUCT_NAME = Cabit;
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -593,10 +627,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Meetup/Cabit-Prefix.pch";
 				INFOPLIST_FILE = "Meetup/Cabit-Info.plist";
 				PRODUCT_NAME = Cabit;
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

@@ -1,148 +1,60 @@
 //
 //  SettingsViewController.m
-//  Meetup
+//  Cabit
 //
-//  Created by Daniel Larsson on 2014-02-14.
+//  Created by Daniel Larsson on 2014-03-02.
 //  Copyright (c) 2014 Meetup. All rights reserved.
 //
 
 #import "SettingsViewController.h"
-#import "PBFlatRoundedImageView.h"
-#import <QuartzCore/QuartzCore.h>
-
+#import "SettingsHelper.h"
 
 @interface SettingsViewController ()
+@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *phoneTextField;
 
 @end
 
 @implementation SettingsViewController
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Load credentials
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [self.nameTextField setText:[defaults objectForKey:@"name"]];
+    [self.phoneTextField setText:[defaults objectForKey:@"phoneNumber"]];
+    NSLog(@"Reading name: %@", [defaults objectForKey:@"name"]);
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
     return 2;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
     switch (section) {
         case 0:
-            return 1;
+            return 2;
         case 1:
-            return 6;
+            return 4;
         default:
             return 0;
             break;
     }
 }
 
--(void)configureCell:(PBFlatGroupedStyleCell *)cell forIndexPath:(NSIndexPath *)indexPath {
-    NSInteger section = indexPath.section;
-    NSString *text = @"";
-    
-    switch (section) {
-        case 0:
-            text = @"Storbil (4+ personer)";
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    text = @"Taxi Göteborg";
-                    break;
-                case 1:
-                    text = @"Minitaxi";
-                    break;
-                case 2:
-                    text = @"Taxi 020";
-                    break;
-                case 3:
-                    text = @"Taxi Kurir";
-                    break;
-                case 4:
-                    text = @"Easy Cab";
-                    break;
-                case 5:
-                    text = @"City Cab";
-                    break;
-            }
-    }
-    
-    [cell.textLabel setText:text];
-    
-    //[cell setIconImage:[[self exampleIcons] objectAtIndex:index]];
-    [cell setCellAccessoryView:[self exampleAccessoryViewForIndexPath:indexPath]];
-    
-    if (section == 2) {
-        
-        switch (indexPath.row) {
-            case 0: {
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"js"]]];
-                break;
-            }
-            case 1: {
-                
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"tl"]]];
-                break;
-            }
-            case 2: {
-                
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"cn"]]];
-                break;
-            }
-            default:
-                break;
-        }
-        
-    }
-    
-}
- 
-- (UIView *)exampleAccessoryViewForIndexPath:(NSIndexPath *)indexPath {
-    
-    UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-
-    [mySwitch setBackgroundColor:[UIColor clearColor]];
-    //mySwitch.onTintColor = [UIColor colorWithRed:67 green:67 blue:67 alpha:1];
-    [mySwitch setOnTintColor:[UIColor colorWithHue:0 saturation:0 brightness:0.26 alpha:1]];
-
-    /*
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    [label setTextColor:[UIColor darkGrayColor]];
-    [label setFont:[[[PBFlatSettings sharedInstance] font] fontWithSize:12.0f]];
-    [label setBackgroundColor:[UIColor clearColor]];
-     */
-    
-    switch (indexPath.section) {
-        case 0:
-            [mySwitch setOn:NO animated:YES];
-            return mySwitch;
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 1:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 2:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-                case 3:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 4:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-                case 5:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-            }
-    }
-    return nil;
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[SettingsHelper sharedSettingsHelper] storeName:self.nameTextField.text];
+    [[SettingsHelper sharedSettingsHelper] storePhoneNumber:self.phoneTextField.text];
+    [super viewWillDisappear:animated];
 }
 
 @end

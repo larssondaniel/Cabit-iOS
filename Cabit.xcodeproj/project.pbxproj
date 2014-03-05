@@ -33,7 +33,7 @@
 		6BABF518183A9EB900A6988B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABF517183A9EB900A6988B /* main.m */; };
 		6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABF51B183A9EB900A6988B /* AppDelegate.m */; };
 		6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BABF51D183A9EB900A6988B /* Main.storyboard */; };
-		6BABF522183A9EB900A6988B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABF521183A9EB900A6988B /* ViewController.m */; };
+		6BABF522183A9EB900A6988B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BABF521183A9EB900A6988B /* MainViewController.m */; };
 		6BABF524183A9EB900A6988B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BABF523183A9EB900A6988B /* Images.xcassets */; };
 		6BABF52B183A9EB900A6988B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF52A183A9EB900A6988B /* XCTest.framework */; };
 		6BABF52C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
@@ -109,8 +109,8 @@
 		6BABF51A183A9EB900A6988B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6BABF51B183A9EB900A6988B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6BABF51E183A9EB900A6988B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6BABF520183A9EB900A6988B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6BABF521183A9EB900A6988B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6BABF520183A9EB900A6988B /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		6BABF521183A9EB900A6988B /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		6BABF523183A9EB900A6988B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6BABF529183A9EB900A6988B /* CabitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CabitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BABF52A183A9EB900A6988B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -198,8 +198,8 @@
 				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
 				6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */,
 				6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */,
-				6BABF520183A9EB900A6988B /* ViewController.h */,
-				6BABF521183A9EB900A6988B /* ViewController.m */,
+				6BABF520183A9EB900A6988B /* MainViewController.h */,
+				6BABF521183A9EB900A6988B /* MainViewController.m */,
 				6B13E10618959AA7002E14BE /* ConfirmationViewController.h */,
 				6B13E10718959AA7002E14BE /* ConfirmationViewController.m */,
 				6BF15A4F18C3811100183C52 /* SettingsViewController.h */,
@@ -505,7 +505,7 @@
 			files = (
 				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
-				6BABF522183A9EB900A6988B /* ViewController.m in Sources */,
+				6BABF522183A9EB900A6988B /* MainViewController.m in Sources */,
 				6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */,
 				6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */,
 				6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */,

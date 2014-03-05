@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MainViewController.h
 //  Meetup
 //
 //  Created by Daniel Larsson on 2013-11-18.
@@ -12,7 +12,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface ViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, UIToolbarDelegate, SearchPickupDelegate, SearchDestinationDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, UIToolbarDelegate, SearchPickupDelegate, SearchDestinationDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UIView *searchView;
 @property (strong, nonatomic) IBOutlet UIButton *locateButton;

@@ -1,12 +1,12 @@
 //
-//  ViewController.m
+//  MainViewController.m
 //  Meetup
 //
 //  Created by Daniel Larsson on 2013-11-18.
 //  Copyright (c) 2013 Meetup. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MainViewController.h"
 #import "Vehicle.h"
 #import "SIAlertView.h"
 #import "ConfirmationViewController.h"
@@ -14,7 +14,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface ViewController ()
+@interface MainViewController ()
 
 @property (nonatomic, strong) MKPointAnnotation *destinationAnnotation;
 @property (nonatomic, strong) MKPointAnnotation *pickupAnnotation;
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation ViewController
+@implementation MainViewController
 
 - (void)viewDidLoad
 {

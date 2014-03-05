@@ -1,9 +1,9 @@
 //
 //  SearchDestinationViewController.h
-//  Meetup
+//  Cabit
 //
 //  Created by Daniel Larsson on 2013-12-28.
-//  Copyright (c) 2013 Meetup. All rights reserved.
+//  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

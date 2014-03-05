@@ -1,9 +1,9 @@
 //
 //  TaxiAnnotation.h
-//  Meetup
+//  Cabit
 //
 //  Created by Daniel Larsson on 2014-02-18.
-//  Copyright (c) 2014 Meetup. All rights reserved.
+//  Copyright (c) 2014 Cabit. All rights reserved.
 //
 
 #import <MapKit/MapKit.h>

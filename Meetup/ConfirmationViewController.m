@@ -1,9 +1,9 @@
 //
 //  ConfirmationViewController.m
-//  Meetup
+//  Cabit
 //
 //  Created by Daniel Larsson on 2014-01-26.
-//  Copyright (c) 2014 Meetup. All rights reserved.
+//  Copyright (c) 2014 Cabit. All rights reserved.
 //
 
 #import "ConfirmationViewController.h"

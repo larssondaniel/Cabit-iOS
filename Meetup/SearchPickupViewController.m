@@ -105,12 +105,6 @@
             NSLog(@"LocalSearch failed with error: %@", error);
             return;
         } else {
-            NSLog(@"%i",[response.mapItems count]);
-
-            for (MKMapItem *item in response.mapItems) {
-                //NSLog(@"Name: %@", [item valueForKey:@"Name"]);
-                //NSLog(@"Item: %@", item);
-            }
             NSPredicate *noBusiness = [NSPredicate predicateWithFormat:@"business.uID == 0"];
             NSMutableArray *itemsWithoutBusinesses = [response.mapItems mutableCopy];
             [itemsWithoutBusinesses filterUsingPredicate:noBusiness];

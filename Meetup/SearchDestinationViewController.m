@@ -78,7 +78,9 @@
     MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
     
     NSString *formattedAddress = [mapItem.placemark.addressDictionary valueForKey:@"Name"];
-    formattedAddress = [formattedAddress stringByAppendingString:[NSString stringWithFormat:@", %@", [mapItem.placemark.addressDictionary valueForKey:@"City"]]];
+    if ([mapItem.placemark.addressDictionary valueForKey:@"City"]) {
+        formattedAddress = [formattedAddress stringByAppendingString:[NSString stringWithFormat:@", %@", [mapItem.placemark.addressDictionary valueForKey:@"City"]]];
+    }
     
     cell.textLabel.text = formattedAddress;
     return cell;
@@ -102,7 +104,10 @@
             NSLog(@"LocalSearch failed with error: %@", error);
             return;
         } else {
-            for(MKMapItem *mapItem in response.mapItems){
+            NSPredicate *noBusiness = [NSPredicate predicateWithFormat:@"business.uID == 0"];
+            NSMutableArray *itemsWithoutBusinesses = [response.mapItems mutableCopy];
+            [itemsWithoutBusinesses filterUsingPredicate:noBusiness];
+            for(MKMapItem *mapItem in itemsWithoutBusinesses){
                 [self.data addObject:mapItem];
                 //NSLog(@"Name for result: = %@", [[mapItem.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "]);
             }

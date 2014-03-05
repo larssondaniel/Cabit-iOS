@@ -173,6 +173,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6BA8931D18C6524200CA099A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6BA8930818C3E30200CA099A /* SettingsHelper.h */,
+				6BA8930918C3E30200CA099A /* SettingsHelper.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		6BA8931E18C6525100CA099A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6BB2DD881840226700BBA9A8 /* Vehicle.h */,
+				6BB2DD891840226700BBA9A8 /* Vehicle.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		6BA8931F18C6528D00CA099A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */,
+				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
+				6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */,
+				6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */,
+				6BABF520183A9EB900A6988B /* ViewController.h */,
+				6BABF521183A9EB900A6988B /* ViewController.m */,
+				6B13E10618959AA7002E14BE /* ConfirmationViewController.h */,
+				6B13E10718959AA7002E14BE /* ConfirmationViewController.m */,
+				6BF15A4F18C3811100183C52 /* SettingsViewController.h */,
+				6BF15A5018C3811100183C52 /* SettingsViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		6BA8932018C652E100CA099A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6BA8930418C3D0C500CA099A /* SettingsCell.h */,
+				6BA8930518C3D0C500CA099A /* SettingsCell.m */,
+				6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */,
+				6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		6BABF4FF183A9EB900A6988B = {
 			isa = PBXGroup;
 			children = (
@@ -210,28 +256,12 @@
 		6BABF511183A9EB900A6988B /* Cabit */ = {
 			isa = PBXGroup;
 			children = (
-				6BF15A4F18C3811100183C52 /* SettingsViewController.h */,
-				6BF15A5018C3811100183C52 /* SettingsViewController.m */,
-				6BABF51A183A9EB900A6988B /* AppDelegate.h */,
-				6BABF51B183A9EB900A6988B /* AppDelegate.m */,
-				6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */,
-				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
-				6BA8930818C3E30200CA099A /* SettingsHelper.h */,
-				6BA8930918C3E30200CA099A /* SettingsHelper.m */,
-				6BABF51D183A9EB900A6988B /* Main.storyboard */,
-				6BA8930418C3D0C500CA099A /* SettingsCell.h */,
-				6BA8930518C3D0C500CA099A /* SettingsCell.m */,
-				6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */,
-				6BBBF3F1186F1E2300569FC0 /* SearchDestinationViewController.m */,
-				6BABF520183A9EB900A6988B /* ViewController.h */,
-				6BABF521183A9EB900A6988B /* ViewController.m */,
-				6B13E10618959AA7002E14BE /* ConfirmationViewController.h */,
-				6B13E10718959AA7002E14BE /* ConfirmationViewController.m */,
-				6BB2DD881840226700BBA9A8 /* Vehicle.h */,
-				6BB2DD891840226700BBA9A8 /* Vehicle.m */,
-				6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */,
-				6BA6136118B3ED0F00B61A6E /* TaxiAnnotation.m */,
+				6BA8932018C652E100CA099A /* View */,
+				6BA8931F18C6528D00CA099A /* Controller */,
+				6BA8931D18C6524200CA099A /* Helpers */,
+				6BA8931E18C6525100CA099A /* Model */,
 				6BABF545183AA71000A6988B /* Graphics */,
+				6BABF51D183A9EB900A6988B /* Main.storyboard */,
 				6BABF523183A9EB900A6988B /* Images.xcassets */,
 				6BABF512183A9EB900A6988B /* Supporting Files */,
 			);
@@ -242,6 +272,8 @@
 		6BABF512183A9EB900A6988B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6BABF51A183A9EB900A6988B /* AppDelegate.h */,
+				6BABF51B183A9EB900A6988B /* AppDelegate.m */,
 				6BABF513183A9EB900A6988B /* Cabit-Info.plist */,
 				6BABF514183A9EB900A6988B /* InfoPlist.strings */,
 				6BABF517183A9EB900A6988B /* main.m */,

@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) MKLocalSearchRequest *localSearchRequest;
 @property (strong, nonatomic) MKLocalSearch *localSearch;
+@property (strong, nonatomic) IBOutlet UIView *topView;
 
 @end
 
@@ -28,6 +29,15 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    
+    [self.topView setHidden:NO];
+    
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(0, 140);
+
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.topView.transform = transform;
+                     }];
     [self.searchBar setShowsCancelButton:YES animated:YES];
     [self.searchBar becomeFirstResponder];
 }
@@ -57,9 +67,6 @@
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    NSUInteger tmp = [self.data count];
-    int i = (int)tmp;
-    // NSLog(@"numberOfRowsInSection = %i", i);
     return [self.data count];
 }
 

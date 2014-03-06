@@ -30,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UIView *numberOfCabsView;
 @property (strong, nonatomic) IBOutlet UIButton *bouncingCone;
 
+@property (strong, nonatomic) NSArray *points;
+
 @end
 
 @implementation MainViewController
@@ -228,12 +230,8 @@
     for (MKRoute *route in response.routes)
     {
         [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-        MKMapPoint middlePoint = route.polyline.points[route.polyline.pointCount/2];
-        //NSLog(@"x = %f", middlePoint.x);
-        //NSLog(@"y = %f", middlePoint.y);
     }
     [self fitRegionToRoute];
-    //[self showRouteCallout];
     NSTimer *timer;
     timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self
                                            selector:@selector(showFirstAlertView) userInfo:nil repeats:NO];
@@ -387,5 +385,6 @@
 	CAKeyframeAnimation *animation = [self dockBounceAnimationWithIconHeight:20];
 	[self.bouncingCone.layer addAnimation:animation forKey:@"jumping"];
 }
+
 
 @end

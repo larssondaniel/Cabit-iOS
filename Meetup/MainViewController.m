@@ -30,8 +30,6 @@
 @property (strong, nonatomic) IBOutlet UIView *numberOfCabsView;
 @property (strong, nonatomic) IBOutlet UIButton *bouncingCone;
 
-@property (strong, nonatomic) NSArray *points;
-
 @end
 
 @implementation MainViewController

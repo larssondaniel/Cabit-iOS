@@ -55,12 +55,6 @@
     
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
-
-    // Press gesture recognizer for pin drop
-    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 1.0;
-    [self.mapView addGestureRecognizer:lpgr];
         
     NSTimer *bounceTimer;
     bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
@@ -84,15 +78,6 @@
         [self.searchPickupButton setTitle:[placemark.addressDictionary valueForKey:@"Name"] forState:UIControlStateNormal];
         [self.locateIndicator stopAnimating];
     }];
-}
-
-- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer.state != UIGestureRecognizerStateBegan)
-        return;
-    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
-    CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
-    [self setPickupLocation:touchMapCoordinate];
 }
 
 - (void)setPickupLocation:(CLLocationCoordinate2D)location

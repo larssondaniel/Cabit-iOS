@@ -16,7 +16,6 @@
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UIView *searchView;
 @property (strong, nonatomic) IBOutlet UIButton *locateButton;
-@property (strong, nonatomic) IBOutlet UIView *destionationView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *locateIndicator;
 
 @end

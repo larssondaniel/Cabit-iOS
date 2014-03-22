@@ -11,6 +11,8 @@
 #import "SIAlertView.h"
 #import "ConfirmationViewController.h"
 #import "TWMessageBarManager.h"
+#import "UIView+Glow.h"
+#import "CAKeyframeAnimation+AHEasing.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -29,6 +31,17 @@
 @property (nonatomic, strong) SIAlertView *searchingAlertView;
 @property (strong, nonatomic) IBOutlet UIView *numberOfCabsView;
 @property (strong, nonatomic) IBOutlet UIButton *bouncingCone;
+@property (strong, nonatomic) IBOutlet UIView *animatedBottomView;
+@property (strong, nonatomic) IBOutlet UIView *pickupView;
+@property (strong, nonatomic) IBOutlet UIView *destinationView;
+@property (strong, nonatomic) IBOutlet UIButton *pickupLabel;
+@property (strong, nonatomic) IBOutlet UILabel *pickupStaticLabel;
+@property (strong, nonatomic) IBOutlet UIView *pickupViewWithImage;
+@property (strong, nonatomic) IBOutlet UIView *destinationViewWithImage;
+@property (strong, nonatomic) IBOutlet UILabel *destinationStaticLabel;
+@property (strong, nonatomic) IBOutlet UIButton *destinationLabel;
+
+@property (nonatomic) bool isShowingDestinaion;
 
 @end
 
@@ -42,7 +55,6 @@
     
     [self.mapView setDelegate:self];
     [self.mapView addSubview:self.searchView];
-    [self.mapView addSubview:self.destionationView];
     [self.mapView addSubview:self.numberOfCabsView];
     
     // self.pickupAnnotation = [[MKPointAnnotation alloc] init];
@@ -55,10 +67,26 @@
     
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
-        
-    NSTimer *bounceTimer;
-    bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
-                                           selector:@selector(bounce) userInfo:nil repeats:YES];}
+
+    //NSTimer *bounceTimer;
+    //bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
+    //                                      selector:@selector(bounce) userInfo:nil repeats:YES];
+    
+    [self.pickupView startGlowingWithColor:[self.searchDestinationButton backgroundColor] intensity:0.9];
+    
+    [self.animatedBottomView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomGradient"]]];
+    [self.pickupViewWithImage setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomView"]]];
+    [self.destinationViewWithImage setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomView"]]];
+    [self.searchDestinationButton setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"blueButton"]]];
+    [self setIsShowingDestinaion:NO];
+    [self.pickupLabel.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.pickupStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:11]];
+    
+    [self.destinationLabel.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:11]];
+    
+    [self.searchDestinationButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+}
 
 - (IBAction)clickedLocate
 {
@@ -369,5 +397,37 @@
 	[self.bouncingCone.layer addAnimation:animation forKey:@"jumping"];
 }
 
+- (IBAction)clickedChooseDestination:(id)sender {
+    if (!self.isShowingDestinaion) {
+        [self setIsShowingDestinaion:YES];
+        [self.destinationView startGlowingWithColor:[self.searchDestinationButton backgroundColor] intensity:0.7];
+        CGAffineTransform transform = CGAffineTransformMakeTranslation(0, -140);
+    //[UIView animateWithDuration:0.3
+    //                 animations:^{
+    //                     self.animatedBottomView.transform = transform;
+    //                 }];
+        [self.searchDestinationButton setTitle:@"Välj destination" forState:UIControlStateNormal];
+        [self.pickupView stopGlowing];
+        [self.pickupLabel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
+        CALayer *layer = self.animatedBottomView.layer;
+        [CATransaction begin];
+        [CATransaction setValue:[NSNumber numberWithFloat:0.200] forKey:kCATransactionAnimationDuration];
+    
+        NSLog(@"Origin is %f", self.animatedBottomView.frame.origin.y);
+    
+        CAAnimation *chase = [CAKeyframeAnimation animationWithKeyPath:@"position"
+                                                          function:ExponentialEaseIn
+                                                         fromPoint:self.animatedBottomView.center
+                                                           toPoint:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y-70)];
+        [chase setDelegate:self];
+        [layer addAnimation:chase forKey:@"position"];
+    
+        [CATransaction commit];
+        [self.animatedBottomView setCenter:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y-70)];
+    } else {
+        [self showFirstAlertView];
+    }
+}
 
 @end

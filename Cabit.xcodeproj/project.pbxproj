@@ -10,6 +10,8 @@
 		6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B13E10718959AA7002E14BE /* ConfirmationViewController.m */; };
 		6B13E10B1895C9F7002E14BE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E1091895C9F7002E14BE /* logo.png */; };
 		6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E10A1895C9F7002E14BE /* logo@2x.png */; };
+		6B85A3E118D35C9700158849 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B85A3E018D35C9700158849 /* UIView+Glow.m */; };
+		6B85A3E318D3AA1600158849 /* bottomGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */; };
 		6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BE918C20100008D0BD9 /* bouncingCircle.png */; };
 		6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */; };
 		6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA6135718AE471500B61A6E /* QuartzCore.framework */; };
@@ -24,6 +26,13 @@
 		6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA613BE18BD720200B61A6E /* taxiAnnotation2@2x.png */; };
 		6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8930518C3D0C500CA099A /* SettingsCell.m */; };
 		6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8930918C3E30200CA099A /* SettingsHelper.m */; };
+		6BAA75C118DA18F900898045 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA75BE18DA18F900898045 /* CAKeyframeAnimation+AHEasing.m */; };
+		6BAA75C218DA18F900898045 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA75BF18DA18F900898045 /* easing.c */; };
+		6BAA75CC18DA4EEA00898045 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75C918DA4EEA00898045 /* OpenSans-Light.ttf */; };
+		6BAA75CD18DA4EEA00898045 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75CA18DA4EEA00898045 /* OpenSans-Regular.ttf */; };
+		6BAA75CE18DA4EEA00898045 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75CB18DA4EEA00898045 /* OpenSans-Semibold.ttf */; };
+		6BAA75D018DA516500898045 /* bottomView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75CF18DA516500898045 /* bottomView@2x.png */; };
+		6BAA75D218DA533E00898045 /* blueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75D118DA533E00898045 /* blueButton@2x.png */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
 		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
 		6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
@@ -79,6 +88,9 @@
 		6B13E10718959AA7002E14BE /* ConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationViewController.m; sourceTree = "<group>"; };
 		6B13E1091895C9F7002E14BE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Graphics/logo.png; sourceTree = "<group>"; };
 		6B13E10A1895C9F7002E14BE /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "Graphics/logo@2x.png"; sourceTree = "<group>"; };
+		6B85A3DF18D35C9700158849 /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
+		6B85A3E018D35C9700158849 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
+		6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottomGradient@2x.png"; path = "Graphics/bottomGradient@2x.png"; sourceTree = "<group>"; };
 		6BA30BE918C20100008D0BD9 /* bouncingCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bouncingCircle.png; path = Graphics/bouncingCircle.png; sourceTree = "<group>"; };
 		6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bouncingCircle@2x.png"; path = "Graphics/bouncingCircle@2x.png"; sourceTree = "<group>"; };
 		6BA6135718AE471500B61A6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -96,6 +108,15 @@
 		6BA8930518C3D0C500CA099A /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 		6BA8930818C3E30200CA099A /* SettingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHelper.h; path = Helper/SettingsHelper.h; sourceTree = "<group>"; };
 		6BA8930918C3E30200CA099A /* SettingsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsHelper.m; path = Helper/SettingsHelper.m; sourceTree = "<group>"; };
+		6BAA75BD18DA18F900898045 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
+		6BAA75BE18DA18F900898045 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
+		6BAA75BF18DA18F900898045 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
+		6BAA75C018DA18F900898045 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
+		6BAA75C918DA4EEA00898045 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		6BAA75CA18DA4EEA00898045 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		6BAA75CB18DA4EEA00898045 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		6BAA75CF18DA516500898045 /* bottomView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottomView@2x.png"; path = "Graphics/bottomView@2x.png"; sourceTree = "<group>"; };
+		6BAA75D118DA533E00898045 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueButton@2x.png"; path = "Graphics/blueButton@2x.png"; sourceTree = "<group>"; };
 		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
 		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
 		6BABF508183A9EB900A6988B /* Cabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +194,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B85A3DE18D35C9700158849 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				6BAA75BD18DA18F900898045 /* CAKeyframeAnimation+AHEasing.h */,
+				6BAA75BE18DA18F900898045 /* CAKeyframeAnimation+AHEasing.m */,
+				6BAA75BF18DA18F900898045 /* easing.c */,
+				6BAA75C018DA18F900898045 /* easing.h */,
+				6B85A3DF18D35C9700158849 /* UIView+Glow.h */,
+				6B85A3E018D35C9700158849 /* UIView+Glow.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		6BA8931D18C6524200CA099A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +253,16 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		6BAA75C818DA4EEA00898045 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6BAA75C918DA4EEA00898045 /* OpenSans-Light.ttf */,
+				6BAA75CA18DA4EEA00898045 /* OpenSans-Regular.ttf */,
+				6BAA75CB18DA4EEA00898045 /* OpenSans-Semibold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		6BABF4FF183A9EB900A6988B = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +300,8 @@
 		6BABF511183A9EB900A6988B /* Cabit */ = {
 			isa = PBXGroup;
 			children = (
+				6BAA75C818DA4EEA00898045 /* Fonts */,
+				6B85A3DE18D35C9700158849 /* Categories */,
 				6BA8932018C652E100CA099A /* View */,
 				6BA8931F18C6528D00CA099A /* Controller */,
 				6BA8931D18C6524200CA099A /* Helpers */,
@@ -304,6 +350,9 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BAA75D118DA533E00898045 /* blueButton@2x.png */,
+				6BAA75CF18DA516500898045 /* bottomView@2x.png */,
+				6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */,
 				6BF15A5618C3868400183C52 /* phone.png */,
 				6BF15A5718C3868400183C52 /* phone@2x.png */,
 				6BF15A5218C3849900183C52 /* name.png */,
@@ -421,7 +470,10 @@
 			files = (
 				6BB2DDA7184D3FDC00BBA9A8 /* taxiGoteborgNy@2x.png in Resources */,
 				6BB2DD80183ED30900BBA9A8 /* taxiGoteborg@2x.png in Resources */,
+				6BAA75D018DA516500898045 /* bottomView@2x.png in Resources */,
 				6BB2DD7F183ED30900BBA9A8 /* taxiGoteborg.png in Resources */,
+				6BAA75CE18DA4EEA00898045 /* OpenSans-Semibold.ttf in Resources */,
+				6BAA75D218DA533E00898045 /* blueButton@2x.png in Resources */,
 				6BABF54B183AA7A500A6988B /* Profile@2x.png in Resources */,
 				6BF15A5518C3849900183C52 /* name@2x.png in Resources */,
 				6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */,
@@ -429,12 +481,14 @@
 				6BB2DDA6184D3FDC00BBA9A8 /* taxiGoteborgNy.png in Resources */,
 				6BB2DD86183EDA5400BBA9A8 /* taxiKurir.png in Resources */,
 				6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */,
+				6BAA75CD18DA4EEA00898045 /* OpenSans-Regular.ttf in Resources */,
 				6BB2DDA2184D3D8100BBA9A8 /* taxiKurirNy.png in Resources */,
 				6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */,
 				6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */,
 				6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */,
 				6BA613BB18BD1BFA00B61A6E /* time.png in Resources */,
 				6BA613B818BD0F4C00B61A6E /* taxiAnnotation@2x.png in Resources */,
+				6BAA75CC18DA4EEA00898045 /* OpenSans-Light.ttf in Resources */,
 				6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */,
 				6BB2DD9C1848039000BBA9A8 /* Arrow@2x.png in Resources */,
 				6BABF524183A9EB900A6988B /* Images.xcassets in Resources */,
@@ -452,6 +506,7 @@
 				6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
 				6BF15A5918C3868400183C52 /* phone@2x.png in Resources */,
+				6B85A3E318D3AA1600158849 /* bottomGradient@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,12 +562,15 @@
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* MainViewController.m in Sources */,
 				6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */,
+				6BAA75C218DA18F900898045 /* easing.c in Sources */,
 				6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */,
 				6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */,
 				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,
+				6B85A3E118D35C9700158849 /* UIView+Glow.m in Sources */,
 				6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */,
+				6BAA75C118DA18F900898045 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

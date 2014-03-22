@@ -33,10 +33,12 @@
     [self.topView setHidden:NO];
     
     CGAffineTransform transform = CGAffineTransformMakeTranslation(0, 140);
+    NSLog(@"Almost in");
 
     [UIView animateWithDuration:0.3
                      animations:^{
                          self.topView.transform = transform;
+                         NSLog(@"Got in");
                      }];
     [self.searchBar setShowsCancelButton:YES animated:YES];
     [self.searchBar becomeFirstResponder];

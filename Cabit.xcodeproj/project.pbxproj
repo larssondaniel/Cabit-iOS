@@ -33,6 +33,7 @@
 		6BAA75CE18DA4EEA00898045 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75CB18DA4EEA00898045 /* OpenSans-Semibold.ttf */; };
 		6BAA75D018DA516500898045 /* bottomView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75CF18DA516500898045 /* bottomView@2x.png */; };
 		6BAA75D218DA533E00898045 /* blueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75D118DA533E00898045 /* blueButton@2x.png */; };
+		6BAA75D518DF404B00898045 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAA75D418DF404B00898045 /* Default@2x.png */; };
 		6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAE187EF4ED00F15E8B /* callout.png */; };
 		6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABDCAF187EF4ED00F15E8B /* callout@2x.png */; };
 		6BABF50C183A9EB900A6988B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BABF50B183A9EB900A6988B /* Foundation.framework */; };
@@ -117,6 +118,7 @@
 		6BAA75CB18DA4EEA00898045 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		6BAA75CF18DA516500898045 /* bottomView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottomView@2x.png"; path = "Graphics/bottomView@2x.png"; sourceTree = "<group>"; };
 		6BAA75D118DA533E00898045 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueButton@2x.png"; path = "Graphics/blueButton@2x.png"; sourceTree = "<group>"; };
+		6BAA75D418DF404B00898045 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Graphics/Default@2x.png"; sourceTree = "<group>"; };
 		6BABDCAE187EF4ED00F15E8B /* callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callout.png; path = Graphics/callout.png; sourceTree = "<group>"; };
 		6BABDCAF187EF4ED00F15E8B /* callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callout@2x.png"; path = "Graphics/callout@2x.png"; sourceTree = "<group>"; };
 		6BABF508183A9EB900A6988B /* Cabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,6 +352,7 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BAA75D418DF404B00898045 /* Default@2x.png */,
 				6BAA75D118DA533E00898045 /* blueButton@2x.png */,
 				6BAA75CF18DA516500898045 /* bottomView@2x.png */,
 				6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */,
@@ -500,6 +503,7 @@
 				6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
 				6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */,
+				6BAA75D518DF404B00898045 /* Default@2x.png in Resources */,
 				6BB2DD87183EDA5400BBA9A8 /* taxiKurir@2x.png in Resources */,
 				6BF15A5418C3849900183C52 /* name.png in Resources */,
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,

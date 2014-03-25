@@ -25,7 +25,7 @@ static char* GLOWVIEW_KEY = "GLOWVIEW";
 }
 
 - (void)startGlowingWithColor:(UIColor *)color intensity:(CGFloat)intensity {
-    [self startGlowingWithColor:color fromIntensity:0.5 toIntensity:intensity repeat:YES];
+    [self startGlowingWithColor:color fromIntensity:0.3 toIntensity:intensity repeat:YES];
 }
 
 - (void) startGlowingWithColor:(UIColor*)color fromIntensity:(CGFloat)fromIntensity toIntensity:(CGFloat)toIntensity repeat:(BOOL)repeat {

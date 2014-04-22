@@ -14,6 +14,7 @@
 @property (strong, nonatomic) MKLocalSearchRequest *localSearchRequest;
 @property (strong, nonatomic) MKLocalSearch *localSearch;
 @property (strong, nonatomic) IBOutlet UIView *topView;
+@property (strong, nonatomic) IBOutlet UILabel *topLabel;
 
 @end
 
@@ -25,6 +26,7 @@
 {
     [super viewDidLoad];
     self.data = [[NSMutableArray alloc] init];
+    [self.topLabel setFont:[UIFont fontWithName:@"OpenSans" size:22]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -98,6 +100,11 @@
 
 -(void)issueLocalSearchLookup:(NSString *)searchString
 {
+    if (self.localSearch.searching)
+    {
+        [self.localSearch cancel];
+    }
+    
     // Tell the search engine to start looking within 30 000 meters from the user
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.location.coordinate, 30000, 30000);
     

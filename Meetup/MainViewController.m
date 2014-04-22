@@ -52,9 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
-    
+
     [self.mapView setDelegate:self];
     [self.mapView addSubview:self.searchView];
     [self.mapView addSubview:self.numberOfCabsView];
@@ -92,6 +90,11 @@
     [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:11]];
     
     [self.searchDestinationButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"OpenSans" size:21],
+      NSFontAttributeName, nil]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -99,6 +102,16 @@
     [super viewDidAppear:animated];
     if (self.shouldAnimateBottomView)
         [self animateBottomView];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.mapView.delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.mapView.delegate = nil;
 }
 
 - (void)setInitialPickupAddress
@@ -134,7 +147,7 @@
 - (void)setPickupLocation:(CLLocationCoordinate2D)location
 {
     self.pickupAnnotation.coordinate = location;
-    [self.mapView addAnnotation:self.pickupAnnotation];
+    //[self.mapView addAnnotation:self.pickupAnnotation];
     if (self.destinationMapItem)
         [self generateRoute];
 }
@@ -142,6 +155,7 @@
 - (void)setDestination:(CLLocationCoordinate2D)location
 {
     self.destinationAnnotation.coordinate = location;
+    NSLog(@"Adding destination annotation");
     [self.mapView addAnnotation:self.destinationAnnotation];
     [self generateRoute];
     [self fitRegionToRoute];
@@ -152,42 +166,76 @@
     if (!self.mapView.userLocation)
         return;
     
-    MKCoordinateRegion region;
-    region.center = self.mapView.userLocation.location.coordinate;
+    if (!self.mapView.userLocation.location)
+        NSLog(@"Location not obtained just yet");
+        return;
+    
+    NSTimeInterval locationAgeInSeconds =
+    [[NSDate date] timeIntervalSinceDate:self.mapView.userLocation.location.timestamp];
+    if (locationAgeInSeconds > 300)  //adjust max age as needed
+    {
+        NSLog(@"location data is too old");
+        return;
+    }
+    
+    if (!CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate))
+    {
+        NSLog(@"userlocation coordinate is invalid");
+        return;
+    }
+    
+    //MKCoordinateRegion region;
+    //region.center = self.mapView.userLocation.location.coordinate;
 
     // Region to show when user clicks locate
-    region.span = MKCoordinateSpanMake(0.01, 0.01);
-    region = [self.mapView regionThatFits:region];
-    [self.mapView setRegion:region animated:YES];
+    //region.span = MKCoordinateSpanMake(0.01, 0.01);
+    //region = [self.mapView regionThatFits:region];
+    //[self.mapView setRegion:region animated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+    NSLog(@"1");
     if (!self.initialLocation)
     {
-        [self calculateLocationAddress];
-        self.initialLocation = userLocation.location;
-        
+        NSLog(@"2");
         MKCoordinateRegion region;
-        region.center = mapView.userLocation.coordinate;
-        
+        NSLog(@"3");
+        region.center = userLocation.coordinate;
+        NSLog(@"4");
         // Region to show when app is loaded
         region.span = MKCoordinateSpanMake(0.04, 0.04);
-        
+        NSLog(@"5");
         region = [mapView regionThatFits:region];
-        [mapView setRegion:region animated:YES];
-        // Set initial pickup location to current position
-        //[self setPickupLocation:self.mapView.userLocation.location.coordinate];
+        NSLog(@"6");
+        
+        if (!CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
+            //do nothing, invalid regions
+            NSLog(@"co-ord fail");
+        } else if (region.span.latitudeDelta <= 0.0 || region.span.longitudeDelta <= 0.0) {
+            NSLog(@"invalid reg");
+        } else {
+            [self calculateLocationAddress];
+            self.initialLocation = userLocation.location;
+            [mapView setRegion:region animated:YES];
+            NSLog(@"7");
+            // Set initial pickup location to current position
+            //[self setPickupLocation:self.mapView.userLocation.location.coordinate];
+        }
     }
 }
 
+/*
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[Vehicle class]]) {
+    NSLog(@"WE FUCKING GOT HERE");
+    if (![annotation isKindOfClass:[MKUserLocation class]]) {
+        NSLog(@"AND HERE");
         static NSString *identifier = @"TaxiLocation";
         MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            [annotationView setImage:[UIImage imageNamed:@"pin"]];
             annotationView.enabled = YES;
             annotationView.canShowCallout = YES;
         } else {
@@ -197,6 +245,7 @@
     }
     return nil;
 }
+*/
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"choosePickupLocation"]){

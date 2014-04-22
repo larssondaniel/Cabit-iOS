@@ -26,6 +26,9 @@
     [self.nameTextField setText:[defaults objectForKey:@"name"]];
     [self.phoneTextField setText:[defaults objectForKey:@"phoneNumber"]];
     NSLog(@"Reading name: %@", [defaults objectForKey:@"name"]);
+    
+    [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:14]];
+    [self.phoneTextField setFont:[UIFont fontWithName:@"OpenSans" size:14]];
 }
 
 #pragma mark - Table view data source

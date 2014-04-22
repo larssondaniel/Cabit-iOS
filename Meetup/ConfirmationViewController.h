@@ -10,8 +10,12 @@
 #import <MapKit/MapKit.h>
 
 #import "ADDropDownMenuView.h"
+#import "DialController.h"
 
-@interface ConfirmationViewController : UIViewController <ADDropDownMenuDelegate, MKMapViewDelegate>
+@interface ConfirmationViewController : UIViewController <ADDropDownMenuDelegate, MKMapViewDelegate, DialControllerDelegate>
+{
+    DialController *dc;
+}
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) MKMapItem *pickupMapItem;

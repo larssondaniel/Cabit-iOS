@@ -7,10 +7,12 @@
 //
 
 #import "ConfirmationViewController.h"
-#import "ADDropDownMenuView.h"
-#import "ADDropDownMenuItemView.h"
 #import "TaxiAnnotation.h"
 #import "Vehicle.h"
+#import "AnimatedCircleView.h"
+#import "DialController.h"
+#import "UIView+Glow.h"
+#import "DACircularProgressView.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -18,6 +20,15 @@
 
 @property (nonatomic, strong) MKPointAnnotation *taxiAnnotation;
 @property (nonatomic, retain) CLLocation *initialLocation;
+@property (strong, nonatomic) IBOutlet UIView *bottomView;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *plateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeStaticLabel;
+@property (strong, nonatomic) IBOutlet UILabel *plateStaticLabel;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
+@property (strong, nonatomic) IBOutlet UILabel *minLabel;
+@property (strong, nonatomic) AnimatedCircleView *circleView;
+@property (strong, nonatomic) IBOutlet UILabel *companyStaticLabel;
 
 @end
 
@@ -35,6 +46,17 @@
     [self.pickupAnnotation setCoordinate:self.pickupMapItem.placemark.coordinate];
     [self.destinationAnnotation setCoordinate:self.destinationMapItem.placemark.coordinate];
     
+    [self.bottomView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"resultBottomView"]]];
+    [self.cancelButton setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"blueButton"]]];
+
+    [self.timeLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.timeStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
+    [self.plateLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.plateStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
+    [self.companyStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
+    [self.minLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.cancelButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+
     //[self.mapView addAnnotation:self.destinationAnnotation];
     //[self.mapView addAnnotation:self.pickupAnnotation];
     
@@ -42,14 +64,53 @@
     
     self.taxiAnnotation = [[MKPointAnnotation alloc] init];
     
-    ADDropDownMenuItemView *item = [[ADDropDownMenuItemView alloc] initWithSize: CGSizeMake(320, 44)];
-    item.titleLabel.text = @"Beräknas vara framme om 12 minuter";
-    
-    ADDropDownMenuView *dropDownMenuView = [[ADDropDownMenuView alloc] initAtOrigin:CGPointMake(0, 64)
-                                                                     withItemsViews:@[item]];
-    dropDownMenuView.delegate = self;
-    
     [self displayTaxiPosition];
+    [self addCircle];
+
+    dc = [[DialController alloc] initWithDialFrame:CGRectMake(110, 31, 30, 28) strings:[NSArray arrayWithObjects:@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20", nil]];
+    //[self.bottomView addSubview:dc.view];
+    [dc setDelegate:self];
+    
+    NSTimer *timer;
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
+                                           selector:@selector(switchTime:) userInfo:nil repeats:NO];
+    NSTimer *timer2;
+    timer2 = [NSTimer scheduledTimerWithTimeInterval:5 target:self
+                                           selector:@selector(switchTime2:) userInfo:nil repeats:NO];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationWillResign)
+     name:UIApplicationWillResignActiveNotification
+     object:nil];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationDidBecomeActive)
+     name:UIApplicationDidBecomeActiveNotification
+     object:nil];
+}
+
+- (void)applicationWillResign
+{
+    NSLog(@"About to lose focus");
+    [self.circleView stop];
+}
+
+- (void)applicationDidBecomeActive
+{
+    NSLog(@"Got it again");
+    [self.circleView start];
+}
+
+- (void)switchTime:(NSTimer *)incomingTimer
+{
+    [dc spinToIndex:10];
+}
+
+- (void)switchTime2:(NSTimer *)incomingTimer
+{
+    [dc spinToIndex:9];
 }
 
 - (void)displayTaxiPosition
@@ -85,9 +146,9 @@
         MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            [annotationView setImage:[UIImage imageNamed:@"taxiAnnotation2"]];
+            [annotationView setImage:[UIImage imageNamed:@"cabIcon"]];
             annotationView.enabled = YES;
-            annotationView.canShowCallout = YES;
+            annotationView.canShowCallout = NO;
         } else {
             annotationView.annotation = annotation;
         }
@@ -128,6 +189,41 @@
         // [self createAndAddAnnotationForCoordinate:MKCoordinateForMapPoint(middlePoint)];
     }
     [self fitRegionToRoute];
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    NSLog(@"Overlay");
+    self.circleView = [[AnimatedCircleView alloc] initWithCircle:(MKCircle *)overlay];
+    return self.circleView;
+}
+
+-(void)addCircle{
+    CLLocationCoordinate2D location;
+    location = self.taxiAnnotation.coordinate;
+    
+    //add overlay
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:location radius:500]];
+    
+    //zoom into the location with the defined circle at the middle
+    [self zoomInto:location distance:(500 * 4.0) animated:YES];
+}
+
+- (void)zoomInto:(CLLocationCoordinate2D)zoomLocation distance:(CGFloat)distance animated:(BOOL)animated{
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, distance, distance);
+    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:viewRegion];
+    [self.mapView setRegion:adjustedRegion animated:animated];
+}
+
+- (void)dialController:(DialController *)dial didSnapToString:(NSString *)string
+{
+    
+}
+
+- (void)dialControllerDidSpin:(DialController *)controller
+{
+    
 }
 
 @end

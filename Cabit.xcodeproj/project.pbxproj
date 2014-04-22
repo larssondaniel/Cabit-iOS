@@ -10,6 +10,24 @@
 		6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B13E10718959AA7002E14BE /* ConfirmationViewController.m */; };
 		6B13E10B1895C9F7002E14BE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E1091895C9F7002E14BE /* logo.png */; };
 		6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B13E10A1895C9F7002E14BE /* logo@2x.png */; };
+		6B1B162F18E2121400CACBDA /* resultBottomView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B162E18E2121400CACBDA /* resultBottomView@2x.png */; };
+		6B1B163118E2130500CACBDA /* resultBottomView.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B163018E2130500CACBDA /* resultBottomView.png */; };
+		6B1B163418E22C9700CACBDA /* cabIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B163218E22C9700CACBDA /* cabIcon.png */; };
+		6B1B163518E22C9700CACBDA /* cabIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B163318E22C9700CACBDA /* cabIcon@2x.png */; };
+		6B1B163818E2380600CACBDA /* AnimatedCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B163718E2380600CACBDA /* AnimatedCircleView.m */; };
+		6B1B163D18E24BFE00CACBDA /* redCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B163C18E24BFE00CACBDA /* redCircle@2x.png */; };
+		6B1B164018E2E0B100CACBDA /* DialController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B163F18E2E0B100CACBDA /* DialController.m */; };
+		6B1B164318E2E0F900CACBDA /* GlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B164218E2E0F900CACBDA /* GlowLabel.m */; };
+		6B1B164518E35F6B00CACBDA /* pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B164418E35F6B00CACBDA /* pin@2x.png */; };
+		6B47958019017B780007E874 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B47957D19017B780007E874 /* DACircularProgressView.m */; };
+		6B47958119017B780007E874 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B47957F19017B780007E874 /* DALabeledCircularProgressView.m */; };
+		6B479584190192510007E874 /* BBCyclingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B479583190192510007E874 /* BBCyclingLabel.m */; };
+		6B479587190193020007E874 /* AlternativeConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B479586190193020007E874 /* AlternativeConfirmationViewController.m */; };
+		6B4795B0190197EF0007E874 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4795AF190197EF0007E874 /* UIImage+animatedGIF.m */; };
+		6B4795B419019A710007E874 /* loading@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6B4795B319019A710007E874 /* loading@2x.gif */; };
+		6B4795B819019F600007E874 /* loading_new.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6B4795B719019F600007E874 /* loading_new.gif */; };
+		6B4795BA19019F8B0007E874 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4795B919019F8B0007E874 /* ImageIO.framework */; };
+		6B4795BC1901D4C70007E874 /* redDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B4795BB1901D4C70007E874 /* redDot@2x.png */; };
 		6B85A3E118D35C9700158849 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B85A3E018D35C9700158849 /* UIView+Glow.m */; };
 		6B85A3E318D3AA1600158849 /* bottomGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */; };
 		6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BE918C20100008D0BD9 /* bouncingCircle.png */; };
@@ -89,6 +107,33 @@
 		6B13E10718959AA7002E14BE /* ConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationViewController.m; sourceTree = "<group>"; };
 		6B13E1091895C9F7002E14BE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Graphics/logo.png; sourceTree = "<group>"; };
 		6B13E10A1895C9F7002E14BE /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "Graphics/logo@2x.png"; sourceTree = "<group>"; };
+		6B1B162E18E2121400CACBDA /* resultBottomView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resultBottomView@2x.png"; path = "Graphics/resultBottomView@2x.png"; sourceTree = "<group>"; };
+		6B1B163018E2130500CACBDA /* resultBottomView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resultBottomView.png; path = Graphics/resultBottomView.png; sourceTree = "<group>"; };
+		6B1B163218E22C9700CACBDA /* cabIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cabIcon.png; path = Graphics/cabIcon.png; sourceTree = "<group>"; };
+		6B1B163318E22C9700CACBDA /* cabIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cabIcon@2x.png"; path = "Graphics/cabIcon@2x.png"; sourceTree = "<group>"; };
+		6B1B163618E2380600CACBDA /* AnimatedCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedCircleView.h; sourceTree = "<group>"; };
+		6B1B163718E2380600CACBDA /* AnimatedCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedCircleView.m; sourceTree = "<group>"; };
+		6B1B163C18E24BFE00CACBDA /* redCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redCircle@2x.png"; path = "Graphics/redCircle@2x.png"; sourceTree = "<group>"; };
+		6B1B163E18E2E0B100CACBDA /* DialController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialController.h; sourceTree = "<group>"; };
+		6B1B163F18E2E0B100CACBDA /* DialController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialController.m; sourceTree = "<group>"; };
+		6B1B164118E2E0F900CACBDA /* GlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowLabel.h; sourceTree = "<group>"; };
+		6B1B164218E2E0F900CACBDA /* GlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlowLabel.m; sourceTree = "<group>"; };
+		6B1B164418E35F6B00CACBDA /* pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin@2x.png"; path = "Graphics/pin@2x.png"; sourceTree = "<group>"; };
+		6B1B164618E35F6B00CACBDA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6B47957C19017B780007E874 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		6B47957D19017B780007E874 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		6B47957E19017B780007E874 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
+		6B47957F19017B780007E874 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
+		6B479582190192510007E874 /* BBCyclingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBCyclingLabel.h; sourceTree = "<group>"; };
+		6B479583190192510007E874 /* BBCyclingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBCyclingLabel.m; sourceTree = "<group>"; };
+		6B479585190193020007E874 /* AlternativeConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlternativeConfirmationViewController.h; sourceTree = "<group>"; };
+		6B479586190193020007E874 /* AlternativeConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlternativeConfirmationViewController.m; sourceTree = "<group>"; };
+		6B4795AE190197EF0007E874 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		6B4795AF190197EF0007E874 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		6B4795B319019A710007E874 /* loading@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading@2x.gif"; sourceTree = "<group>"; };
+		6B4795B719019F600007E874 /* loading_new.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading_new.gif; sourceTree = "<group>"; };
+		6B4795B919019F8B0007E874 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		6B4795BB1901D4C70007E874 /* redDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redDot@2x.png"; path = "Graphics/redDot@2x.png"; sourceTree = "<group>"; };
 		6B85A3DF18D35C9700158849 /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
 		6B85A3E018D35C9700158849 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
 		6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottomGradient@2x.png"; path = "Graphics/bottomGradient@2x.png"; sourceTree = "<group>"; };
@@ -174,6 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B4795BA19019F8B0007E874 /* ImageIO.framework in Frameworks */,
 				6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */,
 				6BABF541183AA2BD00A6988B /* MapKit.framework in Frameworks */,
 				6BABF50E183A9EB900A6988B /* CoreGraphics.framework in Frameworks */,
@@ -238,8 +284,16 @@
 				6BABF521183A9EB900A6988B /* MainViewController.m */,
 				6B13E10618959AA7002E14BE /* ConfirmationViewController.h */,
 				6B13E10718959AA7002E14BE /* ConfirmationViewController.m */,
+				6B479585190193020007E874 /* AlternativeConfirmationViewController.h */,
+				6B479586190193020007E874 /* AlternativeConfirmationViewController.m */,
+				6B1B163618E2380600CACBDA /* AnimatedCircleView.h */,
+				6B1B163718E2380600CACBDA /* AnimatedCircleView.m */,
 				6BF15A4F18C3811100183C52 /* SettingsViewController.h */,
 				6BF15A5018C3811100183C52 /* SettingsViewController.m */,
+				6B1B163E18E2E0B100CACBDA /* DialController.h */,
+				6B1B163F18E2E0B100CACBDA /* DialController.m */,
+				6B1B164118E2E0F900CACBDA /* GlowLabel.h */,
+				6B1B164218E2E0F900CACBDA /* GlowLabel.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -247,6 +301,14 @@
 		6BA8932018C652E100CA099A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6B4795AE190197EF0007E874 /* UIImage+animatedGIF.h */,
+				6B4795AF190197EF0007E874 /* UIImage+animatedGIF.m */,
+				6B479582190192510007E874 /* BBCyclingLabel.h */,
+				6B479583190192510007E874 /* BBCyclingLabel.m */,
+				6B47957C19017B780007E874 /* DACircularProgressView.h */,
+				6B47957D19017B780007E874 /* DACircularProgressView.m */,
+				6B47957E19017B780007E874 /* DALabeledCircularProgressView.h */,
+				6B47957F19017B780007E874 /* DALabeledCircularProgressView.m */,
 				6BA8930418C3D0C500CA099A /* SettingsCell.h */,
 				6BA8930518C3D0C500CA099A /* SettingsCell.m */,
 				6BA6136018B3ED0F00B61A6E /* TaxiAnnotation.h */,
@@ -288,6 +350,8 @@
 		6BABF50A183A9EB900A6988B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6B4795B919019F8B0007E874 /* ImageIO.framework */,
+				6B1B164618E35F6B00CACBDA /* CoreLocation.framework */,
 				6BA6135718AE471500B61A6E /* QuartzCore.framework */,
 				6BABF540183AA2BD00A6988B /* MapKit.framework */,
 				6BABF50B183A9EB900A6988B /* Foundation.framework */,
@@ -352,6 +416,15 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6B4795BB1901D4C70007E874 /* redDot@2x.png */,
+				6B4795B719019F600007E874 /* loading_new.gif */,
+				6B4795B319019A710007E874 /* loading@2x.gif */,
+				6B1B164418E35F6B00CACBDA /* pin@2x.png */,
+				6B1B163C18E24BFE00CACBDA /* redCircle@2x.png */,
+				6B1B163218E22C9700CACBDA /* cabIcon.png */,
+				6B1B163318E22C9700CACBDA /* cabIcon@2x.png */,
+				6B1B163018E2130500CACBDA /* resultBottomView.png */,
+				6B1B162E18E2121400CACBDA /* resultBottomView@2x.png */,
 				6BAA75D418DF404B00898045 /* Default@2x.png */,
 				6BAA75D118DA533E00898045 /* blueButton@2x.png */,
 				6BAA75CF18DA516500898045 /* bottomView@2x.png */,
@@ -478,20 +551,26 @@
 				6BAA75CE18DA4EEA00898045 /* OpenSans-Semibold.ttf in Resources */,
 				6BAA75D218DA533E00898045 /* blueButton@2x.png in Resources */,
 				6BABF54B183AA7A500A6988B /* Profile@2x.png in Resources */,
+				6B4795B819019F600007E874 /* loading_new.gif in Resources */,
 				6BF15A5518C3849900183C52 /* name@2x.png in Resources */,
 				6BABDCB0187EF4ED00F15E8B /* callout.png in Resources */,
 				6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */,
 				6BB2DDA6184D3FDC00BBA9A8 /* taxiGoteborgNy.png in Resources */,
 				6BB2DD86183EDA5400BBA9A8 /* taxiKurir.png in Resources */,
+				6B4795B419019A710007E874 /* loading@2x.gif in Resources */,
 				6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */,
+				6B1B162F18E2121400CACBDA /* resultBottomView@2x.png in Resources */,
 				6BAA75CD18DA4EEA00898045 /* OpenSans-Regular.ttf in Resources */,
 				6BB2DDA2184D3D8100BBA9A8 /* taxiKurirNy.png in Resources */,
+				6B1B164518E35F6B00CACBDA /* pin@2x.png in Resources */,
 				6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */,
+				6B1B163D18E24BFE00CACBDA /* redCircle@2x.png in Resources */,
 				6BA613BC18BD1BFA00B61A6E /* time@2x.png in Resources */,
 				6BA613BF18BD720200B61A6E /* taxiAnnotation2.png in Resources */,
 				6BA613BB18BD1BFA00B61A6E /* time.png in Resources */,
 				6BA613B818BD0F4C00B61A6E /* taxiAnnotation@2x.png in Resources */,
 				6BAA75CC18DA4EEA00898045 /* OpenSans-Light.ttf in Resources */,
+				6B1B163518E22C9700CACBDA /* cabIcon@2x.png in Resources */,
 				6BA6135F18AE7A4E00B61A6E /* settings@2x.png in Resources */,
 				6BB2DD9C1848039000BBA9A8 /* Arrow@2x.png in Resources */,
 				6BABF524183A9EB900A6988B /* Images.xcassets in Resources */,
@@ -501,6 +580,7 @@
 				6BF15A5818C3868400183C52 /* phone.png in Resources */,
 				6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */,
 				6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */,
+				6B1B163418E22C9700CACBDA /* cabIcon.png in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
 				6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */,
 				6BAA75D518DF404B00898045 /* Default@2x.png in Resources */,
@@ -508,6 +588,8 @@
 				6BF15A5418C3849900183C52 /* name.png in Resources */,
 				6BABF51F183A9EB900A6988B /* Main.storyboard in Resources */,
 				6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */,
+				6B4795BC1901D4C70007E874 /* redDot@2x.png in Resources */,
+				6B1B163118E2130500CACBDA /* resultBottomView.png in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
 				6BF15A5918C3868400183C52 /* phone@2x.png in Resources */,
 				6B85A3E318D3AA1600158849 /* bottomGradient@2x.png in Resources */,
@@ -562,18 +644,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B479584190192510007E874 /* BBCyclingLabel.m in Sources */,
 				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* MainViewController.m in Sources */,
 				6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */,
+				6B47958119017B780007E874 /* DALabeledCircularProgressView.m in Sources */,
 				6BAA75C218DA18F900898045 /* easing.c in Sources */,
+				6B479587190193020007E874 /* AlternativeConfirmationViewController.m in Sources */,
+				6B1B163818E2380600CACBDA /* AnimatedCircleView.m in Sources */,
 				6BA8930A18C3E30200CA099A /* SettingsHelper.m in Sources */,
 				6BA8930618C3D0C500CA099A /* SettingsCell.m in Sources */,
 				6BB2DDAD184F395100BBA9A8 /* SearchPickupViewController.m in Sources */,
+				6B1B164018E2E0B100CACBDA /* DialController.m in Sources */,
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,
 				6B85A3E118D35C9700158849 /* UIView+Glow.m in Sources */,
+				6B47958019017B780007E874 /* DACircularProgressView.m in Sources */,
 				6BA6136218B3ED0F00B61A6E /* TaxiAnnotation.m in Sources */,
+				6B1B164318E2E0F900CACBDA /* GlowLabel.m in Sources */,
+				6B4795B0190197EF0007E874 /* UIImage+animatedGIF.m in Sources */,
 				6BAA75C118DA18F900898045 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
 			);

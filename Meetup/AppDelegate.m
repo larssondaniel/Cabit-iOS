@@ -12,10 +12,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UILabel appearance] setFont:[UIFont fontWithName:@"OpenSans" size:14]];
-    
-    [[[UIButton appearance] titleLabel] setFont:[UIFont fontWithName:@"OpenSans" size:14]];
-    
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:@"OpenSans" size:14]];
 
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];

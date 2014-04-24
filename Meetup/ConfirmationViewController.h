@@ -11,16 +11,14 @@
 
 #import "ADDropDownMenuView.h"
 #import "DialController.h"
+#import "PickupAnnotation.h"
 
-@interface ConfirmationViewController : UIViewController <ADDropDownMenuDelegate, MKMapViewDelegate, DialControllerDelegate>
-{
-    DialController *dc;
-}
+@interface ConfirmationViewController : UIViewController <ADDropDownMenuDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) MKMapItem *pickupMapItem;
 @property (nonatomic, strong) MKMapItem *destinationMapItem;
 @property (nonatomic, strong) MKPointAnnotation *destinationAnnotation;
-@property (nonatomic, strong) MKPointAnnotation *pickupAnnotation;
+@property (nonatomic, strong) PickupAnnotation *pickupAnnotation;
 
 @end

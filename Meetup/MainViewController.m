@@ -8,7 +8,6 @@
 
 #import "MainViewController.h"
 #import "Vehicle.h"
-#import "SIAlertView.h"
 #import "ConfirmationViewController.h"
 #import "TWMessageBarManager.h"
 #import "UIView+Glow.h"
@@ -28,19 +27,17 @@
 @property (strong, nonatomic) IBOutlet UIButton *searchPickupButton;
 @property (strong, nonatomic) IBOutlet UIButton *searchDestinationButton;
 
-@property (nonatomic, strong) SIAlertView *searchingAlertView;
-@property (strong, nonatomic) IBOutlet UIView *numberOfCabsView;
 @property (strong, nonatomic) IBOutlet UIButton *bouncingCone;
 @property (strong, nonatomic) IBOutlet UIView *animatedBottomView;
-@property (strong, nonatomic) IBOutlet UIView *pickupView;
-@property (strong, nonatomic) IBOutlet UIView *destinationView;
 @property (strong, nonatomic) IBOutlet UIButton *pickupLabel;
 @property (strong, nonatomic) IBOutlet UILabel *pickupStaticLabel;
-@property (strong, nonatomic) IBOutlet UIView *pickupViewWithImage;
-@property (strong, nonatomic) IBOutlet UIView *destinationViewWithImage;
 @property (strong, nonatomic) IBOutlet UILabel *destinationStaticLabel;
 @property (strong, nonatomic) IBOutlet UIButton *destinationLabel;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *locateIndicator;
+@property (strong, nonatomic) IBOutlet UIView *pickupView;
+@property (strong, nonatomic) IBOutlet UIView *destinationView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewTopConstraint;
+@property (strong, nonatomic) IBOutlet UIButton *continueButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic) bool isShowingDestinaion;
 @property (nonatomic) bool shouldAnimateBottomView;
@@ -55,7 +52,6 @@
 
     [self.mapView setDelegate:self];
     [self.mapView addSubview:self.searchView];
-    [self.mapView addSubview:self.numberOfCabsView];
     
     self.shouldAnimateBottomView = NO;
     
@@ -74,34 +70,27 @@
     //bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
     //                                      selector:@selector(bounce) userInfo:nil repeats:YES];
     
-    [self.pickupView startGlowingWithColor:[self.searchDestinationButton backgroundColor] intensity:0.7];
-    
-    [self.animatedBottomView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomGradient"]]];
-    [self.pickupViewWithImage setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomView"]]];
-    [self.destinationViewWithImage setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomView"]]];
-    [self.pickupView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomView"]]];
-    [self.destinationView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bottomView"]]];
-    [self.searchDestinationButton setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"blueButton"]]];
+    //[self.pickupView startGlowingWithColor:[self.searchDestinationButton backgroundColor] intensity:0.7];
+
     [self setIsShowingDestinaion:NO];
-    [self.pickupLabel.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
-    [self.pickupStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:11]];
+    /*[self.pickupLabel.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.pickupStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
     
-    [self.destinationLabel.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
-    [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:11]];
+    [self.destinationLabel.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
     
     [self.searchDestinationButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    */
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"OpenSans" size:21],
       NSFontAttributeName, nil]];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    if (self.shouldAnimateBottomView)
-        [self animateBottomView];
+    
+    // Doing this in the storyboard magically crashes the app somehow.
+    [self.destinationView setAlpha:0.85];
+    
+    [self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -112,6 +101,23 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     self.mapView.delegate = nil;
+}
+
+-(void)setFontFamily:(NSString*)fontFamily forView:(UIView*)view andSubViews:(BOOL)isSubViews
+{
+    if ([view isKindOfClass:[UILabel class]])
+    {
+        UILabel *lbl = (UILabel *)view;
+        [lbl setFont:[UIFont fontWithName:fontFamily size:[[lbl font] pointSize]]];
+    }
+    
+    if (isSubViews)
+    {
+        for (UIView *sview in view.subviews)
+        {
+            [self setFontFamily:fontFamily forView:sview andSubViews:YES];
+        }
+    }
 }
 
 - (void)setInitialPickupAddress
@@ -132,21 +138,24 @@
 
 - (void)calculateLocationAddress
 {
+    [self.activityIndicator startAnimating];
     [self.geoCoder reverseGeocodeLocation:self.mapView.userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
         
         // NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
         
         [self.pickupLabel setTitle:[placemark.addressDictionary valueForKey:@"Name"] forState:UIControlStateNormal];
-        [self.locateIndicator stopAnimating];
+        [self.activityIndicator stopAnimating];
         [self setPickupMapItem:[[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithPlacemark:placemark]]];
         [self setPickupLocation:placemark.location.coordinate];
+        [self animateBottomView];
     }];
 }
 
 - (void)setPickupLocation:(CLLocationCoordinate2D)location
 {
     self.pickupAnnotation.coordinate = location;
+    NSLog(@"Setting pickup location!!!");
     //[self.mapView addAnnotation:self.pickupAnnotation];
     if (self.destinationMapItem)
         [self generateRoute];
@@ -229,13 +238,13 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     NSLog(@"WE FUCKING GOT HERE");
-    if (![annotation isKindOfClass:[MKUserLocation class]]) {
+    if (![annotation isKindOfClass:[PickupAnnotation class]]) {
         NSLog(@"AND HERE");
-        static NSString *identifier = @"TaxiLocation";
+        static NSString *identifier = @"Pickup";
         MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            [annotationView setImage:[UIImage imageNamed:@"pin"]];
+            [annotationView setImage:[UIImage imageNamed:@"dot-circle"]];
             annotationView.enabled = YES;
             annotationView.canShowCallout = YES;
         } else {
@@ -261,7 +270,7 @@
             CLLocationCoordinate2D myCoord = {self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.longitude};
             [self setPickupLocation:myCoord];
         }
-    } else if([segue.identifier isEqualToString:@"displayConfirmation"]){
+    } else if([segue.identifier isEqualToString:@"confirmationSegue"]){
         ConfirmationViewController *controller = (ConfirmationViewController *)segue.destinationViewController;
         controller.pickupMapItem = self.pickupMapItem;
         controller.destinationMapItem = self.destinationMapItem;
@@ -281,6 +290,7 @@
     [self setDestination:item.placemark.location.coordinate];
     [self.destinationLabel setTitle:item.name forState:UIControlStateNormal];
     self.shouldAnimateBottomView = YES;
+    [self.continueButton setEnabled:YES];
 }
 
 # pragma mark Directions
@@ -345,70 +355,6 @@
     NSLog(@"This just happened");
 }
 
-/*
-- (void) showFirstAlertView {
-    
-    // Check if pickup adress is far away, in that case print the distance from the user (for security)
-    
-    NSString *message = [NSString stringWithFormat:@"Vill du boka en taxi från %@ till %@?", [[self.searchPickupButton titleLabel] text], [[self.searchDestinationButton titleLabel] text]];
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Bekräfta" andMessage:message];
-    
-    [alertView addButtonWithTitle:@"Ja, boka!"
-                             type:SIAlertViewButtonTypeDefault
-                          handler:^(SIAlertView *alert) {
-                              [self showSecondAlertView];
-                              //[alert setMessage:@"Letar efter närmsta taxibil. Detta kan ta ett par minuter"];
-                          }];
-    [alertView addButtonWithTitle:@"Avbryt"
-                             type:SIAlertViewButtonTypeDestructive
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Button2 Clicked");
-                          }];
-    
-    alertView.willShowHandler = ^(SIAlertView *alertView) {
-    };
-    alertView.didShowHandler = ^(SIAlertView *alertView) {
-    };
-    alertView.willDismissHandler = ^(SIAlertView *alertView) {
-    };
-    alertView.didDismissHandler = ^(SIAlertView *alertView) {
-    };
-    
-    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-    
-    [alertView show];
-}
-*/
-
-- (void) showAlertView {
-    NSString *message = [NSString stringWithFormat:@"Din förfrågan skickas just nu till taxibilar i närheten, detta kan ta ett par minuter."];
-    self.searchingAlertView = [[SIAlertView alloc] initWithTitle:@"Var god vänta" andMessage:message];
-    
-    NSTimer *timer;
-    timer = [NSTimer scheduledTimerWithTimeInterval:8.0 target:self
-                                            selector:@selector(findTaxi:) userInfo:nil repeats:NO];
-    
-    [self.searchingAlertView addButtonWithTitle:@"Avbryt"
-                             type:SIAlertViewButtonTypeDestructive
-                          handler:^(SIAlertView *alert) {
-                              [timer invalidate];
-                          }];
-    
-    self.searchingAlertView.willShowHandler = ^(SIAlertView *alertView) {
-    };
-    self.searchingAlertView.didShowHandler = ^(SIAlertView *alertView) {
-    };
-    self.searchingAlertView.willDismissHandler = ^(SIAlertView *alertView) {
-    };
-    self.searchingAlertView.didDismissHandler = ^(SIAlertView *alertView) {
-        [timer invalidate];
-    };
-    
-    self.searchingAlertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-    
-    [self.searchingAlertView show];
-}
-
 - (void) updateActivityIndicator:(NSTimer *)incomingTimer
 {
     if ([incomingTimer userInfo] != nil) {
@@ -421,12 +367,20 @@
     }
 }
 
-- (void) findTaxi:(NSTimer *)incomingTimer {
-    [self.searchingAlertView dismissAnimated:YES];
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Bokning genomförd!"
+- (void) findTaxi
+{
+    /*[[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Bokning genomförd!"
                                                    description:@"En taxi är på väg."
                                                           type:TWMessageBarMessageTypeSuccess];
-    [self performSegueWithIdentifier: @"displayConfirmation" sender: self];
+     */
+    //[self performSegueWithIdentifier: @"displayConfirmation" sender: self];
+}
+
+- (IBAction)clickedChooseDestination:(id)sender {
+    if (!self.isShowingDestinaion) {
+        [self performSegueWithIdentifier:@"chooseDestination" sender:self];
+    } else {
+    }
 }
 
 #pragma Animation
@@ -463,40 +417,19 @@
 	[self.bouncingCone.layer addAnimation:animation forKey:@"jumping"];
 }
 
-- (IBAction)clickedChooseDestination:(id)sender {
-    if (!self.isShowingDestinaion) {
-        [self performSegueWithIdentifier:@"chooseDestination" sender:self];
-    } else {
-        [self showAlertView];
-    }
-}
-
 - (void)animateBottomView
 {
+    NSLog(@"Animating");
     [self setIsShowingDestinaion:YES];
-    [self.destinationView startGlowingWithColor:[self.searchDestinationButton backgroundColor] intensity:0.7];
-    CGAffineTransform transform = CGAffineTransformMakeTranslation(0, -140);
-    //[UIView animateWithDuration:0.3
-    //                 animations:^{
-    //                     self.animatedBottomView.transform = transform;
-    //                 }];
-    [self.searchDestinationButton setTitle:@"BOKA" forState:UIControlStateNormal];
-    [self.pickupView stopGlowing];
-    [self.pickupLabel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     
-    CALayer *layer = self.animatedBottomView.layer;
-    [CATransaction begin];
-    [CATransaction setValue:[NSNumber numberWithFloat:0.200] forKey:kCATransactionAnimationDuration];
-    
-    CAAnimation *chase = [CAKeyframeAnimation animationWithKeyPath:@"position"
-                                                          function:ExponentialEaseIn
-                                                         fromPoint:self.animatedBottomView.center
-                                                           toPoint:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y-70)];
-    [chase setDelegate:self];
-    [layer addAnimation:chase forKey:@"position"];
-    
-    [CATransaction commit];
-    [self.animatedBottomView setCenter:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y-70)];
+    CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y) toPoint:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y - 60)];
+    animation.duration = 1;
+    [self.animatedBottomView.layer addAnimation:animation forKey:@"easing"];
+    [self.animatedBottomView setCenter:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y - 60)];
+    [self.animatedBottomView setFrame:CGRectMake(0, 370, 320, 120)];
+    [self.bottomViewTopConstraint setConstant:370];
+    [self.view layoutIfNeeded];
+
     self.shouldAnimateBottomView = NO;
 }
 

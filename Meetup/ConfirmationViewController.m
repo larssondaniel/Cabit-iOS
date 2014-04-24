@@ -7,28 +7,26 @@
 //
 
 #import "ConfirmationViewController.h"
-#import "TaxiAnnotation.h"
 #import "Vehicle.h"
-#import "AnimatedCircleView.h"
 #import "DialController.h"
 #import "UIView+Glow.h"
 #import "DACircularProgressView.h"
+#import "BBCyclingLabel.h"
+#import "CAKeyframeAnimation+AHEasing.h"
 
 #import <CoreLocation/CoreLocation.h>
 
 @interface ConfirmationViewController ()
 
-@property (nonatomic, strong) MKPointAnnotation *taxiAnnotation;
 @property (nonatomic, retain) CLLocation *initialLocation;
 @property (strong, nonatomic) IBOutlet UIView *bottomView;
-@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *plateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeStaticLabel;
-@property (strong, nonatomic) IBOutlet UILabel *plateStaticLabel;
-@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
-@property (strong, nonatomic) IBOutlet UILabel *minLabel;
-@property (strong, nonatomic) AnimatedCircleView *circleView;
 @property (strong, nonatomic) IBOutlet UILabel *companyStaticLabel;
+@property (strong, nonatomic) IBOutlet UILabel *priceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *staticPriceLabel;
+@property (strong, nonatomic) IBOutlet UIView *statusView;
+@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *statusImage;
 
 @end
 
@@ -40,91 +38,71 @@
     
     [self.mapView setDelegate:self];
     
-    self.pickupAnnotation = [[MKPointAnnotation alloc] init];
+    self.pickupAnnotation = [[PickupAnnotation alloc] initWithCoordinates:self.pickupMapItem.placemark.coordinate];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
-    
-    [self.pickupAnnotation setCoordinate:self.pickupMapItem.placemark.coordinate];
     [self.destinationAnnotation setCoordinate:self.destinationMapItem.placemark.coordinate];
     
-    [self.bottomView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"resultBottomView"]]];
-    [self.cancelButton setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"blueButton"]]];
+    [self setFontFamily:@"OpenSans-Semibold" forView:self.view andSubViews:YES];
+    [self.priceLabel setFont:[UIFont fontWithName:@"OpenSans-Semibold" size:[[self.priceLabel font] pointSize]]];
+    [self.staticPriceLabel setFont:[UIFont fontWithName:@"OpenSans-Semibold" size:[[self.staticPriceLabel font] pointSize]]];
 
-    [self.timeLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
-    [self.timeStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
-    [self.plateLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
-    [self.plateStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
-    [self.companyStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:10]];
-    [self.minLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
-    [self.cancelButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.mapView addAnnotation:self.destinationAnnotation];
+    [self.mapView addAnnotation:self.pickupAnnotation];
+    
+    [self generateRoute];
+    
+    CGRect statusFrame = CGRectMake(76, 29, 224, 40);
+    
+    BBCyclingLabel* label = [[BBCyclingLabel alloc] initWithFrame:statusFrame];
+    [label setNumberOfLines:2];
+    [label setFont:[UIFont fontWithName:@"OpenSans" size:14]];
+    [label setTextColor:[UIColor whiteColor]];
+    [self.statusView addSubview:label];
+    label.transitionEffect = BBCyclingLabelTransitionEffectScaleFadeIn;
+    label.transitionDuration = 0.3;
+    [label setText:@"Söker efter bilar i närheten..." animated:NO];
 
-    //[self.mapView addAnnotation:self.destinationAnnotation];
-    //[self.mapView addAnnotation:self.pickupAnnotation];
+    int64_t delayInSeconds = 5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     
-    [self.navigationController.navigationBar.backItem setTitle:@"Tillbaka"];
-    
-    self.taxiAnnotation = [[MKPointAnnotation alloc] init];
-    
-    [self displayTaxiPosition];
-    [self addCircle];
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.statusView glowOnce];
+        [label setText:@"En bil från Taxi Göteborg är på väg till upphämnintsplatsen" animated:YES];
+        
+        CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
+        animation.duration = 1.0;
+        [self.statusImage.layer addAnimation:animation forKey:@"easing"];
+        [self.statusImage setCenter:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
+        
+        int64_t delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+            animation.duration = 1.0;
+            [self.statusImage.layer addAnimation:animation forKey:@"easing"];
+            [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
 
-    dc = [[DialController alloc] initWithDialFrame:CGRectMake(110, 31, 30, 28) strings:[NSArray arrayWithObjects:@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20", nil]];
-    //[self.bottomView addSubview:dc.view];
-    [dc setDelegate:self];
-    
-    NSTimer *timer;
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
-                                           selector:@selector(switchTime:) userInfo:nil repeats:NO];
-    NSTimer *timer2;
-    timer2 = [NSTimer scheduledTimerWithTimeInterval:5 target:self
-                                           selector:@selector(switchTime2:) userInfo:nil repeats:NO];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(applicationWillResign)
-     name:UIApplicationWillResignActiveNotification
-     object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(applicationDidBecomeActive)
-     name:UIApplicationDidBecomeActiveNotification
-     object:nil];
+        });
+
+    });
 }
 
-- (void)applicationWillResign
+-(void)setFontFamily:(NSString*)fontFamily forView:(UIView*)view andSubViews:(BOOL)isSubViews
 {
-    NSLog(@"About to lose focus");
-    [self.circleView stop];
-}
-
-- (void)applicationDidBecomeActive
-{
-    NSLog(@"Got it again");
-    [self.circleView start];
-}
-
-- (void)switchTime:(NSTimer *)incomingTimer
-{
-    [dc spinToIndex:10];
-}
-
-- (void)switchTime2:(NSTimer *)incomingTimer
-{
-    [dc spinToIndex:9];
-}
-
-- (void)displayTaxiPosition
-{
-    CLLocationCoordinate2D coordinate;
-    coordinate.latitude = 57.697107;
-    coordinate.longitude = 11.970205;
+    if ([view isKindOfClass:[UILabel class]])
+    {
+        UILabel *lbl = (UILabel *)view;
+        [lbl setFont:[UIFont fontWithName:fontFamily size:[[lbl font] pointSize]]];
+    }
     
-    self.taxiAnnotation.coordinate = coordinate;
-    [self.taxiAnnotation setTitle:@"Taxi Göteborg"];
-    [self.taxiAnnotation setSubtitle:@"ABC-123"];
-    [self.mapView addAnnotation:self.taxiAnnotation];
-    [self.mapView selectAnnotation:self.taxiAnnotation animated:YES];
-    [self fitRegionToRoute];
+    if (isSubViews)
+    {
+        for (UIView *sview in view.subviews)
+        {
+            [self setFontFamily:fontFamily forView:sview andSubViews:YES];
+        }
+    }
 }
 
 - (void) fitRegionToRoute {
@@ -141,12 +119,12 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
-        static NSString *identifier = @"TaxiAnnotation";
+    if ([annotation isKindOfClass:[PickupAnnotation class]]) {
+        static NSString *identifier = @"PickupAnnotation";
         MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            [annotationView setImage:[UIImage imageNamed:@"cabIcon"]];
+            [annotationView setImage:[UIImage imageNamed:@"dot-circle"]];
             annotationView.enabled = YES;
             annotationView.canShowCallout = NO;
         } else {
@@ -185,28 +163,25 @@
     for (MKRoute *route in response.routes)
     {
         [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-        // MKMapPoint middlePoint = route.polyline.points[route.polyline.pointCount/2];
-        // [self createAndAddAnnotationForCoordinate:MKCoordinateForMapPoint(middlePoint)];
     }
-    [self fitRegionToRoute];
+    [self beginZoomAnimation];
 }
 
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+- (void)beginZoomAnimation
 {
-    NSLog(@"Overlay");
-    self.circleView = [[AnimatedCircleView alloc] initWithCircle:(MKCircle *)overlay];
-    return self.circleView;
-}
-
--(void)addCircle{
-    CLLocationCoordinate2D location;
-    location = self.taxiAnnotation.coordinate;
+    [self fitRegionToRoute];
     
-    //add overlay
-    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:location radius:500]];
+    MKCoordinateRegion mapRegion;
+    mapRegion.center = self.pickupAnnotation.coordinate;
+    mapRegion.span.latitudeDelta = 0.002;
+    mapRegion.span.longitudeDelta = 0.002;
     
-    //zoom into the location with the defined circle at the middle
-    [self zoomInto:location distance:(500 * 4.0) animated:YES];
+    int64_t delayInSeconds = 2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.mapView setRegion:mapRegion animated: YES];
+    });
 }
 
 - (void)zoomInto:(CLLocationCoordinate2D)zoomLocation distance:(CGFloat)distance animated:(BOOL)animated{
@@ -216,14 +191,11 @@
     [self.mapView setRegion:adjustedRegion animated:animated];
 }
 
-- (void)dialController:(DialController *)dial didSnapToString:(NSString *)string
-{
-    
+- (IBAction)cancelReservation:(id)sender {
+    [self.statusView glowOnce];
 }
 
-- (void)dialControllerDidSpin:(DialController *)controller
-{
-    
+- (IBAction)back {
 }
 
 @end

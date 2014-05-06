@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B992930CEE1B477E885E8FDD"
+               BlueprintIdentifier = "14A066148E4242A0AC322F6D"
                BuildableName = "libPods-ADDropDownMenuView.a"
                BlueprintName = "Pods-ADDropDownMenuView"
                ReferencedContainer = "container:Pods.xcodeproj">

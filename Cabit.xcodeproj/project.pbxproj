@@ -19,8 +19,6 @@
 		6B1B164018E2E0B100CACBDA /* DialController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B163F18E2E0B100CACBDA /* DialController.m */; };
 		6B1B164318E2E0F900CACBDA /* GlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B164218E2E0F900CACBDA /* GlowLabel.m */; };
 		6B1B164518E35F6B00CACBDA /* pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B164418E35F6B00CACBDA /* pin@2x.png */; };
-		6B47958019017B780007E874 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B47957D19017B780007E874 /* DACircularProgressView.m */; };
-		6B47958119017B780007E874 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B47957F19017B780007E874 /* DALabeledCircularProgressView.m */; };
 		6B479584190192510007E874 /* BBCyclingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B479583190192510007E874 /* BBCyclingLabel.m */; };
 		6B479587190193020007E874 /* AlternativeConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B479586190193020007E874 /* AlternativeConfirmationViewController.m */; };
 		6B4795B0190197EF0007E874 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4795AF190197EF0007E874 /* UIImage+animatedGIF.m */; };
@@ -95,11 +93,13 @@
 		6BE8678019095E550046B9F2 /* dot-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BE8677F19095E550046B9F2 /* dot-circle@2x.png */; };
 		6BE867821909AD5F0046B9F2 /* dot-circle-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BE867811909AD5F0046B9F2 /* dot-circle-white@2x.png */; };
 		6BE867861909B4AE0046B9F2 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE867851909B4AE0046B9F2 /* FXBlurView.m */; };
+		6BE867881909B5D00046B9F2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE867871909B5D00046B9F2 /* Accelerate.framework */; };
 		6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BF15A5018C3811100183C52 /* SettingsViewController.m */; };
 		6BF15A5418C3849900183C52 /* name.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5218C3849900183C52 /* name.png */; };
 		6BF15A5518C3849900183C52 /* name@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5318C3849900183C52 /* name@2x.png */; };
 		6BF15A5818C3868400183C52 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5618C3868400183C52 /* phone.png */; };
 		6BF15A5918C3868400183C52 /* phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5718C3868400183C52 /* phone@2x.png */; };
+		6BFFD8411919405D00B7591B /* BookingHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD8401919405D00B7591B /* BookingHTTPClient.m */; };
 		E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACBD26CE1B64C9E9325F5DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -131,10 +131,6 @@
 		6B1B164218E2E0F900CACBDA /* GlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlowLabel.m; sourceTree = "<group>"; };
 		6B1B164418E35F6B00CACBDA /* pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin@2x.png"; path = "Graphics/pin@2x.png"; sourceTree = "<group>"; };
 		6B1B164618E35F6B00CACBDA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		6B47957C19017B780007E874 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
-		6B47957D19017B780007E874 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
-		6B47957E19017B780007E874 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
-		6B47957F19017B780007E874 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
 		6B479582190192510007E874 /* BBCyclingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBCyclingLabel.h; sourceTree = "<group>"; };
 		6B479583190192510007E874 /* BBCyclingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBCyclingLabel.m; sourceTree = "<group>"; };
 		6B479585190193020007E874 /* AlternativeConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlternativeConfirmationViewController.h; sourceTree = "<group>"; };
@@ -227,12 +223,15 @@
 		6BE867811909AD5F0046B9F2 /* dot-circle-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dot-circle-white@2x.png"; path = "Graphics/dot-circle-white@2x.png"; sourceTree = "<group>"; };
 		6BE867841909B4AE0046B9F2 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		6BE867851909B4AE0046B9F2 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		6BE867871909B5D00046B9F2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		6BF15A4F18C3811100183C52 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6BF15A5018C3811100183C52 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6BF15A5218C3849900183C52 /* name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = name.png; path = Graphics/name.png; sourceTree = "<group>"; };
 		6BF15A5318C3849900183C52 /* name@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "name@2x.png"; path = "Graphics/name@2x.png"; sourceTree = "<group>"; };
 		6BF15A5618C3868400183C52 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = phone.png; path = Graphics/phone.png; sourceTree = "<group>"; };
 		6BF15A5718C3868400183C52 /* phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phone@2x.png"; path = "Graphics/phone@2x.png"; sourceTree = "<group>"; };
+		6BFFD83F1919405D00B7591B /* BookingHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookingHTTPClient.h; path = Helper/BookingHTTPClient.h; sourceTree = "<group>"; };
+		6BFFD8401919405D00B7591B /* BookingHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookingHTTPClient.m; path = Helper/BookingHTTPClient.m; sourceTree = "<group>"; };
 		9ACBD26CE1B64C9E9325F5DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -242,6 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BE867881909B5D00046B9F2 /* Accelerate.framework in Frameworks */,
 				6B4795BA19019F8B0007E874 /* ImageIO.framework in Frameworks */,
 				6BA6135818AE471500B61A6E /* QuartzCore.framework in Frameworks */,
 				6BABF541183AA2BD00A6988B /* MapKit.framework in Frameworks */,
@@ -283,6 +283,8 @@
 			children = (
 				6BA8930818C3E30200CA099A /* SettingsHelper.h */,
 				6BA8930918C3E30200CA099A /* SettingsHelper.m */,
+				6BFFD83F1919405D00B7591B /* BookingHTTPClient.h */,
+				6BFFD8401919405D00B7591B /* BookingHTTPClient.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -328,10 +330,6 @@
 				6B4795AF190197EF0007E874 /* UIImage+animatedGIF.m */,
 				6B479582190192510007E874 /* BBCyclingLabel.h */,
 				6B479583190192510007E874 /* BBCyclingLabel.m */,
-				6B47957C19017B780007E874 /* DACircularProgressView.h */,
-				6B47957D19017B780007E874 /* DACircularProgressView.m */,
-				6B47957E19017B780007E874 /* DALabeledCircularProgressView.h */,
-				6B47957F19017B780007E874 /* DALabeledCircularProgressView.m */,
 				6BA8930418C3D0C500CA099A /* SettingsCell.h */,
 				6BA8930518C3D0C500CA099A /* SettingsCell.m */,
 				6B4795BD19080D010007E874 /* PickupAnnotation.h */,
@@ -373,6 +371,7 @@
 		6BABF50A183A9EB900A6988B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BE867871909B5D00046B9F2 /* Accelerate.framework */,
 				6B4795B919019F8B0007E874 /* ImageIO.framework */,
 				6B1B164618E35F6B00CACBDA /* CoreLocation.framework */,
 				6BA6135718AE471500B61A6E /* QuartzCore.framework */,
@@ -703,7 +702,6 @@
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* MainViewController.m in Sources */,
 				6BF15A5118C3811100183C52 /* SettingsViewController.m in Sources */,
-				6B47958119017B780007E874 /* DALabeledCircularProgressView.m in Sources */,
 				6BAA75C218DA18F900898045 /* easing.c in Sources */,
 				6BE867861909B4AE0046B9F2 /* FXBlurView.m in Sources */,
 				6B479587190193020007E874 /* AlternativeConfirmationViewController.m in Sources */,
@@ -715,10 +713,10 @@
 				6BABF51C183A9EB900A6988B /* AppDelegate.m in Sources */,
 				6BABF518183A9EB900A6988B /* main.m in Sources */,
 				6B85A3E118D35C9700158849 /* UIView+Glow.m in Sources */,
-				6B47958019017B780007E874 /* DACircularProgressView.m in Sources */,
 				6B1B164318E2E0F900CACBDA /* GlowLabel.m in Sources */,
 				6B4795B0190197EF0007E874 /* UIImage+animatedGIF.m in Sources */,
 				6BAA75C118DA18F900898045 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				6BFFD8411919405D00B7591B /* BookingHTTPClient.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

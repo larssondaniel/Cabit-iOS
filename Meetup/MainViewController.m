@@ -12,6 +12,7 @@
 #import "TWMessageBarManager.h"
 #import "UIView+Glow.h"
 #import "CAKeyframeAnimation+AHEasing.h"
+#import "FXBlurView.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -41,6 +42,16 @@
 
 @property (nonatomic) bool isShowingDestinaion;
 @property (nonatomic) bool shouldAnimateBottomView;
+@property (nonatomic, strong) FXBlurView *blurView;
+@property (nonatomic, strong) UIView *tintView;
+@property (nonatomic, strong) UITableView *searchTableView;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UILabel *searchLabel;
+@property (strong, nonatomic) NSMutableArray *data;
+@property (strong, nonatomic) MKLocalSearchRequest *localSearchRequest;
+@property (strong, nonatomic) MKLocalSearch *localSearch;
+@property (strong, nonatomic) UISearchDisplayController *searchController;
+@property (strong, nonatomic) IBOutlet UIButton *menuButton;
 
 @end
 
@@ -91,6 +102,100 @@
     [self.destinationView setAlpha:0.85];
     
     [self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
+    
+    
+    
+    
+    // Set up search views
+    
+    self.data = [[NSMutableArray alloc] init];
+    
+    
+    CGRect topBlurFrame = CGRectMake(0, 0, 320, 64);
+    FXBlurView *topBlurView = [[FXBlurView alloc] initWithFrame:topBlurFrame];
+    [topBlurView setAlpha:1.0];
+    //[self.view addSubview:topBlurView];
+    [topBlurView setDynamic:YES];
+    [topBlurView setBlurEnabled:YES];
+    [topBlurView setBlurRadius:20];
+    [topBlurView setTintColor:[UIColor clearColor]];
+    
+    CGRect topTintFrame = CGRectMake(0, 0, 320, 64);
+    UIView *topTintView = [[UIView alloc] initWithFrame:topTintFrame];
+    [topTintView setBackgroundColor:[UIColor whiteColor]];
+    [topTintView setAlpha:0.9];
+    [self.view addSubview:topTintView];
+    
+    [self.view bringSubviewToFront:self.menuButton];
+
+    
+    
+    
+    CGRect blurFrame = CGRectMake(0, 0, 320, 576);
+    self.blurView = [[FXBlurView alloc] initWithFrame:blurFrame];
+    [self.blurView setAlpha:0.0];
+    [self.view addSubview:self.blurView];
+    [self.blurView setDynamic:YES];
+    [self.blurView setBlurEnabled:YES];
+    [self.blurView setBlurRadius:20];
+    [self.blurView setTintColor:[UIColor clearColor]];
+
+    CGRect tintFrame = CGRectMake(0, 0, 320, 576);
+    self.tintView = [[UIView alloc] initWithFrame:tintFrame];
+    //[self.tintView setBackgroundColor:[UIColor blackColor]];
+    [self.tintView setBackgroundColor:[UIColor colorWithRed:0.196 green:0.235 blue:0.313 alpha:1]];
+    // In order to animate it later
+    [self.tintView setAlpha:0.0];
+    [self.view addSubview:self.tintView];
+    
+    self.searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, 320, 32)];
+    self.searchLabel.textColor = [UIColor whiteColor];
+    self.searchLabel.text = @"Upphämtningsplats";
+    self.searchLabel.textAlignment = NSTextAlignmentCenter;
+    self.searchLabel.alpha = 0.0;
+    [self.view addSubview:self.searchLabel];
+    
+    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 60.0f, 320.0f, 44.0f)];
+    //tableView.tableHeaderView = searchBar;
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"Sök adress";
+    self.searchBar.tintColor = [UIColor whiteColor];
+    self.searchBar.backgroundColor = [UIColor clearColor];
+    self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    self.searchBar.barStyle = UIBarStyleDefault;
+    UITextField *searchField = [self.searchBar valueForKey:@"_searchField"];
+    [searchField setTextColor:[UIColor whiteColor]];
+    [searchField setKeyboardAppearance:UIKeyboardAppearanceDark];
+    
+    // create the Search Display Controller with the above Search Bar
+    self.searchController = [[UISearchDisplayController alloc]initWithSearchBar:self.searchBar contentsController:self];
+    self.searchController.searchResultsDataSource = self;
+    self.searchController.searchResultsDelegate = self;
+    self.searchController.delegate = self;
+    self.searchController.searchResultsTableView.alpha = 0.0;
+    self.searchController.searchResultsTableView.backgroundColor = [UIColor clearColor];
+    self.searchController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
+    self.searchController.searchResultsTableView.rowHeight = 45;
+    self.searchController.searchResultsTableView.sectionFooterHeight = 22;
+    self.searchController.searchResultsTableView.sectionHeaderHeight = 22;
+    self.searchController.searchResultsTableView.scrollEnabled = YES;
+    self.searchController.searchResultsTableView.showsVerticalScrollIndicator = YES;
+    self.searchController.searchResultsTableView.userInteractionEnabled = YES;
+    self.searchController.searchResultsTableView.bounces = YES;
+    self.searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 10.0f)];
+    self.searchController.searchResultsTableView.tintColor = [UIColor clearColor];
+    
+    self.searchBar.alpha = 0.0;
+    [self.view addSubview:self.searchBar];
+
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self hidePickupSearchView];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -204,19 +309,13 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    NSLog(@"1");
     if (!self.initialLocation)
     {
-        NSLog(@"2");
         MKCoordinateRegion region;
-        NSLog(@"3");
         region.center = userLocation.coordinate;
-        NSLog(@"4");
         // Region to show when app is loaded
         region.span = MKCoordinateSpanMake(0.04, 0.04);
-        NSLog(@"5");
         region = [mapView regionThatFits:region];
-        NSLog(@"6");
         
         if (!CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
             //do nothing, invalid regions
@@ -227,7 +326,6 @@
             [self calculateLocationAddress];
             self.initialLocation = userLocation.location;
             [mapView setRegion:region animated:YES];
-            NSLog(@"7");
             // Set initial pickup location to current position
             //[self setPickupLocation:self.mapView.userLocation.location.coordinate];
         }
@@ -419,7 +517,6 @@
 
 - (void)animateBottomView
 {
-    NSLog(@"Animating");
     [self setIsShowingDestinaion:YES];
     
     CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y) toPoint:CGPointMake(self.animatedBottomView.center.x, self.animatedBottomView.center.y - 60)];
@@ -431,6 +528,124 @@
     [self.view layoutIfNeeded];
 
     self.shouldAnimateBottomView = NO;
+}
+
+- (IBAction)showPickupSearchView {
+    
+    [UIView animateWithDuration:0.6 animations:^(void) {
+        self.tintView.alpha = 0.6;
+        self.blurView.alpha = 1.0;
+        self.searchTableView.alpha = 1.0;
+        self.searchBar.alpha = 1.0;
+        self.searchLabel.alpha = 1.0;
+    }];
+    [self.searchBar becomeFirstResponder];
+}
+
+- (IBAction)hidePickupSearchView {
+    
+    [UIView animateWithDuration:0.6 animations:^(void) {
+        self.tintView.alpha = 0.0;
+        self.blurView.alpha = 0.0;
+        self.searchTableView.alpha = 0.0;
+        self.searchBar.alpha = 0.0;
+        self.searchLabel.alpha = 0.0;
+    }];
+}
+
+#pragma tableView
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
+{
+    return 1;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    if (controller.searchBar.text.length > 1)
+        [self doSearch:searchString];
+    return NO;
+}
+
+- (void)doSearch:(NSString *)query
+{
+    [self.data removeAllObjects];
+    [self issueLocalSearchLookup:self.searchBar.text];
+}
+
+- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.data count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    NSLog(@"Making a cell");
+    
+    // Dequeue or create a cell of the appropriate type.
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        // cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundView = nil;
+        cell.textLabel.textColor = [UIColor whiteColor];
+    }
+    
+    // Configure the cell.
+    MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
+    
+    NSString *formattedAddress = [mapItem.placemark.addressDictionary valueForKey:@"Name"];
+    if ([mapItem.placemark.addressDictionary valueForKey:@"City"]) {
+        formattedAddress = [formattedAddress stringByAppendingString:[NSString stringWithFormat:@", %@", [mapItem.placemark.addressDictionary valueForKey:@"City"]]];
+    }
+    
+    cell.textLabel.text = formattedAddress;
+    
+    return cell;
+}
+
+-(void)issueLocalSearchLookup:(NSString *)searchString
+{
+    if (self.localSearch.searching)
+    {
+        [self.localSearch cancel];
+    }
+    
+    // Tell the search engine to start looking within 30 000 meters from the user
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 30000, 30000);
+    
+    // Create the search request
+    self.localSearchRequest = [[MKLocalSearchRequest alloc] init];
+    self.localSearchRequest.region = region;
+    self.localSearchRequest.naturalLanguageQuery = searchString;
+    
+    // Perform the search request...
+    self.localSearch = [[MKLocalSearch alloc] initWithRequest:self.localSearchRequest];
+    [self.localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+        
+        if(error){
+            NSLog(@"LocalSearch failed with error: %@", error);
+            return;
+        } else {
+            NSPredicate *noBusiness = [NSPredicate predicateWithFormat:@"business.uID == 0"];
+            NSMutableArray *itemsWithoutBusinesses = [response.mapItems mutableCopy];
+            [itemsWithoutBusinesses filterUsingPredicate:noBusiness];
+            for(MKMapItem *mapItem in itemsWithoutBusinesses){
+                [self.data addObject:mapItem];
+            }
+            [self.searchDisplayController.searchResultsTableView reloadData];
+        }
+    }];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
+    [self setPickupMapItem:mapItem];
+    [self setPickupLocation:mapItem.placemark.location.coordinate];
+    [self.pickupLabel setTitle:mapItem.name forState:UIControlStateNormal];
 }
 
 @end

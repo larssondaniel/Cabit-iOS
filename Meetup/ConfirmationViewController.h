@@ -12,8 +12,9 @@
 #import "ADDropDownMenuView.h"
 #import "DialController.h"
 #import "PickupAnnotation.h"
+#import "BookingHTTPClient.h"
 
-@interface ConfirmationViewController : UIViewController <ADDropDownMenuDelegate, MKMapViewDelegate>
+@interface ConfirmationViewController : UIViewController <ADDropDownMenuDelegate, MKMapViewDelegate, BookingHTTPClientDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) MKMapItem *pickupMapItem;

@@ -216,7 +216,8 @@ AHFloat ElasticEaseIn(AHFloat p)
 // Modeled after the damped sine wave y = sin(-13pi/2*(x + 1))*pow(2, -10x) + 1
 AHFloat ElasticEaseOut(AHFloat p)
 {
-	return sin(-13 * M_PI_2 * (p + 1)) * pow(2, -10 * p) + 1;
+    //return sin(-13 * M_PI_2 * (p + 1)) * pow(2, -10 * p) + 1;
+	return sin(-5 * M_PI_2 * (p + 1)) * pow(2, -5 * p) + 1;
 }
 
 // Modeled after the piecewise exponentially-damped sine wave:
@@ -271,22 +272,22 @@ AHFloat BounceEaseIn(AHFloat p)
 
 AHFloat BounceEaseOut(AHFloat p)
 {
-	if(p < 4/11.0)
-	{
+//	if(p < 4/11.0)
+//	{
 		return (121 * p * p)/16.0;
-	}
-	else if(p < 8/11.0)
-	{
-		return (363/40.0 * p * p) - (99/10.0 * p) + 17/5.0;
-	}
-	else if(p < 9/10.0)
-	{
-		return (4356/361.0 * p * p) - (35442/1805.0 * p) + 16061/1805.0;
-	}
-	else
-	{
-		return (54/5.0 * p * p) - (513/25.0 * p) + 268/25.0;
-	}
+//	}
+	//else if(p < 8/11.0)
+	//{
+//		return (363/40.0 * p * p) - (99/10.0 * p) + 17/5.0;
+//	}
+	//else if(p < 9/10.0)
+	//{
+	//	return (4356/361.0 * p * p) - (35442/1805.0 * p) + 16061/1805.0;
+	//}
+	//else
+	//{
+//		return (54/5.0 * p * p) - (513/25.0 * p) + 268/25.0;
+//	}
 }
 
 AHFloat BounceEaseInOut(AHFloat p)

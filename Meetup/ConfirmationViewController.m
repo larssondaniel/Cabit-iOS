@@ -27,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UIView *statusView;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *statusImage;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 
 @end
 
@@ -37,6 +39,16 @@
     [super viewDidLoad];
     
     [self.mapView setDelegate:self];
+    
+    
+    
+    
+    BookingHTTPClient *client = [BookingHTTPClient sharedBookingHTTPClient];
+    client.delegate = self;
+    [client requestReservationWithOrigin:self.mapView.userLocation.location andDestination:self.mapView.userLocation.location];
+    
+    
+    
     
     self.pickupAnnotation = [[PickupAnnotation alloc] initWithCoordinates:self.pickupMapItem.placemark.coordinate];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
@@ -61,27 +73,86 @@
     label.transitionEffect = BBCyclingLabelTransitionEffectScaleFadeIn;
     label.transitionDuration = 0.3;
     [label setText:@"Söker efter bilar i närheten..." animated:NO];
-
-    int64_t delayInSeconds = 5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     
+    
+    
+    //dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+
+    
+
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:1]);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.statusView glowOnce];
-        [label setText:@"En bil från Taxi Göteborg är på väg till upphämnintsplatsen" animated:YES];
         
-        CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
-        animation.duration = 1.0;
-        [self.statusImage.layer addAnimation:animation forKey:@"easing"];
-        [self.statusImage setCenter:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
         
-        int64_t delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        CAAnimation *animation_cancelButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y) toPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
+        animation_cancelButton.duration = 0.6;
+        [self.cancelButton.layer addAnimation:animation_cancelButton forKey:@"easing"];
+        [self.cancelButton setCenter:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
         
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
-            animation.duration = 1.0;
-            [self.statusImage.layer addAnimation:animation forKey:@"easing"];
-            [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+            
+            
+            CAAnimation *animation_editButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y) toPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
+            animation_editButton.duration = 0.6;
+            [self.editButton.layer addAnimation:animation_editButton forKey:@"easing"];
+            [self.editButton setCenter:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
+            
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                
+                
+                CAAnimation *animation_bottomView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.bottomView.center.x, self.bottomView.center.y) toPoint:CGPointMake(self.bottomView.center.x, self.bottomView.center.y - 181)];
+                animation_bottomView.duration = 0.5;
+                [self.bottomView.layer addAnimation:animation_bottomView forKey:@"easing"];
+                [self.bottomView setCenter:CGPointMake(self.bottomView.center.x, self.bottomView.center.y - 181)];
+                
+                
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    
+                    
+                    CAAnimation *animation_statusView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y) toPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
+                    animation_statusView.duration = 0.8;
+                    [self.statusView.layer addAnimation:animation_statusView forKey:@"easing"];
+                    [self.statusView setCenter:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
+                    
+                    
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:1]);
+                    
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+                        animation.duration = 0.5;
+                        [self.statusImage.layer addAnimation:animation forKey:@"easing"];
+                        [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+                        
+                        int64_t delayInSeconds = 5;
+                        dispatch_time_t popTime2 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                        
+                        dispatch_after(popTime2, dispatch_get_main_queue(), ^(void){
+                            [self.statusView glowOnce];
+                            [label setText:@"En bil från Taxi Göteborg är på väg till upphämnintsplatsen" animated:YES];
+                            
+                            CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
+                            animation.duration = 1.0;
+                            [self.statusImage.layer addAnimation:animation forKey:@"easing"];
+                            [self.statusImage setCenter:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
+                            
+                            int64_t delayInSeconds = 1.0;
+                            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                            
+                            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+                                animation.duration = 1.0;
+                                [self.statusImage.layer addAnimation:animation forKey:@"easing"];
+                                [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+                                
+                            });
+                        });
+                    });
+                });
+            });
 
         });
 
@@ -196,6 +267,30 @@
 }
 
 - (IBAction)back {
+}
+
+- (float)secondsToNanoseconds:(float)second
+{
+    return second * 1000000000;
+}
+
+# pragma networking
+
+-(void)bookingHTTPClient:(BookingHTTPClient *)client didBeginReservation:(id)reservation
+{
+    NSLog(@"Success! Response: \n\n%@", reservation);
+}
+
+- (void)bookingHTTPClient:(BookingHTTPClient *)client didFailWithError:(NSError *)error
+{
+    NSLog(@"Fail! Error: \n\n%@", error);
+
+    /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Weather"
+                                                        message:[NSString stringWithFormat:@"%@",error]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+     */
 }
 
 @end

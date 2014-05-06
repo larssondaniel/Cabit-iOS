@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "657BD415B9C04046AD25BDBF"
+               BlueprintIdentifier = "966830836C284AA1936E6AB9"
                BuildableName = "libPods-PBFlatUI.a"
                BlueprintName = "Pods-PBFlatUI"
                ReferencedContainer = "container:Pods.xcodeproj">

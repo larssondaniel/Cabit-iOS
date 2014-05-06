@@ -29,6 +29,5 @@
 @property (nonatomic, weak) id<ADDropDownMenuDelegate> delegate;
 
 - (instancetype)initAtOrigin:(CGPoint)origin withItemsViews:(NSArray *)itemsViews;
-- (void)expand;
 
 @end

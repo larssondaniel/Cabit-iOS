@@ -8,6 +8,7 @@
 
 #import "SearchPickupViewController.h"
 #import "SearchDestinationViewController.h"
+#import "CredentialsViewController.h"
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
@@ -15,5 +16,7 @@
 @interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, SearchPickupDelegate, SearchDestinationDelegate, UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UIView *searchView;
+
+- (void)didFinishEnteringCredentials;
 
 @end

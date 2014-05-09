@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vYW-Y0-daE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -124,6 +124,14 @@
                                     <segue destination="vYW-Y0-daE" kind="modal" identifier="confirmationSegue" id="DWG-ts-7XW"/>
                                 </connections>
                             </button>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lD-pu-YsB">
+                                <rect key="frame" x="0.0" y="0.0" width="321" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="VTE-vX-Ju3" kind="embed" id="EkQ-uj-wec"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -149,6 +157,7 @@
                         <outlet property="bottomViewTopConstraint" destination="cJ9-fm-Tcg" id="Ods-D8-Ddb"/>
                         <outlet property="bouncingCone" destination="zWq-ad-wdz" id="ibo-r5-q68"/>
                         <outlet property="continueButton" destination="I74-Jr-VGc" id="tIX-82-xeg"/>
+                        <outlet property="credentialsContainer" destination="8lD-pu-YsB" id="mcB-GP-m7H"/>
                         <outlet property="destinationLabel" destination="8GI-2j-iT5" id="FXU-gb-fZ9"/>
                         <outlet property="destinationStaticLabel" destination="xgx-dg-fUZ" id="MSh-1y-H9L"/>
                         <outlet property="destinationView" destination="pTy-mP-a4p" id="LWx-sp-9Jq"/>
@@ -646,6 +655,97 @@
             </objects>
             <point key="canvasLocation" x="2898" y="402"/>
         </scene>
+        <!--Credentials View Controller-->
+        <scene sceneID="9h9-pc-oPe">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="VTE-vX-Ju3" customClass="CredentialsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qoC-60-VOF"/>
+                        <viewControllerLayoutGuide type="bottom" id="tIS-gy-AOF"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Vv0-qW-QCV">
+                        <rect key="frame" x="0.0" y="0.0" width="321" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vem är du?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="321" translatesAutoresizingMaskIntoConstraints="NO" id="Y3V-qd-LoV">
+                                <rect key="frame" x="0.0" y="0.0" width="321" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Namn" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfH-tY-C1o">
+                                <rect key="frame" x="82" y="190" width="208" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Välkommen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUK-AE-Ssy">
+                                <rect key="frame" x="0.0" y="-47" width="320" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzi-tW-RQa">
+                                <rect key="frame" x="106" y="454" width="108" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title="Varför behövs detta?">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="white-line.png" translatesAutoresizingMaskIntoConstraints="NO" id="iuH-Ao-qDH">
+                                <rect key="frame" x="42" y="221" width="238" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Telefonnummer" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wcY-2r-Mlf">
+                                <rect key="frame" x="82" y="239" width="208" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="phone_white.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bwa-W6-HzU">
+                                <rect key="frame" x="43" y="244" width="22" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="white-line.png" translatesAutoresizingMaskIntoConstraints="NO" id="hR9-O7-BO8">
+                                <rect key="frame" x="43" y="272" width="238" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZkB-cq-M0T">
+                                <rect key="frame" x="43" y="194" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMw-qk-BRB">
+                                <rect key="frame" x="20" y="488" width="280" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.16078431369999999" green="0.70588235290000001" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Fortsätt">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickedContinue" destination="VTE-vX-Ju3" eventType="touchUpInside" id="Jpr-kH-rUy"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="bigLabel" destination="gUK-AE-Ssy" id="Gw9-50-hlZ"/>
+                        <outlet property="nameField" destination="qfH-tY-C1o" id="F3d-s1-2Xs"/>
+                        <outlet property="phoneField" destination="wcY-2r-Mlf" id="vsr-32-oUR"/>
+                        <outlet property="smallLabel" destination="Y3V-qd-LoV" id="Or2-fW-npO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uPL-5i-nGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2410" y="1149"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bouncingCircle.png" width="68" height="68"/>
@@ -656,9 +756,11 @@
         <image name="map-pin.png" width="20" height="32"/>
         <image name="name.png" width="22" height="22"/>
         <image name="phone.png" width="22" height="22"/>
+        <image name="phone_white.png" width="22" height="21"/>
         <image name="reorder.png" width="19" height="22"/>
         <image name="settings.png" width="24" height="16"/>
         <image name="user.png" width="32" height="32"/>
+        <image name="white-line.png" width="1" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

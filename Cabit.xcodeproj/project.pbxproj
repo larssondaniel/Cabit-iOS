@@ -100,6 +100,9 @@
 		6BF15A5818C3868400183C52 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5618C3868400183C52 /* phone.png */; };
 		6BF15A5918C3868400183C52 /* phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF15A5718C3868400183C52 /* phone@2x.png */; };
 		6BFFD8411919405D00B7591B /* BookingHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD8401919405D00B7591B /* BookingHTTPClient.m */; };
+		6BFFD84E191CC4CC00B7591B /* white-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD84D191CC4CC00B7591B /* white-line@2x.png */; };
+		6BFFD851191CC86000B7591B /* CredentialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD850191CC86000B7591B /* CredentialsViewController.m */; };
+		6BFFD853191CCB2100B7591B /* phone_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD852191CCB2100B7591B /* phone_white@2x.png */; };
 		E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACBD26CE1B64C9E9325F5DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -232,6 +235,10 @@
 		6BF15A5718C3868400183C52 /* phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phone@2x.png"; path = "Graphics/phone@2x.png"; sourceTree = "<group>"; };
 		6BFFD83F1919405D00B7591B /* BookingHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookingHTTPClient.h; path = Helper/BookingHTTPClient.h; sourceTree = "<group>"; };
 		6BFFD8401919405D00B7591B /* BookingHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookingHTTPClient.m; path = Helper/BookingHTTPClient.m; sourceTree = "<group>"; };
+		6BFFD84D191CC4CC00B7591B /* white-line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white-line@2x.png"; path = "Graphics/white-line@2x.png"; sourceTree = "<group>"; };
+		6BFFD84F191CC86000B7591B /* CredentialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CredentialsViewController.h; sourceTree = "<group>"; };
+		6BFFD850191CC86000B7591B /* CredentialsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CredentialsViewController.m; sourceTree = "<group>"; };
+		6BFFD852191CCB2100B7591B /* phone_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phone_white@2x.png"; path = "Graphics/phone_white@2x.png"; sourceTree = "<group>"; };
 		9ACBD26CE1B64C9E9325F5DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -301,6 +308,8 @@
 		6BA8931F18C6528D00CA099A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6BFFD84F191CC86000B7591B /* CredentialsViewController.h */,
+				6BFFD850191CC86000B7591B /* CredentialsViewController.m */,
 				6BB2DDAB184F395100BBA9A8 /* SearchPickupViewController.h */,
 				6BB2DDAC184F395100BBA9A8 /* SearchPickupViewController.m */,
 				6BBBF3F0186F1E2300569FC0 /* SearchDestinationViewController.h */,
@@ -439,6 +448,8 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BFFD852191CCB2100B7591B /* phone_white@2x.png */,
+				6BFFD84D191CC4CC00B7591B /* white-line@2x.png */,
 				6BE867811909AD5F0046B9F2 /* dot-circle-white@2x.png */,
 				6BE8677F19095E550046B9F2 /* dot-circle@2x.png */,
 				6BE8677D19095BC70046B9F2 /* left-arrow@2x.png */,
@@ -600,6 +611,7 @@
 				6B13E10C1895C9F7002E14BE /* logo@2x.png in Resources */,
 				6BB2DDA6184D3FDC00BBA9A8 /* taxiGoteborgNy.png in Resources */,
 				6B4795C3190818130007E874 /* map-pin@2x.png in Resources */,
+				6BFFD853191CCB2100B7591B /* phone_white@2x.png in Resources */,
 				6BB2DD86183EDA5400BBA9A8 /* taxiKurir.png in Resources */,
 				6B4795B419019A710007E874 /* loading@2x.gif in Resources */,
 				6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */,
@@ -642,6 +654,7 @@
 				6BE8678019095E550046B9F2 /* dot-circle@2x.png in Resources */,
 				6B1B163118E2130500CACBDA /* resultBottomView.png in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
+				6BFFD84E191CC4CC00B7591B /* white-line@2x.png in Resources */,
 				6BF15A5918C3868400183C52 /* phone@2x.png in Resources */,
 				6B47963519081E4D0007E874 /* cancelButton@2x.png in Resources */,
 				6B85A3E318D3AA1600158849 /* bottomGradient@2x.png in Resources */,
@@ -698,6 +711,7 @@
 			files = (
 				6B4795BF19080D010007E874 /* PickupAnnotation.m in Sources */,
 				6B479584190192510007E874 /* BBCyclingLabel.m in Sources */,
+				6BFFD851191CC86000B7591B /* CredentialsViewController.m in Sources */,
 				6B13E10818959AA7002E14BE /* ConfirmationViewController.m in Sources */,
 				6BBBF3F2186F1E2300569FC0 /* SearchDestinationViewController.m in Sources */,
 				6BABF522183A9EB900A6988B /* MainViewController.m in Sources */,

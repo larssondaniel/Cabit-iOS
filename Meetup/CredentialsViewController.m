@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *smallLabel;
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
 @property (strong, nonatomic) IBOutlet UITextField *phoneField;
+@property (strong, nonatomic) IBOutlet UIButton *continueButton;
 
 @end
 
@@ -26,6 +27,7 @@
     
     [self.nameField setValue:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     [self.phoneField setValue:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.continueButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:22]];
 }
 
 - (IBAction)clickedContinue {

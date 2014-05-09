@@ -14,6 +14,7 @@
 #import "CAKeyframeAnimation+AHEasing.h"
 #import "FXBlurView.h"
 #import "CredentialsViewController.h"
+#import "SettingsViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -51,6 +52,8 @@
 @property (strong, nonatomic) UISearchDisplayController *searchController;
 @property (strong, nonatomic) IBOutlet UIButton *menuButton;
 @property (strong, nonatomic) IBOutlet UIView *credentialsContainer;
+@property (strong, nonatomic) IBOutlet UIView *settingsContainer;
+@property (nonatomic) bool isSearchingForPickup;
 
 @end
 
@@ -61,11 +64,11 @@
     [super viewDidLoad];
 
     [self.mapView setDelegate:self];
-    [self.mapView addSubview:self.searchView];
+    //[self.mapView addSubview:self.searchView];
     
     self.data = [[NSMutableArray alloc] init];
-
-    self.shouldAnimateBottomView = NO;
+    
+    //self.shouldAnimateBottomView = NO;
     
     self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
@@ -112,7 +115,6 @@
     [self.view addSubview:self.tintView];
     
     self.credentialsContainer.alpha = 0.0;
-    //[self.view bringSubviewToFront:self.credentialsContainer];
 
     self.searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, 320, 32)];
     self.searchLabel.textColor = [UIColor whiteColor];
@@ -132,15 +134,17 @@
     [searchField setTextColor:[UIColor whiteColor]];
     [searchField setKeyboardAppearance:UIKeyboardAppearanceDark];
     
+    /*
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.delegate = self;
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
+     */
     
 
     //self.searchDisplayController.searchResultsTableView.hidden = YES;
-
+    
     self.searchController = [[UISearchDisplayController alloc]initWithSearchBar:self.searchBar contentsController:self];
     self.searchController.searchResultsDataSource = self;
     self.searchController.searchResultsDelegate = self;
@@ -156,9 +160,10 @@
     self.searchController.searchResultsTableView.userInteractionEnabled = YES;
     self.searchController.searchResultsTableView.bounces = YES;
     self.searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 10.0f)];
-    self.searchController.searchResultsTableView.tintColor = [UIColor clearColor];
+    //self.searchController.searchResultsTableView.tintColor = [UIColor clearColor];
     //[self.searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"resultsCell"];
     self.searchController.searchResultsTableView.alpha = 0.0;
+
 
     self.searchBar.alpha = 0.0;
     [self.view addSubview:self.searchBar];
@@ -169,7 +174,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self hidePickupSearchView];
+    [self hideSearchView];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -486,6 +491,16 @@
 }
 
 - (IBAction)showPickupSearchView {
+    self.isSearchingForPickup = YES;
+    [self showSearchView];
+}
+
+- (IBAction)showDestinationSearchView {
+    self.isSearchingForPickup = NO;
+    [self showSearchView];
+}
+
+- (void)showSearchView {
     [UIView animateWithDuration:0.6 animations:^(void) {
         self.tintView.alpha = 0.95;
         self.searchBar.alpha = 1.0;
@@ -495,11 +510,11 @@
     [UIView animateWithDuration:0.6 animations:^(void) {
         [self.searchBar setShowsCancelButton:YES animated:YES];
     }];
+    [self.view bringSubviewToFront:self.searchController.searchResultsTableView];
     [self.searchBar becomeFirstResponder];
 }
 
-- (void)hidePickupSearchView {
-    NSLog(@"Hiding");
+- (void)hideSearchView {
     [UIView animateWithDuration:0.6 animations:^(void) {
         self.tintView.alpha = 0.0;
         self.searchBar.alpha = 0.0;
@@ -558,6 +573,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Delegate is %@", tableView.delegate);
+    NSLog(@"Data source is %@", tableView.dataSource);
+
     static NSString *CellIdentifier = @"ResultsCell";
     
     // Dequeue or create a cell of the appropriate type.
@@ -615,27 +633,34 @@
                 [self.data addObject:mapItem];
             }
             [self.searchController.searchResultsTableView reloadData];
-            if (self.searchDisplayController.searchResultsTableView.visibleCells.count > 0) {
-                NSLog(@"Delegate is %@", self.searchDisplayController.searchResultsTableView.delegate);
-            }
         }
     }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"This just happened");
     MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
-    [self setPickupMapItem:mapItem];
-    [self setPickupLocation:mapItem.placemark.location.coordinate];
-    [self.pickupLabel setTitle:mapItem.name forState:UIControlStateNormal];
-    [self hidePickupSearchView];
+    NSLog(@"Selected something:");
+    if (self.isSearchingForPickup) {
+        NSLog(@"Pickup!");
+        [self setPickupMapItem:mapItem];
+        [self setPickupLocation:mapItem.placemark.location.coordinate];
+        [self.pickupLabel setTitle:mapItem.name forState:UIControlStateNormal];
+    } else {
+        NSLog(@"Destination!");
+        [self setDestinationMapItem:mapItem];
+        //[self setPickupLocation:mapItem.placemark.location.coordinate];
+        [self.destinationLabel setTitle:mapItem.name forState:UIControlStateNormal];
+    }
+    
+    [self hideSearchView];
 }
 
+/*
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
-
+*/
 
 #pragma credentials
 
@@ -651,11 +676,34 @@
 }
 
 - (void)didFinishEnteringCredentials {
-    [self hidePickupSearchView];
     [UIView animateWithDuration:0.4 animations:^(void) {
         self.animatedBottomView.alpha = 1.0;
-        [self.credentialsContainer setHidden:YES];
+        self.tintView.alpha = 0.0;
+        [self.credentialsContainer setAlpha:0.0];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }];
+}
+
+
+#pragma settings
+
+- (void)hideSettingsView {
+    [self.view endEditing:YES];
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        self.animatedBottomView.alpha = 1.0;
+        self.settingsContainer.alpha = 0.0;
+        self.tintView.alpha = 0.0;
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }];
+}
+
+- (IBAction)showSettingsView {
+    [self.view bringSubviewToFront:self.settingsContainer];
+    [UIView animateWithDuration:0.4 animations:^{
+        self.settingsContainer.alpha = 1.0;
+        self.tintView.alpha = 0.97;
+        //self.animatedBottomView.alpha = 0.0;
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
 }
 

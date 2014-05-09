@@ -13,10 +13,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, SearchPickupDelegate, SearchDestinationDelegate, UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) IBOutlet UIView *searchView;
 
 - (void)didFinishEnteringCredentials;
+- (void)hideSettingsView;
 
 @end

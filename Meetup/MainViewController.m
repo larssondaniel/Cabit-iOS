@@ -15,6 +15,7 @@
 #import "FXBlurView.h"
 #import "CredentialsViewController.h"
 #import "SettingsViewController.h"
+#import "SearchViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -27,8 +28,6 @@
 
 @property (nonatomic, retain) CLLocation *initialLocation;
 @property (nonatomic, strong) CLGeocoder *geoCoder;
-@property (strong, nonatomic) IBOutlet UIButton *searchPickupButton;
-@property (strong, nonatomic) IBOutlet UIButton *searchDestinationButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *bouncingCone;
 @property (strong, nonatomic) IBOutlet UIView *animatedBottomView;
@@ -49,10 +48,10 @@
 @property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) MKLocalSearchRequest *localSearchRequest;
 @property (strong, nonatomic) MKLocalSearch *localSearch;
-@property (strong, nonatomic) UISearchDisplayController *searchController;
 @property (strong, nonatomic) IBOutlet UIButton *menuButton;
 @property (strong, nonatomic) IBOutlet UIView *credentialsContainer;
 @property (strong, nonatomic) IBOutlet UIView *settingsContainer;
+@property (strong, nonatomic) IBOutlet UIView *searchContainer;
 @property (nonatomic) bool isSearchingForPickup;
 
 @end
@@ -68,15 +67,8 @@
     
     self.data = [[NSMutableArray alloc] init];
     
-    //self.shouldAnimateBottomView = NO;
-    
     self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation = [[MKPointAnnotation alloc] init];
-    
-    self.searchPickupButton.titleLabel.adjustsFontSizeToFitWidth = TRUE;
-    self.searchPickupButton.titleLabel.minimumScaleFactor = 0.4;
-    self.searchDestinationButton.titleLabel.adjustsFontSizeToFitWidth = TRUE;
-    self.searchDestinationButton.titleLabel.minimumScaleFactor = 0.4;
     
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
@@ -115,16 +107,35 @@
     [self.view addSubview:self.tintView];
     
     self.credentialsContainer.alpha = 0.0;
+    
+    [self setupSearchView];
+    [self showCredentialsView];
+}
 
+- (void)setupSearchView {
+    /*
     self.searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, 320, 32)];
     self.searchLabel.textColor = [UIColor whiteColor];
     self.searchLabel.text = @"Upphämtningsplats";
     self.searchLabel.textAlignment = NSTextAlignmentCenter;
     self.searchLabel.alpha = 0.0;
     [self.view addSubview:self.searchLabel];
-
+     */
+    
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 60.0f, 320.0f, 44.0f)];
     self.searchBar.delegate = self;
+    
+    [self.searchDisplayController setDelegate:self];
+	[self.searchDisplayController setSearchResultsDataSource:self];
+    
+    // iOS 7 compatibility
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    if ([self respondsToSelector:@selector(extendedLayoutIncludesOpaqueBars)])
+        self.extendedLayoutIncludesOpaqueBars = NO;
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    /*
     self.searchBar.placeholder = @"Sök adress";
     self.searchBar.tintColor = [UIColor whiteColor];
     self.searchBar.backgroundColor = [UIColor clearColor];
@@ -133,25 +144,30 @@
     UITextField *searchField = [self.searchBar valueForKey:@"_searchField"];
     [searchField setTextColor:[UIColor whiteColor]];
     [searchField setKeyboardAppearance:UIKeyboardAppearanceDark];
-    
-    /*
-    self.searchDisplayController.searchResultsDataSource = self;
-    self.searchDisplayController.searchResultsDelegate = self;
-    self.searchDisplayController.delegate = self;
-    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
      */
     
-
+    /*
+     self.searchDisplayController.searchResultsDataSource = self;
+     self.searchDisplayController.searchResultsDelegate = self;
+     self.searchDisplayController.delegate = self;
+     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
+     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
+     */
+    
+    
     //self.searchDisplayController.searchResultsTableView.hidden = YES;
     
+    /*
     self.searchController = [[UISearchDisplayController alloc]initWithSearchBar:self.searchBar contentsController:self];
     self.searchController.searchResultsDataSource = self;
     self.searchController.searchResultsDelegate = self;
     self.searchController.delegate = self;
     self.searchController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
-
+     */
+    
+    // SKA FINNAS MED
+    /*
     self.searchController.searchResultsTableView.rowHeight = 45;
     self.searchController.searchResultsTableView.sectionFooterHeight = 22;
     self.searchController.searchResultsTableView.sectionHeaderHeight = 22;
@@ -159,17 +175,16 @@
     self.searchController.searchResultsTableView.showsVerticalScrollIndicator = YES;
     self.searchController.searchResultsTableView.userInteractionEnabled = YES;
     self.searchController.searchResultsTableView.bounces = YES;
-    self.searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 10.0f)];
+     */
+     
+    //self.searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 10.0f)];
     //self.searchController.searchResultsTableView.tintColor = [UIColor clearColor];
     //[self.searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"resultsCell"];
-    self.searchController.searchResultsTableView.alpha = 0.0;
-
-
+    //self.searchController.searchResultsTableView.alpha = 0.0;
+    
     self.searchBar.alpha = 0.0;
     [self.view addSubview:self.searchBar];
-    [self.view addSubview:self.searchController.searchResultsTableView];
-    
-    [self showCredentialsView];
+    //[self.view addSubview:self.searchController.searchResultsTableView];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -500,30 +515,6 @@
     [self showSearchView];
 }
 
-- (void)showSearchView {
-    [UIView animateWithDuration:0.6 animations:^(void) {
-        self.tintView.alpha = 0.95;
-        self.searchBar.alpha = 1.0;
-        self.searchLabel.alpha = 1.0;
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    }];
-    [UIView animateWithDuration:0.6 animations:^(void) {
-        [self.searchBar setShowsCancelButton:YES animated:YES];
-    }];
-    [self.view bringSubviewToFront:self.searchController.searchResultsTableView];
-    [self.searchBar becomeFirstResponder];
-}
-
-- (void)hideSearchView {
-    [UIView animateWithDuration:0.6 animations:^(void) {
-        self.tintView.alpha = 0.0;
-        self.searchBar.alpha = 0.0;
-        self.searchLabel.alpha = 0.0;
-        [self.searchBar setShowsCancelButton:NO animated:YES];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    }];
-}
-
 #pragma tableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
@@ -706,5 +697,28 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
 }
+
+#pragma search
+
+- (void)showSearchView {
+    [self.view bringSubviewToFront:self.searchContainer];
+    [UIView animateWithDuration:0.4 animations:^{
+        self.searchContainer.alpha = 1.0;
+        self.tintView.alpha = 0.97;
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
+    SearchViewController *searchViewController = (SearchViewController *)self.childViewControllers[2];
+    [searchViewController setActiveWithLabel:@"Tjena"];
+}
+
+- (void)hideSearchView {
+    [self.view endEditing:YES];
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        self.tintView.alpha = 0.0;
+        self.searchContainer.alpha = 0.0;
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }];
+}
+
 
 @end

@@ -103,6 +103,7 @@
 		6BFFD84E191CC4CC00B7591B /* white-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD84D191CC4CC00B7591B /* white-line@2x.png */; };
 		6BFFD851191CC86000B7591B /* CredentialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD850191CC86000B7591B /* CredentialsViewController.m */; };
 		6BFFD853191CCB2100B7591B /* phone_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD852191CCB2100B7591B /* phone_white@2x.png */; };
+		6BFFD89A191DB36E00B7591B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD899191DB36E00B7591B /* SearchViewController.m */; };
 		E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACBD26CE1B64C9E9325F5DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -239,6 +240,8 @@
 		6BFFD84F191CC86000B7591B /* CredentialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CredentialsViewController.h; sourceTree = "<group>"; };
 		6BFFD850191CC86000B7591B /* CredentialsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CredentialsViewController.m; sourceTree = "<group>"; };
 		6BFFD852191CCB2100B7591B /* phone_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phone_white@2x.png"; path = "Graphics/phone_white@2x.png"; sourceTree = "<group>"; };
+		6BFFD898191DB36E00B7591B /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		6BFFD899191DB36E00B7591B /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		9ACBD26CE1B64C9E9325F5DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -328,6 +331,8 @@
 				6B1B163F18E2E0B100CACBDA /* DialController.m */,
 				6B1B164118E2E0F900CACBDA /* GlowLabel.h */,
 				6B1B164218E2E0F900CACBDA /* GlowLabel.m */,
+				6BFFD898191DB36E00B7591B /* SearchViewController.h */,
+				6BFFD899191DB36E00B7591B /* SearchViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -731,6 +736,7 @@
 				6B4795B0190197EF0007E874 /* UIImage+animatedGIF.m in Sources */,
 				6BAA75C118DA18F900898045 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				6BFFD8411919405D00B7591B /* BookingHTTPClient.m in Sources */,
+				6BFFD89A191DB36E00B7591B /* SearchViewController.m in Sources */,
 				6BB2DD8A1840226700BBA9A8 /* Vehicle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

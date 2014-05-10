@@ -15,8 +15,10 @@
 
 @interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) UISearchDisplayController *searchController;
 
 - (void)didFinishEnteringCredentials;
 - (void)hideSettingsView;
+- (void)hideSearchView;
 
 @end

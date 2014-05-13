@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-SPGooglePlacesAutocomplete.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-TWMessageBarManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>013B6716A0074ED2B0C2D019</key>
+		<key>1F0449CDCC9540DEAD755096</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>183D3D7B5BE84986946F31CA</key>
+		<key>38897D5F78284DA28622D2FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31C95CD6BD864612B05BD5A1</key>
+		<key>4162A9EC53E145159E641819</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6B3A520BE70748B8B9D5A94C</key>
+		<key>5C8C6D633F374C7A81E33DE5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ACC9EB32735A4A3CAB771C9D</key>
+		<key>B0BB05BEF972431A9F8697B8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D2B15B7B663C40B18EFEF435</key>
+		<key>C35D8D5FF09C4E76A4064F85</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DA719BC705D54CF78F7CAEDA</key>
+		<key>C8A27279FCA0485D84BDF8EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E3ECF3C4EF61460C9D725F9F</key>
+		<key>E19D8973CDAD4D8C9126D7D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA9602E393864C159052695A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -78,6 +78,12 @@
 #define COCOAPODS_VERSION_MINOR_SIAlertView 3
 #define COCOAPODS_VERSION_PATCH_SIAlertView 0
 
+// SPGooglePlacesAutocomplete
+#define COCOAPODS_POD_AVAILABLE_SPGooglePlacesAutocomplete
+#define COCOAPODS_VERSION_MAJOR_SPGooglePlacesAutocomplete 1
+#define COCOAPODS_VERSION_MINOR_SPGooglePlacesAutocomplete 0
+#define COCOAPODS_VERSION_PATCH_SPGooglePlacesAutocomplete 2
+
 // TWMessageBarManager
 #define COCOAPODS_POD_AVAILABLE_TWMessageBarManager
 #define COCOAPODS_VERSION_MAJOR_TWMessageBarManager 1

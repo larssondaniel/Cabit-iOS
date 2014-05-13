@@ -571,7 +571,7 @@
 				ORGANIZATIONNAME = Meetup;
 				TargetAttributes = {
 					6BABF507183A9EB900A6988B = {
-						DevelopmentTeam = 85JQFL47E9;
+						DevelopmentTeam = VM4D468R3G;
 					};
 					6BABF528183A9EB900A6988B = {
 						TestTargetID = 6BABF507183A9EB900A6988B;

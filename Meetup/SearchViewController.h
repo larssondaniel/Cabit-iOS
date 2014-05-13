@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface SearchViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate>
+@interface SearchViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (nonatomic, strong) NSMutableArray *places;
 

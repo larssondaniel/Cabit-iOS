@@ -8,19 +8,18 @@
 
 #import "SearchViewController.h"
 #import "MainViewController.h"
+#import "SPGooglePlacesAutocomplete.h"
 
 @interface SearchViewController ()
 
 @property (nonatomic, assign) MKCoordinateRegion boundingRegion;
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) MKLocalSearchRequest *localSearchRequest;
 @property (strong, nonatomic) MKLocalSearch *localSearch;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) CLGeocoder *geoCoder;
 @property (nonatomic) CLLocationCoordinate2D userLocation;
 @property (nonatomic, strong) MainViewController *mainViewController;
-
 
 @end
 
@@ -41,6 +40,30 @@
     [searchField setKeyboardAppearance:UIKeyboardAppearanceDark];
     [self.searchDisplayController.searchResultsTableView setBackgroundView:nil];
     [self.searchDisplayController.searchResultsTableView setBackgroundColor:[UIColor clearColor]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    //[self loadSearchHistory];
+}
+
+- (void)loadSearchHistory
+{
+    NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *recentSearches = [NSMutableArray array];
+    
+    NSArray *dataRepresentingSavedArray = [currentDefaults objectForKey:@"searchHistory"];
+    
+    if (dataRepresentingSavedArray != nil)
+    {
+        for (NSData *data in dataRepresentingSavedArray) {
+            [recentSearches addObject:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+        }
+        [self.places addObjectsFromArray:recentSearches];
+    }
+    NSLog(@"Reading %i searches", self.places.count);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
@@ -65,6 +88,7 @@
         cell.textLabel.textColor = [UIColor whiteColor];
     }
     
+    /*
     // Configure the cell.
     MKMapItem *mapItem = (MKMapItem *)[self.places objectAtIndex:indexPath.row];
     
@@ -74,56 +98,37 @@
     }
     
     cell.textLabel.text = formattedAddress;
+     */
+
+    SPGooglePlacesAutocompletePlace *place = (SPGooglePlacesAutocompletePlace *)[self.places objectAtIndex:indexPath.row];
+    cell.textLabel.text = place.name;
 
     return cell;
 }
 
 -(void)issueLocalSearchLookup:(NSString *)searchString
 {
-    if (self.localSearch.searching)
-    {
-        [self.localSearch cancel];
-    }
+    //NSLog(@"Issue search for %@", searchString);
+    SPGooglePlacesAutocompleteQuery *query = [[SPGooglePlacesAutocompleteQuery alloc] initWithApiKey:@"AIzaSyDxTyIXSAktcdcT8_l9AdjiUem8--zxw2Y"];
+    query.input = searchString; // search key word
+    query.location = self.userLocation;  // user's current location
+    query.radius = 100.0;   // search addresses close to user
+    query.language = @"se"; // optional
+    query.types = SPPlaceTypeGeocode; // Only return geocoding (address) results.
     
-    // Tell the search engine to start looking within 30 000 meters from the user
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.userLocation, 30000, 30000);
-    
-    // Create the search request
-    self.localSearchRequest = [[MKLocalSearchRequest alloc] init];
-    self.localSearchRequest.region = region;
-    self.localSearchRequest.naturalLanguageQuery = searchString;
-    
-    // Perform the search request...
-    self.localSearch = [[MKLocalSearch alloc] initWithRequest:self.localSearchRequest];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    [self.localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
-        
-        if(error){
-            NSLog(@"LocalSearch failed with error: %@", error);
-            return;
-        } else {
-            NSPredicate *noBusiness = [NSPredicate predicateWithFormat:@"business.uID == 0"];
-            NSMutableArray *itemsWithoutBusinesses = [response.mapItems mutableCopy];
-            [itemsWithoutBusinesses filterUsingPredicate:noBusiness];
-            // NSLog(@"Searching for %@ with results: %i", searchString, itemsWithoutBusinesses.count);
-            
-            self.places = itemsWithoutBusinesses;
-
-            /*
-            for(MKMapItem *mapItem in itemsWithoutBusinesses){
-                [self.places addObject:mapItem];
-            }
-             */
-            [self.searchDisplayController.searchResultsTableView reloadData];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        }
+    [query fetchPlaces:^(NSArray *places, NSError *error) {
+        [self.places removeAllObjects];
+        //NSLog(@"Results for %@: %i", searchString, places.count);
+        [self.places addObjectsFromArray:places];
     }];
+    
+    [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [self.mainViewController hideSearchView];
+    [self resetTableView];
 }
 
 - (void)setActiveWithLabel:(NSString *)label andUserLocation:(CLLocationCoordinate2D)location
@@ -174,23 +179,74 @@
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    [self issueLocalSearchLookup:searchString];
-    return NO;
+    if (searchString != nil && ![searchString isEqual: @""])
+        [self issueLocalSearchLookup:searchString];
+    return YES;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Super is: %@", self.mainViewController);
     // pass the new bounding region to the map destination view controller
     //self.mainViewController.boundingRegion = self.boundingRegion;
     
     // pass the individual place to our map destination view controller
     NSIndexPath *selectedItem = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-    [self.mainViewController didFinishSearchWithAdress:[self.places objectAtIndex:selectedItem.row]];
+    //[self.mainViewController didFinishSearchWithAdress:[self.places objectAtIndex:selectedItem.row]];
     [self.mainViewController hideSearchView];
     
+    [self saveToRecentSearches:[self.places objectAtIndex:selectedItem.row]];
+    [self resetTableView];
+}
+
+- (void)resetTableView
+{
     [self.places removeAllObjects];
     [self.searchBar setText:@""];
+    [self.searchDisplayController.searchResultsTableView reloadData];
+    [self.searchDisplayController setActive:NO];
+}
+
+- (void)saveToRecentSearches:(SPGooglePlacesAutocompletePlace *)search
+{
+    NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *recentSearches = [NSMutableArray array];
+    
+    NSMutableArray *dataRepresentingSavedArray = [currentDefaults objectForKey:@"searchHistory"];
+    
+    if (dataRepresentingSavedArray != nil)
+        recentSearches = [[NSMutableArray alloc] initWithArray:dataRepresentingSavedArray];
+    
+
+    NSData *encodedSearch = [NSKeyedArchiver archivedDataWithRootObject:search];
+    [recentSearches insertObject:encodedSearch atIndex:0];
+    if (recentSearches.count > 3) {
+        NSLog(@"Removing last object");
+        [recentSearches removeLastObject];
+    }
+    //NSLog(@"Data represented: %@", dataRepresentingSavedArray);
+    NSLog(@"Saving %i searches", recentSearches.count);
+
+    [currentDefaults setValue:recentSearches forKey:@"searchHistory"];
+}
+
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
+    NSLog(@"Did begin search");
+    [self loadSearchHistory];
+    [self.searchDisplayController.searchResultsTableView reloadData];
+    controller.searchResultsTableView.hidden = NO;
+    for (UIView *v in [[controller.searchResultsTableView superview] subviews]) {
+        if (v.alpha < 1) {
+            [v setHidden:YES];
+        }
+    }
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+    NSLog(@"Did hide search view");
+    if (self.searchDisplayController.active == YES) {
+        NSLog(@"Did hide");
+        tableView.hidden = NO;
+    }
     [self.searchDisplayController.searchResultsTableView reloadData];
 }
 

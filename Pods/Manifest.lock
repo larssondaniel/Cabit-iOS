@@ -23,6 +23,7 @@ PODS:
   - PBFlatUI (1.1.0)
   - PulsingHalo (0.0.1)
   - SIAlertView (1.3)
+  - SPGooglePlacesAutocomplete (1.0.2)
   - TWMessageBarManager (1.3.2)
 
 DEPENDENCIES:
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - PBFlatUI (~> 1.1.0)
   - PulsingHalo
   - SIAlertView
+  - SPGooglePlacesAutocomplete
   - TWMessageBarManager (~> 1.3.2)
 
 SPEC CHECKSUMS:
@@ -41,6 +43,7 @@ SPEC CHECKSUMS:
   PBFlatUI: 17b80f917881dfd02cf4851af6888d258912261a
   PulsingHalo: 6c5b7e18ca5c6c1319d5e2fd277f123ed74a1435
   SIAlertView: e6d0d786c3a3f6e456b0e8b9376d0c34d68e827b
+  SPGooglePlacesAutocomplete: b8fc4dfdd33b0b07aaab635e6d9255ef9e9277e8
   TWMessageBarManager: e14110324f2b2e821ba0880805a0655cbdb76e82
 
 COCOAPODS: 0.32.1

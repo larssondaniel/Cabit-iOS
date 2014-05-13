@@ -67,8 +67,8 @@
     
     self.data = [[NSMutableArray alloc] init];
     
-    self.pickupAnnotation = [[MKPointAnnotation alloc] init];
-    self.destinationAnnotation = [[MKPointAnnotation alloc] init];
+    //self.pickupAnnotation = [[MKPointAnnotation alloc] init];
+    //self.destinationAnnotation = [[MKPointAnnotation alloc] init];
     
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
@@ -83,12 +83,12 @@
       NSFontAttributeName, nil]];
     
     // Doing this in the storyboard magically crashes the app somehow.
-    [self.destinationView setAlpha:0.85];
+    //[self.destinationView setAlpha:0.85];
     
     [self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
     
     // Set up search views
-    
+
     /*
     CGRect topTintFrame = CGRectMake(0, 0, 320, 64);
     UIView *topTintView = [[UIView alloc] initWithFrame:topTintFrame];
@@ -108,83 +108,7 @@
     
     self.credentialsContainer.alpha = 0.0;
     
-    [self setupSearchView];
     [self showCredentialsView];
-}
-
-- (void)setupSearchView {
-    /*
-    self.searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, 320, 32)];
-    self.searchLabel.textColor = [UIColor whiteColor];
-    self.searchLabel.text = @"Upphämtningsplats";
-    self.searchLabel.textAlignment = NSTextAlignmentCenter;
-    self.searchLabel.alpha = 0.0;
-    [self.view addSubview:self.searchLabel];
-     */
-    
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 60.0f, 320.0f, 44.0f)];
-    self.searchBar.delegate = self;
-    
-    [self.searchDisplayController setDelegate:self];
-	[self.searchDisplayController setSearchResultsDataSource:self];
-    
-    // iOS 7 compatibility
-    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    if ([self respondsToSelector:@selector(extendedLayoutIncludesOpaqueBars)])
-        self.extendedLayoutIncludesOpaqueBars = NO;
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    /*
-    self.searchBar.placeholder = @"Sök adress";
-    self.searchBar.tintColor = [UIColor whiteColor];
-    self.searchBar.backgroundColor = [UIColor clearColor];
-    self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    self.searchBar.barStyle = UIBarStyleDefault;
-    UITextField *searchField = [self.searchBar valueForKey:@"_searchField"];
-    [searchField setTextColor:[UIColor whiteColor]];
-    [searchField setKeyboardAppearance:UIKeyboardAppearanceDark];
-     */
-    
-    /*
-     self.searchDisplayController.searchResultsDataSource = self;
-     self.searchDisplayController.searchResultsDelegate = self;
-     self.searchDisplayController.delegate = self;
-     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
-     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
-     */
-    
-    
-    //self.searchDisplayController.searchResultsTableView.hidden = YES;
-    
-    /*
-    self.searchController = [[UISearchDisplayController alloc]initWithSearchBar:self.searchBar contentsController:self];
-    self.searchController.searchResultsDataSource = self;
-    self.searchController.searchResultsDelegate = self;
-    self.searchController.delegate = self;
-    self.searchController.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    self.searchController.searchResultsTableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
-     */
-    
-    // SKA FINNAS MED
-    /*
-    self.searchController.searchResultsTableView.rowHeight = 45;
-    self.searchController.searchResultsTableView.sectionFooterHeight = 22;
-    self.searchController.searchResultsTableView.sectionHeaderHeight = 22;
-    self.searchController.searchResultsTableView.scrollEnabled = YES;
-    self.searchController.searchResultsTableView.showsVerticalScrollIndicator = YES;
-    self.searchController.searchResultsTableView.userInteractionEnabled = YES;
-    self.searchController.searchResultsTableView.bounces = YES;
-     */
-     
-    //self.searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 10.0f)];
-    //self.searchController.searchResultsTableView.tintColor = [UIColor clearColor];
-    //[self.searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"resultsCell"];
-    //self.searchController.searchResultsTableView.alpha = 0.0;
-    
-    self.searchBar.alpha = 0.0;
-    [self.view addSubview:self.searchBar];
-    //[self.view addSubview:self.searchController.searchResultsTableView];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -245,6 +169,7 @@
 
 - (void)setPickupLocation:(CLLocationCoordinate2D)location
 {
+    self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.pickupAnnotation.coordinate = location;
     //[self.mapView addAnnotation:self.pickupAnnotation];
     if (self.destinationMapItem)
@@ -253,6 +178,7 @@
 
 - (void)setDestination:(CLLocationCoordinate2D)location
 {
+    self.destinationAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation.coordinate = location;
     [self.mapView addAnnotation:self.destinationAnnotation];
     [self generateRoute];
@@ -338,21 +264,6 @@
 */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    /*
-    if([segue.identifier isEqualToString:@"choosePickupLocation"]){
-        SearchPickupViewController *controller = (SearchPickupViewController *)segue.destinationViewController;
-        controller.delegate = self;
-        controller.location = self.mapView.userLocation.location;
-    } else if([segue.identifier isEqualToString:@"chooseDestination"]){
-        SearchDestinationViewController *controller = (SearchDestinationViewController *)segue.destinationViewController;
-        controller.delegate = self;
-        controller.location = self.mapView.userLocation.location;
-        if (!self.pickupAnnotation) {
-            self.pickupAnnotation = [[MKPointAnnotation alloc] init];
-            CLLocationCoordinate2D myCoord = {self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.longitude};
-            [self setPickupLocation:myCoord];
-        }
-     */
     if([segue.identifier isEqualToString:@"confirmationSegue"]){
         ConfirmationViewController *controller = (ConfirmationViewController *)segue.destinationViewController;
         controller.pickupMapItem = self.pickupMapItem;
@@ -373,7 +284,6 @@
     [self setDestination:item.placemark.location.coordinate];
     [self.destinationLabel setTitle:item.name forState:UIControlStateNormal];
     self.shouldAnimateBottomView = YES;
-    [self.continueButton setEnabled:YES];
 }
 
 # pragma mark Directions
@@ -424,10 +334,10 @@
     
     MKPointAnnotation *userAnnotation = [[MKPointAnnotation alloc] init];
     [userAnnotation setCoordinate:self.mapView.userLocation.coordinate];
-    routeAnnotations = [routeAnnotations arrayByAddingObject:self.mapView.userLocation];
+    //routeAnnotations = [routeAnnotations arrayByAddingObject:self.mapView.userLocation];
+    routeAnnotations = [routeAnnotations arrayByAddingObject:self.destinationAnnotation];
     routeAnnotations = [routeAnnotations arrayByAddingObject:self.pickupAnnotation];
-    if (self.destinationAnnotation)
-        routeAnnotations = [routeAnnotations arrayByAddingObject:self.destinationAnnotation];
+    
     for (id <MKAnnotation> annotation in routeAnnotations) {
         MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
         MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1);
@@ -435,27 +345,8 @@
     }
     double inset = -zoomRect.size.width * 1;
     [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) animated:YES];
-}
-
-- (void) updateActivityIndicator:(NSTimer *)incomingTimer
-{
-    if ([incomingTimer userInfo] != nil) {
-        if ([[[incomingTimer userInfo] message] length] <= 30) {
-            [[incomingTimer userInfo] setMessage:[[[incomingTimer userInfo] message] stringByAppendingString:@"."]];
-        }
-        else {
-            [[incomingTimer userInfo] setMessage:[[[incomingTimer userInfo] message]stringByReplacingCharactersInRange:(NSRange){27, 3} withString:@""]];
-        }
-    }
-}
-
-- (void) findTaxi
-{
-    /*[[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Bokning genomförd!"
-                                                   description:@"En taxi är på väg."
-                                                          type:TWMessageBarMessageTypeSuccess];
-     */
-    //[self performSegueWithIdentifier: @"displayConfirmation" sender: self];
+    
+    [self.continueButton setEnabled:YES];
 }
 
 #pragma Animation
@@ -628,6 +519,7 @@
     }];
 }
 
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
@@ -643,9 +535,9 @@
         //[self setPickupLocation:mapItem.placemark.location.coordinate];
         [self.destinationLabel setTitle:mapItem.name forState:UIControlStateNormal];
     }
-    
     [self hideSearchView];
 }
+ */
 
 /*
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -708,7 +600,7 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
     SearchViewController *searchViewController = (SearchViewController *)self.childViewControllers[2];
-    [searchViewController setActiveWithLabel:@"Tjena"];
+    [searchViewController setActiveWithLabel:@"Tjena" andUserLocation:self.mapView.userLocation.coordinate];
 }
 
 - (void)hideSearchView {
@@ -720,5 +612,17 @@
     }];
 }
 
+- (void)didFinishSearchWithAdress:(MKMapItem *)mapItem
+{
+    if (self.isSearchingForPickup) {
+        [self setPickupMapItem:mapItem];
+        [self setPickupLocation:mapItem.placemark.location.coordinate];
+        [self.pickupLabel setTitle:mapItem.name forState:UIControlStateNormal];
+    } else {
+        [self setDestinationMapItem:mapItem];
+        [self setDestination:mapItem.placemark.location.coordinate];
+        [self.destinationLabel setTitle:mapItem.name forState:UIControlStateNormal];
+    }
+}
 
 @end

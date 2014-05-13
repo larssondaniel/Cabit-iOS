@@ -20,5 +20,6 @@
 - (void)didFinishEnteringCredentials;
 - (void)hideSettingsView;
 - (void)hideSearchView;
+- (void)didFinishSearchWithAdress:(MKMapItem *)mapItem;
 
 @end

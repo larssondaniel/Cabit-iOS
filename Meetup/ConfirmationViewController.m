@@ -40,24 +40,19 @@
     
     [self.mapView setDelegate:self];
     
-    
-    
-    
     BookingHTTPClient *client = [BookingHTTPClient sharedBookingHTTPClient];
     client.delegate = self;
     [client requestReservationWithOrigin:self.mapView.userLocation.location andDestination:self.mapView.userLocation.location];
     
-    
-    
-    
-    self.pickupAnnotation = [[PickupAnnotation alloc] initWithCoordinates:self.pickupMapItem.placemark.coordinate];
-    self.destinationAnnotation = [[MKPointAnnotation alloc] init];
-    [self.destinationAnnotation setCoordinate:self.destinationMapItem.placemark.coordinate];
+    //self.pickupAnnotation = [[PickupAnnotation alloc] initWithCoordinates:self.pickupMapItem.placemark.coordinate];
+    //self.destinationAnnotation = [[MKPointAnnotation alloc] init];
+    //[self.destinationAnnotation setCoordinate:self.destinationMapItem.placemark.coordinate];
     
     [self setFontFamily:@"OpenSans-Semibold" forView:self.view andSubViews:YES];
     [self.priceLabel setFont:[UIFont fontWithName:@"OpenSans-Semibold" size:[[self.priceLabel font] pointSize]]];
     [self.staticPriceLabel setFont:[UIFont fontWithName:@"OpenSans-Semibold" size:[[self.staticPriceLabel font] pointSize]]];
 
+    NSLog(@"Annotation is %@", self.destinationAnnotation);
     [self.mapView addAnnotation:self.destinationAnnotation];
     [self.mapView addAnnotation:self.pickupAnnotation];
     
@@ -80,14 +75,16 @@
 
     
 
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:1]);
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
         
         CAAnimation *animation_cancelButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y) toPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
+        animation_cancelButton.fillMode = kCAFillModeForwards;
+        animation_cancelButton.removedOnCompletion = NO;
         animation_cancelButton.duration = 0.6;
         [self.cancelButton.layer addAnimation:animation_cancelButton forKey:@"easing"];
-        [self.cancelButton setCenter:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
+        //[self.cancelButton setCenter:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
         
         
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
@@ -95,9 +92,11 @@
             
             
             CAAnimation *animation_editButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y) toPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
+            animation_editButton.fillMode = kCAFillModeForwards;
+            animation_editButton.removedOnCompletion = NO;
             animation_editButton.duration = 0.6;
             [self.editButton.layer addAnimation:animation_editButton forKey:@"easing"];
-            [self.editButton setCenter:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
+            //[self.editButton setCenter:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
             
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -105,8 +104,10 @@
                 
                 CAAnimation *animation_bottomView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.bottomView.center.x, self.bottomView.center.y) toPoint:CGPointMake(self.bottomView.center.x, self.bottomView.center.y - 181)];
                 animation_bottomView.duration = 0.5;
+                animation_bottomView.fillMode = kCAFillModeForwards;
+                animation_bottomView.removedOnCompletion = NO;
                 [self.bottomView.layer addAnimation:animation_bottomView forKey:@"easing"];
-                [self.bottomView setCenter:CGPointMake(self.bottomView.center.x, self.bottomView.center.y - 181)];
+                //[self.bottomView setCenter:CGPointMake(self.bottomView.center.x, self.bottomView.center.y - 181)];
                 
                 
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
@@ -115,8 +116,10 @@
                     
                     CAAnimation *animation_statusView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y) toPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
                     animation_statusView.duration = 0.8;
+                    animation_statusView.fillMode = kCAFillModeForwards;
+                    animation_statusView.removedOnCompletion = NO;
                     [self.statusView.layer addAnimation:animation_statusView forKey:@"easing"];
-                    [self.statusView setCenter:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
+                    //[self.statusView setCenter:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
                     
                     
                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:1]);
@@ -124,9 +127,12 @@
                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                         CAAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ExponentialEaseOut fromPoint:CGPointMake(self.statusImage.center.x, self.statusImage.center.y) toPoint:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
                         animation.duration = 0.5;
+                        animation.fillMode = kCAFillModeForwards;
+                        animation.removedOnCompletion = NO;
                         [self.statusImage.layer addAnimation:animation forKey:@"easing"];
-                        [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
+                        //[self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
                         
+                        /*
                         int64_t delayInSeconds = 5;
                         dispatch_time_t popTime2 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                         
@@ -138,7 +144,7 @@
                             animation.duration = 1.0;
                             [self.statusImage.layer addAnimation:animation forKey:@"easing"];
                             [self.statusImage setCenter:CGPointMake(self.statusImage.center.x - 80, self.statusImage.center.y)];
-                            
+                         
                             int64_t delayInSeconds = 1.0;
                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                             
@@ -149,7 +155,7 @@
                                 [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
                                 
                             });
-                        });
+                        });*/
                     });
                 });
             });
@@ -243,9 +249,12 @@
     [self fitRegionToRoute];
     
     MKCoordinateRegion mapRegion;
-    mapRegion.center = self.pickupAnnotation.coordinate;
+    CLLocationCoordinate2D center = self.pickupAnnotation.coordinate;
+    center.latitude -= 0.002 * 0.20;
+    mapRegion.center = center;
     mapRegion.span.latitudeDelta = 0.002;
     mapRegion.span.longitudeDelta = 0.002;
+    
     
     int64_t delayInSeconds = 2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);

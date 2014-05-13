@@ -25,8 +25,8 @@
 {
     [super viewDidLoad];
     
-    [self.nameField setValue:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.phoneField setValue:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.nameField setValue:[UIColor colorWithWhite:0.85 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.phoneField setValue:[UIColor colorWithWhite:0.85 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     [self.continueButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:22]];
 }
 
@@ -55,6 +55,10 @@
     [defaults setObject:self.nameField.text forKey:@"Name"];
     [defaults setObject:self.phoneField.text forKey:@"PhoneNumber"];
     [defaults synchronize];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 @end

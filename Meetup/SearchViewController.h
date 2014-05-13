@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface SearchViewController : UIViewController
+@interface SearchViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate>
 
-- (void)setActiveWithLabel:(NSString *)label;
+@property (nonatomic, strong) NSMutableArray *places;
+
+- (void)setActiveWithLabel:(NSString *)label andUserLocation:(CLLocationCoordinate2D)location;
 
 @end

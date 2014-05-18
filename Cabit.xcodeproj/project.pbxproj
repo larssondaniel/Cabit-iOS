@@ -104,6 +104,11 @@
 		6BFFD851191CC86000B7591B /* CredentialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD850191CC86000B7591B /* CredentialsViewController.m */; };
 		6BFFD853191CCB2100B7591B /* phone_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD852191CCB2100B7591B /* phone_white@2x.png */; };
 		6BFFD89A191DB36E00B7591B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFFD899191DB36E00B7591B /* SearchViewController.m */; };
+		6BFFD8C819283EEB00B7591B /* whiteCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD8C719283EEB00B7591B /* whiteCircle@2x.png */; };
+		6BFFD8CA1928435D00B7591B /* blurBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD8C91928435D00B7591B /* blurBackground@2x.jpg */; };
+		6BFFD8CD1928451400B7591B /* blurBackground2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD8CB1928451400B7591B /* blurBackground2@2x.jpg */; };
+		6BFFD8CE1928451400B7591B /* blurBackground3@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD8CC1928451400B7591B /* blurBackground3@2x.jpg */; };
+		6BFFD8D01928BFFA00B7591B /* blurBackground4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BFFD8CF1928BFFA00B7591B /* blurBackground4@2x.jpg */; };
 		E70D06E6A7B44D088C73B6E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACBD26CE1B64C9E9325F5DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -242,6 +247,11 @@
 		6BFFD852191CCB2100B7591B /* phone_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phone_white@2x.png"; path = "Graphics/phone_white@2x.png"; sourceTree = "<group>"; };
 		6BFFD898191DB36E00B7591B /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		6BFFD899191DB36E00B7591B /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		6BFFD8C719283EEB00B7591B /* whiteCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteCircle@2x.png"; path = "Graphics/whiteCircle@2x.png"; sourceTree = "<group>"; };
+		6BFFD8C91928435D00B7591B /* blurBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "blurBackground@2x.jpg"; path = "Graphics/blurBackground@2x.jpg"; sourceTree = "<group>"; };
+		6BFFD8CB1928451400B7591B /* blurBackground2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "blurBackground2@2x.jpg"; path = "Graphics/blurBackground2@2x.jpg"; sourceTree = "<group>"; };
+		6BFFD8CC1928451400B7591B /* blurBackground3@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "blurBackground3@2x.jpg"; path = "Graphics/blurBackground3@2x.jpg"; sourceTree = "<group>"; };
+		6BFFD8CF1928BFFA00B7591B /* blurBackground4@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "blurBackground4@2x.jpg"; path = "Graphics/blurBackground4@2x.jpg"; sourceTree = "<group>"; };
 		9ACBD26CE1B64C9E9325F5DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA2434ED27C46CAAF88BE54 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -453,6 +463,11 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6BFFD8CF1928BFFA00B7591B /* blurBackground4@2x.jpg */,
+				6BFFD8CB1928451400B7591B /* blurBackground2@2x.jpg */,
+				6BFFD8CC1928451400B7591B /* blurBackground3@2x.jpg */,
+				6BFFD8C91928435D00B7591B /* blurBackground@2x.jpg */,
+				6BFFD8C719283EEB00B7591B /* whiteCircle@2x.png */,
 				6BFFD852191CCB2100B7591B /* phone_white@2x.png */,
 				6BFFD84D191CC4CC00B7591B /* white-line@2x.png */,
 				6BE867811909AD5F0046B9F2 /* dot-circle-white@2x.png */,
@@ -620,9 +635,12 @@
 				6BB2DD86183EDA5400BBA9A8 /* taxiKurir.png in Resources */,
 				6B4795B419019A710007E874 /* loading@2x.gif in Resources */,
 				6BB2DDA3184D3D8100BBA9A8 /* taxiKurirNy@2x.png in Resources */,
+				6BFFD8C819283EEB00B7591B /* whiteCircle@2x.png in Resources */,
 				6B1B162F18E2121400CACBDA /* resultBottomView@2x.png in Resources */,
 				6BAA75CD18DA4EEA00898045 /* OpenSans-Regular.ttf in Resources */,
 				6BB2DDA2184D3D8100BBA9A8 /* taxiKurirNy.png in Resources */,
+				6BFFD8D01928BFFA00B7591B /* blurBackground4@2x.jpg in Resources */,
+				6BFFD8CD1928451400B7591B /* blurBackground2@2x.jpg in Resources */,
 				6B1B164518E35F6B00CACBDA /* pin@2x.png in Resources */,
 				6BABDCB1187EF4ED00F15E8B /* callout@2x.png in Resources */,
 				6B1B163D18E24BFE00CACBDA /* redCircle@2x.png in Resources */,
@@ -645,6 +663,7 @@
 				6BA6135E18AE7A4E00B61A6E /* settings.png in Resources */,
 				6BA613C018BD720200B61A6E /* taxiAnnotation2@2x.png in Resources */,
 				6B1B163418E22C9700CACBDA /* cabIcon.png in Resources */,
+				6BFFD8CA1928435D00B7591B /* blurBackground@2x.jpg in Resources */,
 				6BABF516183A9EB900A6988B /* InfoPlist.strings in Resources */,
 				6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */,
 				6BAA75D518DF404B00898045 /* Default@2x.png in Resources */,
@@ -658,6 +677,7 @@
 				6B4795C5190818F30007E874 /* user@2x.png in Resources */,
 				6BE8678019095E550046B9F2 /* dot-circle@2x.png in Resources */,
 				6B1B163118E2130500CACBDA /* resultBottomView.png in Resources */,
+				6BFFD8CE1928451400B7591B /* blurBackground3@2x.jpg in Resources */,
 				6BABF54A183AA7A500A6988B /* Profile.png in Resources */,
 				6BFFD84E191CC4CC00B7591B /* white-line@2x.png in Resources */,
 				6BF15A5918C3868400183C52 /* phone@2x.png in Resources */,

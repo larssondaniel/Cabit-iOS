@@ -16,6 +16,7 @@
 #import "CredentialsViewController.h"
 #import "SettingsViewController.h"
 #import "SearchViewController.h"
+#import "SPGooglePlacesAutocomplete.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -63,12 +64,7 @@
     [super viewDidLoad];
 
     [self.mapView setDelegate:self];
-    //[self.mapView addSubview:self.searchView];
-    
     self.data = [[NSMutableArray alloc] init];
-    
-    //self.pickupAnnotation = [[MKPointAnnotation alloc] init];
-    //self.destinationAnnotation = [[MKPointAnnotation alloc] init];
     
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
@@ -81,9 +77,6 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"OpenSans" size:21],
       NSFontAttributeName, nil]];
-    
-    // Doing this in the storyboard magically crashes the app somehow.
-    //[self.destinationView setAlpha:0.85];
     
     [self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
     
@@ -266,8 +259,8 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"confirmationSegue"]){
         ConfirmationViewController *controller = (ConfirmationViewController *)segue.destinationViewController;
-        controller.pickupMapItem = self.pickupMapItem;
-        controller.destinationMapItem = self.destinationMapItem;
+        controller.pickup = self.pickupMapItem;
+        controller.destination = self.destinationMapItem;
         controller.pickupAnnotation = self.pickupAnnotation;
         controller.destinationAnnotation = self.destinationAnnotation;
     }
@@ -567,7 +560,6 @@
     }];
 }
 
-
 #pragma settings
 
 - (void)hideSettingsView {
@@ -594,7 +586,7 @@
 
 - (void)showSearchView {
     [self.view bringSubviewToFront:self.searchContainer];
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         self.searchContainer.alpha = 1.0;
         self.tintView.alpha = 0.97;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -605,24 +597,44 @@
 
 - (void)hideSearchView {
     [self.view endEditing:YES];
-    [UIView animateWithDuration:0.4 animations:^(void) {
+    [UIView animateWithDuration:0.25 animations:^(void) {
         self.tintView.alpha = 0.0;
         self.searchContainer.alpha = 0.0;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     }];
 }
 
-- (void)didFinishSearchWithAdress:(MKMapItem *)mapItem
+- (void)didFinishSearchWithAdress:(SPGooglePlacesAutocompletePlace *)mapItem
 {
+    NSString *parsedAddress = [self parseAddress:mapItem.name];
+
     if (self.isSearchingForPickup) {
-        [self setPickupMapItem:mapItem];
-        [self setPickupLocation:mapItem.placemark.location.coordinate];
-        [self.pickupLabel setTitle:mapItem.name forState:UIControlStateNormal];
+        //[self setPickupMapItem:mapItem];
+        [mapItem resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
+            MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
+            MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
+            [self setPickupMapItem:mapItem];
+            [self setPickupLocation:placemark.location.coordinate];
+        }];
+        //[self setPickupLocation:mapItem.placemark.location.coordinate];
+        [self.pickupLabel setTitle:parsedAddress forState:UIControlStateNormal];
     } else {
-        [self setDestinationMapItem:mapItem];
-        [self setDestination:mapItem.placemark.location.coordinate];
-        [self.destinationLabel setTitle:mapItem.name forState:UIControlStateNormal];
+        //[self setDestinationMapItem:mapItem];
+        [mapItem resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
+            MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
+            MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
+            [self setDestinationMapItem:mapItem];
+            [self setDestination:placemark.location.coordinate];
+        }];
+        //[self setDestination:mapItem.placemark.location.coordinate];
+        [self.destinationLabel setTitle:parsedAddress forState:UIControlStateNormal];
     }
+}
+
+- (NSString *)parseAddress:(NSString *)address {
+    NSArray *addressComponents = [address componentsSeparatedByString:@","];
+    NSString *parsedAddress = [NSString stringWithFormat:@"%@, %@", [addressComponents objectAtIndex:0], [addressComponents objectAtIndex:1]];
+    return parsedAddress;
 }
 
 @end

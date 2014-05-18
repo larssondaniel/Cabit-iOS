@@ -13,6 +13,7 @@
 #import "DACircularProgressView.h"
 #import "BBCyclingLabel.h"
 #import "CAKeyframeAnimation+AHEasing.h"
+#import "SPGooglePlacesAutocompletePlace.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -30,6 +31,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 
+@property (strong, nonatomic) DACircularProgressView *progressView;
+@property (strong, nonatomic) UIImageView *progressImageView;
+@property (strong, nonatomic) NSTimer *timer;
+
 @end
 
 @implementation ConfirmationViewController
@@ -40,13 +45,28 @@
     
     [self.mapView setDelegate:self];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.image = [UIImage imageNamed:@"blurBackground3.jpg"];
+    imageView.alpha = 0.25;
+    [self.bottomView addSubview:imageView];
+    
+    /*
+    self.progressImageView = [[UIImageView alloc] initWithFrame:CGRectMake(130.0, 276.0, 60.0, 60.0)];
+    self.progressImageView.image = [UIImage imageNamed:@"whiteCircle"];
+    [self.view addSubview:self.progressImageView];
+    
+    self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(130, 276, 60.0f, 60.0f)];
+    self.progressView.trackTintColor = [UIColor colorWithWhite:0.8 alpha:1];
+    self.progressView.progressTintColor = [UIColor colorWithRed:41.0f/255.0f green:180.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
+    self.progressView.thicknessRatio = 0.1f;
+    self.progressView.clockwiseProgress = YES;
+    [self.view addSubview:self.progressView];
+    [self startAnimation];
+     */
+    
     BookingHTTPClient *client = [BookingHTTPClient sharedBookingHTTPClient];
     client.delegate = self;
     [client requestReservationWithOrigin:self.mapView.userLocation.location andDestination:self.mapView.userLocation.location];
-    
-    //self.pickupAnnotation = [[PickupAnnotation alloc] initWithCoordinates:self.pickupMapItem.placemark.coordinate];
-    //self.destinationAnnotation = [[MKPointAnnotation alloc] init];
-    //[self.destinationAnnotation setCoordinate:self.destinationMapItem.placemark.coordinate];
     
     [self setFontFamily:@"OpenSans-Semibold" forView:self.view andSubViews:YES];
     [self.priceLabel setFont:[UIFont fontWithName:@"OpenSans-Semibold" size:[[self.priceLabel font] pointSize]]];
@@ -69,34 +89,31 @@
     label.transitionDuration = 0.3;
     [label setText:@"Söker efter bilar i närheten..." animated:NO];
     
-    
-    
-    //dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-
-    
 
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        
+        /*
         CAAnimation *animation_cancelButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y) toPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
         animation_cancelButton.fillMode = kCAFillModeForwards;
         animation_cancelButton.removedOnCompletion = NO;
         animation_cancelButton.duration = 0.6;
         [self.cancelButton.layer addAnimation:animation_cancelButton forKey:@"easing"];
         //[self.cancelButton setCenter:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
+         */
         
         
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            
+            /*
             CAAnimation *animation_editButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y) toPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
             animation_editButton.fillMode = kCAFillModeForwards;
             animation_editButton.removedOnCompletion = NO;
             animation_editButton.duration = 0.6;
             [self.editButton.layer addAnimation:animation_editButton forKey:@"easing"];
             //[self.editButton setCenter:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
+             */
             
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -114,13 +131,13 @@
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     
                     
-                    CAAnimation *animation_statusView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y) toPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
+                    /*CAAnimation *animation_statusView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y) toPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
                     animation_statusView.duration = 0.8;
                     animation_statusView.fillMode = kCAFillModeForwards;
                     animation_statusView.removedOnCompletion = NO;
                     [self.statusView.layer addAnimation:animation_statusView forKey:@"easing"];
                     //[self.statusView setCenter:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
-                    
+                    */
                     
                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:1]);
                     
@@ -218,10 +235,10 @@
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
     request.source = [MKMapItem mapItemForCurrentLocation];
     
-    if (self.pickupMapItem)
-        request.source = self.pickupMapItem;
+    if (self.pickup)
+        request.source = self.pickup;
     
-    request.destination = self.destinationMapItem;
+    request.destination = self.destination;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
     
     [directions calculateDirectionsWithCompletionHandler:
@@ -256,7 +273,7 @@
     mapRegion.span.longitudeDelta = 0.002;
     
     
-    int64_t delayInSeconds = 2;
+    int64_t delayInSeconds = 0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -276,6 +293,9 @@
 }
 
 - (IBAction)back {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (float)secondsToNanoseconds:(float)second
@@ -300,6 +320,27 @@
                                               cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
      */
+}
+
+- (void)startAnimation
+{
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                  target:self
+                                                selector:@selector(progressChange)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
+
+- (void)progressChange
+{
+    CGFloat progress = ![self.timer isValid] ? self.progressView.progress : self.progressView.progress + 0.01f;
+    [self.progressView setProgress:progress animated:YES];
+    
+    if (self.progressView.progress >= 1.0f && [self.timer isValid])
+        [self.progressView setProgress:0.f animated:YES];
+}
+
+- (IBAction)clickedOk:(UIButton *)sender {
 }
 
 @end

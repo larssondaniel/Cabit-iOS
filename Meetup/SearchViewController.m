@@ -28,6 +28,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];
+    imageView.alpha = 0.25;
+    [self.view addSubview:imageView];
+    
     self.locationManager = [[CLLocationManager alloc] init];
 	self.locationManager.delegate = self;
 	[self.locationManager startUpdatingLocation];
@@ -87,28 +92,23 @@
         cell.backgroundView = nil;
         cell.textLabel.textColor = [UIColor whiteColor];
     }
-    
-    /*
-    // Configure the cell.
-    MKMapItem *mapItem = (MKMapItem *)[self.places objectAtIndex:indexPath.row];
-    
-    NSString *formattedAddress = [mapItem.placemark.addressDictionary valueForKey:@"Name"];
-    if ([mapItem.placemark.addressDictionary valueForKey:@"City"]) {
-        formattedAddress = [formattedAddress stringByAppendingString:[NSString stringWithFormat:@", %@", [mapItem.placemark.addressDictionary valueForKey:@"City"]]];
+
+    if (indexPath.row <= self.places.count -1 && self.places.count) {
+        SPGooglePlacesAutocompletePlace *place = (SPGooglePlacesAutocompletePlace *)[self.places objectAtIndex:indexPath.row];
+        cell.textLabel.text = [self parseAddress:place.name];
+        return cell;
     }
-    
-    cell.textLabel.text = formattedAddress;
-     */
+    return nil;
+}
 
-    SPGooglePlacesAutocompletePlace *place = (SPGooglePlacesAutocompletePlace *)[self.places objectAtIndex:indexPath.row];
-    cell.textLabel.text = place.name;
-
-    return cell;
+- (NSString *)parseAddress:(NSString *)address {
+    NSArray *addressComponents = [address componentsSeparatedByString:@","];
+    NSString *parsedAddress = [NSString stringWithFormat:@"%@, %@", [addressComponents objectAtIndex:0], [addressComponents objectAtIndex:1]];
+    return parsedAddress;
 }
 
 -(void)issueLocalSearchLookup:(NSString *)searchString
 {
-    //NSLog(@"Issue search for %@", searchString);
     SPGooglePlacesAutocompleteQuery *query = [[SPGooglePlacesAutocompleteQuery alloc] initWithApiKey:@"AIzaSyDxTyIXSAktcdcT8_l9AdjiUem8--zxw2Y"];
     query.input = searchString; // search key word
     query.location = self.userLocation;  // user's current location
@@ -191,7 +191,7 @@
     
     // pass the individual place to our map destination view controller
     NSIndexPath *selectedItem = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-    //[self.mainViewController didFinishSearchWithAdress:[self.places objectAtIndex:selectedItem.row]];
+    [self.mainViewController didFinishSearchWithAdress:[self.places objectAtIndex:selectedItem.row]];
     [self.mainViewController hideSearchView];
     
     [self saveToRecentSearches:[self.places objectAtIndex:selectedItem.row]];
@@ -219,32 +219,32 @@
 
     NSData *encodedSearch = [NSKeyedArchiver archivedDataWithRootObject:search];
     [recentSearches insertObject:encodedSearch atIndex:0];
-    if (recentSearches.count > 3) {
-        NSLog(@"Removing last object");
+    if (recentSearches.count > 9) {
         [recentSearches removeLastObject];
     }
-    //NSLog(@"Data represented: %@", dataRepresentingSavedArray);
-    NSLog(@"Saving %i searches", recentSearches.count);
-
     [currentDefaults setValue:recentSearches forKey:@"searchHistory"];
 }
 
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
-    NSLog(@"Did begin search");
     [self loadSearchHistory];
     [self.searchDisplayController.searchResultsTableView reloadData];
     controller.searchResultsTableView.hidden = NO;
-    for (UIView *v in [[controller.searchResultsTableView superview] subviews]) {
+    [self removeTableViewOverlay];
+}
+
+- (void)removeTableViewOverlay {
+    for (UIView *v in [[self.searchDisplayController.searchResultsTableView superview] subviews]) {
         if (v.alpha < 1) {
             [v setHidden:YES];
         }
     }
 }
 
--(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
     NSLog(@"Did hide search view");
     if (self.searchDisplayController.active == YES) {
         NSLog(@"Did hide");
+        [self removeTableViewOverlay];
         tableView.hidden = NO;
     }
     [self.searchDisplayController.searchResultsTableView reloadData];

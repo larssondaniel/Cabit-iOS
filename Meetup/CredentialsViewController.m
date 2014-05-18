@@ -25,6 +25,11 @@
 {
     [super viewDidLoad];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];
+    imageView.alpha = 0.25;
+    [self.view addSubview:imageView];
+    
     [self.nameField setValue:[UIColor colorWithWhite:0.85 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     [self.phoneField setValue:[UIColor colorWithWhite:0.85 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     [self.continueButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:22]];

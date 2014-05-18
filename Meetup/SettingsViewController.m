@@ -25,6 +25,11 @@
 {
     [super viewDidLoad];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];
+    imageView.alpha = 0.25;
+    [self.view addSubview:imageView];
+    
     // Load credentials
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [self.nameTextField setText:[defaults objectForKey:@"name"]];

@@ -4,12 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-ADDropDownMenuView.xcscheme</key>
+		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-AFNetworking.xcscheme</key>
+		<key>Pods-APLKeyboardControls.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Canvas.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -19,22 +24,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-PBFlatUI.xcscheme</key>
+		<key>Pods-NSData+Base64.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-PulsingHalo.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SIAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SPGooglePlacesAutocomplete.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,47 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1F0449CDCC9540DEAD755096</key>
+		<key>1F8F131A14DD4E149CB02165</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>38897D5F78284DA28622D2FF</key>
+		<key>2A5587F79B754340B749510F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4162A9EC53E145159E641819</key>
+		<key>34309B94699442B4A6C2C133</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C8C6D633F374C7A81E33DE5</key>
+		<key>4B0084075A1C4D818030E50A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B0BB05BEF972431A9F8697B8</key>
+		<key>6C581DA16E9D4F3AAF730893</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C35D8D5FF09C4E76A4064F85</key>
+		<key>8DA77E21DAE54C54A08B1E67</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C8A27279FCA0485D84BDF8EC</key>
+		<key>E784A8C5FEFD41CE913B81F1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E19D8973CDAD4D8C9126D7D5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EA9602E393864C159052695A</key>
+		<key>F5916AD742DC4AD8AF1F8AA1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

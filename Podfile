@@ -1,10 +1,8 @@
-platform :ios, '6.0'
+platform :ios, '7.0'
 
-pod 'SIAlertView'
-pod 'PBFlatUI', '~> 1.1.0'
-pod 'ADDropDownMenuView', '~> 1.0.1'
 pod 'TWMessageBarManager', '~> 1.3.2'
-pod "PulsingHalo"
+pod 'PulsingHalo'
 pod 'DACircularProgress', '~> 2.2.0'
 pod 'AFNetworking', '~> 2.2.3'
-pod 'SPGooglePlacesAutocomplete'
+pod 'APLKeyboardControls'
+pod 'Canvas'

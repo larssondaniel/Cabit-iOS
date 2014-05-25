@@ -36,7 +36,6 @@
     [self.phoneTextField setText:[defaults objectForKey:@"phoneNumber"]];
     NSLog(@"Reading name: %@", [defaults objectForKey:@"name"]);
     
-    
     [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     [self.phoneTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     [self.pushLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
@@ -47,8 +46,6 @@
     [self.phoneTextField setValue:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     
     self.tableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
-    //self.tableView.rowHeight = 45;
-
 }
 
 #pragma mark - Table view data source
@@ -56,7 +53,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

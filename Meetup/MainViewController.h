@@ -13,7 +13,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) UISearchDisplayController *searchController;
 

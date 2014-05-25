@@ -8,13 +8,11 @@
 
 #import "ConfirmationViewController.h"
 #import "Vehicle.h"
-#import "DialController.h"
 #import "UIView+Glow.h"
 #import "DACircularProgressView.h"
 #import "BBCyclingLabel.h"
 #import "CAKeyframeAnimation+AHEasing.h"
 #import "SPGooglePlacesAutocompletePlace.h"
-
 #import <CoreLocation/CoreLocation.h>
 
 @interface ConfirmationViewController ()
@@ -93,27 +91,27 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        /*
+        
         CAAnimation *animation_cancelButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y) toPoint:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
         animation_cancelButton.fillMode = kCAFillModeForwards;
         animation_cancelButton.removedOnCompletion = NO;
         animation_cancelButton.duration = 0.6;
         [self.cancelButton.layer addAnimation:animation_cancelButton forKey:@"easing"];
         //[self.cancelButton setCenter:CGPointMake(self.cancelButton.center.x, self.cancelButton.center.y - 77)];
-         */
+        
         
         
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            /*
+            
             CAAnimation *animation_editButton = [CAKeyframeAnimation animationWithKeyPath:@"position" function:ElasticEaseOut fromPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y) toPoint:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
             animation_editButton.fillMode = kCAFillModeForwards;
             animation_editButton.removedOnCompletion = NO;
             animation_editButton.duration = 0.6;
             [self.editButton.layer addAnimation:animation_editButton forKey:@"easing"];
             //[self.editButton setCenter:CGPointMake(self.editButton.center.x, self.editButton.center.y - 77)];
-             */
+            
             
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:0.1]);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -131,13 +129,13 @@
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     
                     
-                    /*CAAnimation *animation_statusView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y) toPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
+                    CAAnimation *animation_statusView = [CAKeyframeAnimation animationWithKeyPath:@"position" function:CubicEaseOut fromPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y) toPoint:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
                     animation_statusView.duration = 0.8;
                     animation_statusView.fillMode = kCAFillModeForwards;
                     animation_statusView.removedOnCompletion = NO;
                     [self.statusView.layer addAnimation:animation_statusView forKey:@"easing"];
                     //[self.statusView setCenter:CGPointMake(self.statusView.center.x, self.statusView.center.y - 262)];
-                    */
+                    
                     
                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [self secondsToNanoseconds:1]);
                     
@@ -149,7 +147,7 @@
                         [self.statusImage.layer addAnimation:animation forKey:@"easing"];
                         //[self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
                         
-                        /*
+                        
                         int64_t delayInSeconds = 5;
                         dispatch_time_t popTime2 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                         
@@ -172,13 +170,11 @@
                                 [self.statusImage setCenter:CGPointMake(self.statusImage.center.x + 80, self.statusImage.center.y)];
                                 
                             });
-                        });*/
+                        });
                     });
                 });
             });
-
         });
-
     });
 }
 

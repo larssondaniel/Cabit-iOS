@@ -47,13 +47,6 @@
     [self.searchDisplayController.searchResultsTableView setBackgroundColor:[UIColor clearColor]];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    //[self loadSearchHistory];
-}
-
 - (void)loadSearchHistory
 {
     NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
@@ -68,7 +61,6 @@
         }
         [self.places addObjectsFromArray:recentSearches];
     }
-    NSLog(@"Reading %i searches", self.places.count);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
@@ -120,9 +112,8 @@
         [self.places removeAllObjects];
         //NSLog(@"Results for %@: %i", searchString, places.count);
         [self.places addObjectsFromArray:places];
+        [self.searchDisplayController.searchResultsTableView reloadData];
     }];
-    
-    [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -217,8 +208,18 @@
         recentSearches = [[NSMutableArray alloc] initWithArray:dataRepresentingSavedArray];
     
 
+    for (NSData *data in dataRepresentingSavedArray) {
+        SPGooglePlacesAutocompletePlace *object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        //NSLog(@"Comparing \n\n%@ \n\n to %@", search, object);
+        if ([object.reference isEqualToString:search.reference]) {
+            NSLog(@"Removing data");
+            [recentSearches removeObject:data];
+        }
+    }
+    
     NSData *encodedSearch = [NSKeyedArchiver archivedDataWithRootObject:search];
     [recentSearches insertObject:encodedSearch atIndex:0];
+    
     if (recentSearches.count > 9) {
         [recentSearches removeLastObject];
     }

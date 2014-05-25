@@ -6,12 +6,6 @@
 // project.
 
 
-// ADDropDownMenuView
-#define COCOAPODS_POD_AVAILABLE_ADDropDownMenuView
-#define COCOAPODS_VERSION_MAJOR_ADDropDownMenuView 1
-#define COCOAPODS_VERSION_MINOR_ADDropDownMenuView 0
-#define COCOAPODS_VERSION_PATCH_ADDropDownMenuView 1
-
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
@@ -54,35 +48,35 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 3
 
+// APLKeyboardControls
+#define COCOAPODS_POD_AVAILABLE_APLKeyboardControls
+#define COCOAPODS_VERSION_MAJOR_APLKeyboardControls 0
+#define COCOAPODS_VERSION_MINOR_APLKeyboardControls 1
+#define COCOAPODS_VERSION_PATCH_APLKeyboardControls 2
+
+// Canvas
+#define COCOAPODS_POD_AVAILABLE_Canvas
+#define COCOAPODS_VERSION_MAJOR_Canvas 0
+#define COCOAPODS_VERSION_MINOR_Canvas 1
+#define COCOAPODS_VERSION_PATCH_Canvas 1
+
 // DACircularProgress
 #define COCOAPODS_POD_AVAILABLE_DACircularProgress
 #define COCOAPODS_VERSION_MAJOR_DACircularProgress 2
 #define COCOAPODS_VERSION_MINOR_DACircularProgress 2
 #define COCOAPODS_VERSION_PATCH_DACircularProgress 0
 
-// PBFlatUI
-#define COCOAPODS_POD_AVAILABLE_PBFlatUI
-#define COCOAPODS_VERSION_MAJOR_PBFlatUI 1
-#define COCOAPODS_VERSION_MINOR_PBFlatUI 1
-#define COCOAPODS_VERSION_PATCH_PBFlatUI 0
+// NSData+Base64
+#define COCOAPODS_POD_AVAILABLE_NSData_Base64
+#define COCOAPODS_VERSION_MAJOR_NSData_Base64 1
+#define COCOAPODS_VERSION_MINOR_NSData_Base64 0
+#define COCOAPODS_VERSION_PATCH_NSData_Base64 0
 
 // PulsingHalo
 #define COCOAPODS_POD_AVAILABLE_PulsingHalo
 #define COCOAPODS_VERSION_MAJOR_PulsingHalo 0
 #define COCOAPODS_VERSION_MINOR_PulsingHalo 0
 #define COCOAPODS_VERSION_PATCH_PulsingHalo 1
-
-// SIAlertView
-#define COCOAPODS_POD_AVAILABLE_SIAlertView
-#define COCOAPODS_VERSION_MAJOR_SIAlertView 1
-#define COCOAPODS_VERSION_MINOR_SIAlertView 3
-#define COCOAPODS_VERSION_PATCH_SIAlertView 0
-
-// SPGooglePlacesAutocomplete
-#define COCOAPODS_POD_AVAILABLE_SPGooglePlacesAutocomplete
-#define COCOAPODS_VERSION_MAJOR_SPGooglePlacesAutocomplete 1
-#define COCOAPODS_VERSION_MINOR_SPGooglePlacesAutocomplete 0
-#define COCOAPODS_VERSION_PATCH_SPGooglePlacesAutocomplete 2
 
 // TWMessageBarManager
 #define COCOAPODS_POD_AVAILABLE_TWMessageBarManager

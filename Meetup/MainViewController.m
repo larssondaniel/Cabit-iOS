@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
+#define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
+
 #import "MainViewController.h"
 #import "Vehicle.h"
 #import "ConfirmationViewController.h"
@@ -17,6 +19,7 @@
 #import "SettingsViewController.h"
 #import "SearchViewController.h"
 #import "SPGooglePlacesAutocomplete.h"
+#import "CSAnimation.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -34,10 +37,10 @@
 @property (strong, nonatomic) IBOutlet UIView *animatedBottomView;
 @property (strong, nonatomic) IBOutlet UIButton *pickupLabel;
 @property (strong, nonatomic) IBOutlet UILabel *pickupStaticLabel;
-@property (strong, nonatomic) IBOutlet UILabel *destinationStaticLabel;
-@property (strong, nonatomic) IBOutlet UIButton *destinationLabel;
-@property (strong, nonatomic) IBOutlet UIView *pickupView;
-@property (strong, nonatomic) IBOutlet UIView *destinationView;
+//@property (strong, nonatomic) IBOutlet UILabel *destinationStaticLabel;
+//@property (strong, nonatomic) IBOutlet UIButton *destinationLabel;
+//@property (strong, nonatomic) IBOutlet UIView *pickupView;
+//@property (strong, nonatomic) IBOutlet UIView *destinationView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewTopConstraint;
 @property (strong, nonatomic) IBOutlet UIButton *continueButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -54,6 +57,33 @@
 @property (strong, nonatomic) IBOutlet UIView *settingsContainer;
 @property (strong, nonatomic) IBOutlet UIView *searchContainer;
 @property (nonatomic) bool isSearchingForPickup;
+@property (strong, nonatomic) IBOutlet UIImageView *temp_imageView;
+
+
+
+
+
+
+
+@property (strong, nonatomic) IBOutlet UIView *destinationView;
+@property (strong, nonatomic) IBOutlet UIView *pickupView;
+@property (strong, nonatomic) IBOutlet UIImageView *destinationArrow;
+@property (strong, nonatomic) IBOutlet UIButton *destinationButton;
+@property (strong, nonatomic) IBOutlet UIButton *pickupButton;
+@property (strong, nonatomic) IBOutlet UILabel *destinationStaticLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *pickupArrow;
+
+@property (strong, nonatomic) IBOutlet UIView *additionalInfoView;
+
+@property (strong, nonatomic) IBOutlet UILabel *travelTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *priceLabel;
+@property (strong, nonatomic) IBOutlet UIButton *makeReservationButton;
+@property (strong, nonatomic) IBOutlet UIView *timerView;
+@property (strong, nonatomic) UIToolbar *toolbar;
+@property (strong, nonatomic) IBOutlet UIButton *toggleInformationButton;
+@property (nonatomic) BOOL isShowingAddresses;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 
 @end
 
@@ -66,12 +96,40 @@
     [self.mapView setDelegate:self];
     self.data = [[NSMutableArray alloc] init];
     
+    self.additionalInfoView.hidden = YES;
+    self.timerView.hidden = YES;
+    
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
 
     //NSTimer *bounceTimer;
     //bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
     //                                      selector:@selector(bounce) userInfo:nil repeats:YES];
+    
+    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 353, 320, 138)];
+    [self.view addSubview:self.toolbar];
+    
+    UIToolbar *toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 68)];
+    [self.additionalInfoView addSubview:toolbar2];
+    
+    UIToolbar *toolbar3 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 85)];
+    [self.timerView addSubview:toolbar3];
+    
+    for (UIView *subview in self.additionalInfoView.subviews) {
+        if (!([subview isKindOfClass:[UIToolbar class]]))
+            [self.additionalInfoView bringSubviewToFront:subview];
+    }
+    
+    for (UIView *subview in self.timerView.subviews) {
+        if (!([subview isKindOfClass:[UIToolbar class]]))
+            [self.timerView bringSubviewToFront:subview];
+    }
+    
+    [self.view bringSubviewToFront:self.temp_imageView];
+    [self.view bringSubviewToFront:self.pickupView];
+    [self.view bringSubviewToFront:self.destinationView];
+    [self.view bringSubviewToFront:self.additionalInfoView];
+    
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
@@ -100,8 +158,35 @@
     [self.view addSubview:self.tintView];
     
     self.credentialsContainer.alpha = 0.0;
+
+    [self.travelTimeLabel setAttributedText:[self attributedFontForValue:@"12" andUnit:@"min"]];
+    [self.priceLabel setAttributedText:[self attributedFontForValue:@"240" andUnit:@"sek"]];
     
-    [self showCredentialsView];
+    [self.pickupButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    //[self showCredentialsView];
+}
+
+- (NSAttributedString *)attributedFontForValue:(NSString *)value andUnit:(NSString *)unit
+{
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@""];
+    UIFont *largeFont = [UIFont fontWithName:@"OpenSans" size:40];
+    UIFont *smallFont = [UIFont fontWithName:@"OpenSans-Light" size:22];
+    UIColor *color = [UIColor colorWithRed:46.0f/255.0f green:67.0f/255.0f blue:89.0f/255.0f alpha:1];
+    //UIColor *color = [UIColor colorWithRed:102.0f/255.0f green:115.0f/255.0f blue:129.0f/255.0f alpha:1];
+    NSDictionary *largeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                largeFont, NSFontAttributeName,
+                                color, NSForegroundColorAttributeName,
+                                nil];
+    NSDictionary *smallAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     smallFont, NSFontAttributeName,
+                                     color, NSForegroundColorAttributeName,
+                                     nil];
+
+    NSAttributedString *subString = [[NSAttributedString alloc] initWithString:value attributes:largeAttributes];
+    [string appendAttributedString:subString];
+    subString = [[NSAttributedString alloc] initWithString:unit attributes:smallAttributes];
+    [string appendAttributedString:subString];
+    return string;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -152,7 +237,7 @@
     [self.activityIndicator startAnimating];
     [self.geoCoder reverseGeocodeLocation:self.mapView.userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        [self.pickupLabel setTitle:[placemark.addressDictionary valueForKey:@"Name"] forState:UIControlStateNormal];
+        [self.pickupButton setTitle:[placemark.addressDictionary valueForKey:@"Name"] forState:UIControlStateNormal];
         [self.activityIndicator stopAnimating];
         [self setPickupMapItem:[[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithPlacemark:placemark]]];
         [self setPickupLocation:placemark.location.coordinate];
@@ -162,16 +247,20 @@
 
 - (void)setPickupLocation:(CLLocationCoordinate2D)location
 {
-    self.pickupAnnotation = [[MKPointAnnotation alloc] init];
+    if (!self.pickupAnnotation)
+        self.pickupAnnotation = [[MKPointAnnotation alloc] init];
     self.pickupAnnotation.coordinate = location;
-    //[self.mapView addAnnotation:self.pickupAnnotation];
-    if (self.destinationMapItem)
+    [self.mapView addAnnotation:self.pickupAnnotation];
+    if (self.destinationMapItem) {
         [self generateRoute];
+        [self fitRegionToRoute];
+    }
 }
 
 - (void)setDestination:(CLLocationCoordinate2D)location
 {
-    self.destinationAnnotation = [[MKPointAnnotation alloc] init];
+    if (!self.destinationAnnotation)
+        self.destinationAnnotation = [[MKPointAnnotation alloc] init];
     self.destinationAnnotation.coordinate = location;
     [self.mapView addAnnotation:self.destinationAnnotation];
     [self generateRoute];
@@ -275,18 +364,19 @@
 - (void)addItemViewController:(SearchDestinationViewController *)controller didFinishEnteringDestination:(MKMapItem *)item {
     [self setDestinationMapItem:item];
     [self setDestination:item.placemark.location.coordinate];
-    [self.destinationLabel setTitle:item.name forState:UIControlStateNormal];
+    [self.destinationButton setTitle:item.name forState:UIControlStateNormal];
     self.shouldAnimateBottomView = YES;
 }
 
 # pragma mark Directions
 
 - (void)generateRoute {
+    //NSLog(@"Fetching route between %@ and %@", [ );
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
     request.source = [MKMapItem mapItemForCurrentLocation];
 
     if (self.pickupMapItem) {
-        // request.source = self.pickupMapItem;
+        request.source = self.pickupMapItem;
     }
     
     request.destination = self.destinationMapItem;
@@ -297,7 +387,7 @@
      ^(MKDirectionsResponse *response, NSError *error) {
          if (error) {
              NSLog(@"Error is %@", error);
-             // Handle Error
+             // Handle error
          } else {
              [self showRoute:response];
          }
@@ -310,6 +400,24 @@
     {
         [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
     }
+    
+    [UIView transitionWithView:self.additionalInfoView
+                      duration:0.4
+                       options:UIViewAnimationOptionTransitionFlipFromBottom
+                    animations:^{
+                        //  Set the new image
+                        //  Since its done in animation block, the change will be animated
+                        self.additionalInfoView.hidden = NO;
+                    } completion:^(BOOL finished) {
+                        //  Do whatever when the animation is finished
+                    }];
+
+    /*
+    //self.additionalInfoView.transform = CGAffineTransformMakeTranslation(0, 100);
+    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        self.additionalInfoView.transform = CGAffineTransformMakeTranslation(0, -300);
+    } completion:^(BOOL finished) { }];
+     */
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay {
@@ -338,8 +446,6 @@
     }
     double inset = -zoomRect.size.width * 1;
     [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) animated:YES];
-    
-    [self.continueButton setEnabled:YES];
 }
 
 #pragma Animation
@@ -398,145 +504,6 @@
     self.isSearchingForPickup = NO;
     [self showSearchView];
 }
-
-#pragma tableView
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
-{
-    return 1;
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    /*
-    dispatch_queue_t queue = dispatch_queue_create("com.cabit.Cabit", NULL);
-    dispatch_async(queue, ^{
-        //code to be executed in the background
-        [self doSearch:searchString];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //code to be executed on the main thread when background task is finished
-            [self.searchDisplayController.searchResultsTableView reloadData];
-        });
-    });
-    */
-
-    //if (controller.searchBar.text.length > 2)
-    
-    // Completely unclear why this needs to be done, but it does. Without it, the tableview displays only after typing a second query.
-    controller.searchResultsTableView.hidden = NO;
-    controller.searchResultsTableView.alpha = 1.0;
-
-    [self doSearch:searchString];
-
-    // Apple suggests to return NO here..
-    return NO;
-}
-
-- (void)doSearch:(NSString *)query
-{
-    if ([query length] != 0) {
-        [self.data removeAllObjects];
-        [self issueLocalSearchLookup:self.searchBar.text];
-    }
-}
-
-- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.data count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"Delegate is %@", tableView.delegate);
-    NSLog(@"Data source is %@", tableView.dataSource);
-
-    static NSString *CellIdentifier = @"ResultsCell";
-    
-    // Dequeue or create a cell of the appropriate type.
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.backgroundView = nil;
-        cell.textLabel.textColor = [UIColor whiteColor];
-    }
-    
-    // Configure the cell.
-    MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
-    
-    NSString *formattedAddress = [mapItem.placemark.addressDictionary valueForKey:@"Name"];
-    if ([mapItem.placemark.addressDictionary valueForKey:@"City"]) {
-        formattedAddress = [formattedAddress stringByAppendingString:[NSString stringWithFormat:@", %@", [mapItem.placemark.addressDictionary valueForKey:@"City"]]];
-    }
-    
-    cell.textLabel.text = formattedAddress;
-    
-    return cell;
-}
-
--(void)issueLocalSearchLookup:(NSString *)searchString
-{
-    // NSLog(@"Searching for %@", searchString);
-    //if (self.localSearch.searching)
-    //{
-    //    NSLog(@"Cancelled search for %@", searchString);
-    //    [self.localSearch cancel];
-    //}
-
-    // Tell the search engine to start looking within 30 000 meters from the user
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 30000, 30000);
-    
-    // Create the search request
-    self.localSearchRequest = [[MKLocalSearchRequest alloc] init];
-    self.localSearchRequest.region = region;
-    self.localSearchRequest.naturalLanguageQuery = searchString;
-    
-    // Perform the search request...
-    self.localSearch = [[MKLocalSearch alloc] initWithRequest:self.localSearchRequest];
-    [self.localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
-
-        if(error){
-            NSLog(@"LocalSearch failed with error: %@", error);
-            return;
-        } else {
-            NSPredicate *noBusiness = [NSPredicate predicateWithFormat:@"business.uID == 0"];
-            NSMutableArray *itemsWithoutBusinesses = [response.mapItems mutableCopy];
-            [itemsWithoutBusinesses filterUsingPredicate:noBusiness];
-            // NSLog(@"Searching for %@ with results: %i", searchString, itemsWithoutBusinesses.count);
-            for(MKMapItem *mapItem in itemsWithoutBusinesses){
-                [self.data addObject:mapItem];
-            }
-            [self.searchController.searchResultsTableView reloadData];
-        }
-    }];
-}
-
-/*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    MKMapItem *mapItem = (MKMapItem *)[self.data objectAtIndex:indexPath.row];
-    NSLog(@"Selected something:");
-    if (self.isSearchingForPickup) {
-        NSLog(@"Pickup!");
-        [self setPickupMapItem:mapItem];
-        [self setPickupLocation:mapItem.placemark.location.coordinate];
-        [self.pickupLabel setTitle:mapItem.name forState:UIControlStateNormal];
-    } else {
-        NSLog(@"Destination!");
-        [self setDestinationMapItem:mapItem];
-        //[self setPickupLocation:mapItem.placemark.location.coordinate];
-        [self.destinationLabel setTitle:mapItem.name forState:UIControlStateNormal];
-    }
-    [self hideSearchView];
-}
- */
-
-/*
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
-}
-*/
 
 #pragma credentials
 
@@ -609,25 +576,21 @@
     NSString *parsedAddress = [self parseAddress:mapItem.name];
 
     if (self.isSearchingForPickup) {
-        //[self setPickupMapItem:mapItem];
         [mapItem resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
             MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
             MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
             [self setPickupMapItem:mapItem];
             [self setPickupLocation:placemark.location.coordinate];
         }];
-        //[self setPickupLocation:mapItem.placemark.location.coordinate];
         [self.pickupLabel setTitle:parsedAddress forState:UIControlStateNormal];
     } else {
-        //[self setDestinationMapItem:mapItem];
         [mapItem resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
             MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
             MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
             [self setDestinationMapItem:mapItem];
             [self setDestination:placemark.location.coordinate];
         }];
-        //[self setDestination:mapItem.placemark.location.coordinate];
-        [self.destinationLabel setTitle:parsedAddress forState:UIControlStateNormal];
+        [self.destinationButton setTitle:parsedAddress forState:UIControlStateNormal];
     }
 }
 
@@ -635,6 +598,219 @@
     NSArray *addressComponents = [address componentsSeparatedByString:@","];
     NSString *parsedAddress = [NSString stringWithFormat:@"%@, %@", [addressComponents objectAtIndex:0], [addressComponents objectAtIndex:1]];
     return parsedAddress;
+}
+
+- (IBAction)didBeginTouchAtPickupButton {
+    [self performPopAnimationOnView:self.pickupArrow duration:0.3 delay:0];
+}
+
+- (IBAction)didBeginTouchAtDestinationButton {
+    [self performPopAnimationOnView:self.destinationArrow duration:0.3 delay:0];
+}
+
+- (void)performShakeAnimationOnView:(UIView *)view duration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
+    // Start
+    view.transform = CGAffineTransformMakeTranslation(0, 0);
+    [UIView animateKeyframesWithDuration:duration/5 delay:delay options:0 animations:^{
+        // End
+        view.transform = CGAffineTransformMakeTranslation(14, 0);
+    } completion:^(BOOL finished) {
+        [UIView animateKeyframesWithDuration:duration/5 delay:0 options:0 animations:^{
+            // End
+            view.transform = CGAffineTransformMakeTranslation(-14, 0);
+        } completion:^(BOOL finished) {
+            [UIView animateKeyframesWithDuration:duration/5 delay:0 options:0 animations:^{
+                // End
+                view.transform = CGAffineTransformMakeTranslation(7, 0);
+            } completion:^(BOOL finished) {
+                [UIView animateKeyframesWithDuration:duration/5 delay:0 options:0 animations:^{
+                    // End
+                    view.transform = CGAffineTransformMakeTranslation(-7, 0);
+                } completion:^(BOOL finished) {
+                    [UIView animateKeyframesWithDuration:duration/5 delay:0 options:0 animations:^{
+                        // End
+                        view.transform = CGAffineTransformMakeTranslation(0, 0);
+                    } completion:^(BOOL finished) {
+                        // End
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
+- (void)performSlideRightAnimationOnView:(UIView *)view duration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
+    // Start
+    view.transform = CGAffineTransformMakeTranslation(0, 0);
+    [UIView animateKeyframesWithDuration:duration delay:delay options:0 animations:^{
+        // End
+        view.transform = CGAffineTransformMakeTranslation(100, 0);
+    } completion:^(BOOL finished) { }];
+}
+
+- (void)performPopAnimationOnView:(UIView *)view duration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
+    // Start
+    view.transform = CGAffineTransformMakeScale(1, 1);
+    CGRectApplyAffineTransform(view.frame, CGAffineTransformMakeScale(1, 1));
+    [UIView animateKeyframesWithDuration:duration/3 delay:delay options:0 animations:^{
+        // End
+        CGRectApplyAffineTransform(view.frame, CGAffineTransformMakeScale(1.2, 1.2));
+        view.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    } completion:^(BOOL finished) {
+        [UIView animateKeyframesWithDuration:duration/3 delay:0 options:0 animations:^{
+            // End
+            view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        } completion:^(BOOL finished) {
+            [UIView animateKeyframesWithDuration:duration/3 delay:0 options:0 animations:^{
+                // End
+                view.transform = CGAffineTransformMakeScale(1, 1);
+            } completion:^(BOOL finished) {
+                
+            }];
+        }];
+    }];
+}
+
+- (IBAction)clickedDestination {
+    self.isSearchingForPickup = NO;
+    [self showSearchView];
+}
+- (IBAction)clickedPickup {
+    self.isSearchingForPickup = YES;
+    [self showSearchView];
+}
+
+- (IBAction)clickedContinue {
+    if (!(self.pickupMapItem && self.destinationMapItem)) {
+        [self performShakeAnimationOnView:self.destinationStaticLabel duration:0.3 delay:0];
+    } else {
+        [self animateButtonsToLeft:1];
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+            self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, 100, 0);
+            self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, 100, 0);        } completion:^(BOOL finished) {
+            self.destinationButton.enabled = NO;
+            self.pickupButton.enabled = NO;
+        }];
+    }
+}
+
+- (IBAction)clickedMakeReservation:(id)sender {
+    [self animateButtonsToLeft:1];
+    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+        self.toolbar.transform = CGAffineTransformMakeTranslation(0, 134);
+        self.additionalInfoView.transform = CGAffineTransformMakeTranslation(0, 134);
+        self.pickupView.transform = CGAffineTransformMakeTranslation(0, 134);
+        self.destinationView.transform = CGAffineTransformMakeTranslation(0, 134);
+    } completion:^(BOOL finished) {
+        self.isShowingAddresses = NO;
+        self.destinationArrow.hidden = YES;
+        self.pickupArrow.hidden = YES;
+        [UIView transitionWithView:self.timerView
+                          duration:0.25
+                           options:UIViewAnimationOptionTransitionFlipFromBottom
+                        animations:^{
+                            self.timerView.hidden = NO;
+                            self.toggleInformationButton.hidden = NO;
+                        } completion:^(BOOL finished) {
+                        }];
+    }];
+}
+
+- (IBAction)toggleInformation {
+    if (self.isShowingAddresses) {
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+            CGAffineTransform rotation2 = CGAffineTransformRotate(self.toggleInformationButton.transform, DEGREES_TO_RADIANS(1080));
+            CGAffineTransform translation2 = CGAffineTransformMakeTranslation(0, 134);
+            self.toggleInformationButton.transform = CGAffineTransformConcat(rotation2, translation2);
+            [self.toggleInformationButton setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+
+            self.toolbar.transform = CGAffineTransformTranslate(self.toolbar.transform, 0, 134);
+            self.additionalInfoView.transform = CGAffineTransformTranslate(self.additionalInfoView.transform, 0, 134);
+            self.pickupView.transform = CGAffineTransformTranslate(self.pickupView.transform, 0, 134);
+            self.destinationView.transform = CGAffineTransformTranslate(self.destinationView.transform, 0, 134);
+            self.timerView.transform = CGAffineTransformTranslate(self.timerView.transform, 0, 134);
+        } completion:^(BOOL finished) {
+            self.isShowingAddresses = NO;
+        }];
+    } else {
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+            CGAffineTransform rotation = CGAffineTransformRotate(self.toggleInformationButton.transform, DEGREES_TO_RADIANS(1080));
+            CGAffineTransform translation = CGAffineTransformTranslate(self.toggleInformationButton.transform, 0, -134);
+            self.toggleInformationButton.transform = CGAffineTransformConcat(rotation, translation);
+            [self.toggleInformationButton setImage:[UIImage imageNamed:@"minus"] forState:UIControlStateNormal];
+            
+            self.toolbar.transform = CGAffineTransformTranslate(self.toolbar.transform, 0, -134);
+            self.additionalInfoView.transform = CGAffineTransformTranslate(self.additionalInfoView.transform, 0, -134);
+            self.pickupView.transform = CGAffineTransformTranslate(self.pickupView.transform, 0, -134);
+            self.destinationView.transform = CGAffineTransformTranslate(self.destinationView.transform, 0, -134);
+            self.timerView.transform = CGAffineTransformTranslate(self.timerView.transform, 0, -134);
+        } completion:^(BOOL finished) {
+            self.isShowingAddresses = YES;
+        }];
+    }
+}
+
+- (void)animateButtonsToLeft:(int)steps {
+    [self.view bringSubviewToFront:self.makeReservationButton];
+    [self.view bringSubviewToFront:self.editButton];
+    [self.view bringSubviewToFront:self.cancelButton];
+    [self.view bringSubviewToFront:self.continueButton];
+    
+    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+        self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * (-320), 0);
+        self.makeReservationButton.transform = CGAffineTransformTranslate(self.makeReservationButton.transform, steps * (-320), 0);
+        self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, steps * (-320), 0);
+        self.editButton.transform = CGAffineTransformTranslate(self.editButton.transform, steps * (-320), 0);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)animateButtonsToRight:(int)steps {
+    [self.view bringSubviewToFront:self.makeReservationButton];
+    [self.view bringSubviewToFront:self.editButton];
+    [self.view bringSubviewToFront:self.cancelButton];
+    [self.view bringSubviewToFront:self.continueButton];
+
+    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+        self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * 320, 0);
+        self.makeReservationButton.transform = CGAffineTransformTranslate(self.makeReservationButton.transform, steps * 320, 0);
+        self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, steps * 320, 0);
+        self.editButton.transform = CGAffineTransformTranslate(self.editButton.transform, steps * 320, 0);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (IBAction)clickedEdit:(id)sender {
+    [self animateButtonsToRight:1];
+    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+        self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, -100, 0);
+        self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, -100, 0);
+    } completion:^(BOOL finished) {
+        self.destinationButton.enabled = YES;
+        self.pickupButton.enabled = YES;
+    }];
+    
+}
+
+- (IBAction)clickedCancel:(id)sender {
+    [self animateButtonsToRight:2];
+    
+    if (self.isShowingAddresses)
+        [self toggleInformation];
+    
+    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+        
+        self.toolbar.transform = CGAffineTransformTranslate(self.toolbar.transform, 0, -134);
+        self.additionalInfoView.transform = CGAffineTransformTranslate(self.additionalInfoView.transform, 0, -134);
+        self.pickupView.transform = CGAffineTransformTranslate(self.pickupView.transform, 0, -134);
+        self.destinationView.transform = CGAffineTransformTranslate(self.destinationView.transform, 0, -134);
+        self.isShowingAddresses = NO;
+        self.destinationArrow.hidden = NO;
+        self.pickupArrow.hidden = NO;
+        self.timerView.hidden = YES;
+        self.toggleInformationButton.hidden = YES;
+    } completion:^(BOOL finished) {
+    }];
 }
 
 @end

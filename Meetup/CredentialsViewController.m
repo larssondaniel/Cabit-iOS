@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    [super viewDidLoad]; 
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
     imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];

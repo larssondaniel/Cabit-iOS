@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SPGooglePlacesAutocompletePlace.h"
 
 @interface SettingsHelper : NSObject
 
@@ -14,5 +15,6 @@
 
 - (void)storeName:(NSString *)name;
 - (void)storePhoneNumber:(NSString *)number;
+- (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address;
 
 @end

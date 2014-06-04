@@ -9,10 +9,6 @@
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 
 #import "MainViewController.h"
-#import "Vehicle.h"
-#import "ConfirmationViewController.h"
-#import "TWMessageBarManager.h"
-#import "UIView+Glow.h"
 #import "CAKeyframeAnimation+AHEasing.h"
 #import "FXBlurView.h"
 #import "CredentialsViewController.h"
@@ -20,30 +16,27 @@
 #import "SearchViewController.h"
 #import "SPGooglePlacesAutocomplete.h"
 #import "CSAnimation.h"
+#import "MapAnnotation.h"
 
 #import <CoreLocation/CoreLocation.h>
 
 @interface MainViewController ()
 
-@property (nonatomic, strong) MKPointAnnotation *destinationAnnotation;
-@property (nonatomic, strong) MKPointAnnotation *pickupAnnotation;
+@property (nonatomic, strong) MapAnnotation *destinationAnnotation;
+@property (nonatomic, strong) MapAnnotation *pickupAnnotation;
 @property (nonatomic, strong) MKMapItem *pickupMapItem;
 @property (nonatomic, strong) MKMapItem *destinationMapItem;
 
 @property (nonatomic, retain) CLLocation *initialLocation;
 @property (nonatomic, strong) CLGeocoder *geoCoder;
 
-@property (strong, nonatomic) IBOutlet UIButton *bouncingCone;
 @property (strong, nonatomic) IBOutlet UIView *animatedBottomView;
 @property (strong, nonatomic) IBOutlet UIButton *pickupLabel;
 @property (strong, nonatomic) IBOutlet UILabel *pickupStaticLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *destinationStaticLabel;
-//@property (strong, nonatomic) IBOutlet UIButton *destinationLabel;
-//@property (strong, nonatomic) IBOutlet UIView *pickupView;
-//@property (strong, nonatomic) IBOutlet UIView *destinationView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewTopConstraint;
 @property (strong, nonatomic) IBOutlet UIButton *continueButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *destinationActivityIndicator;
 
 @property (nonatomic) bool shouldAnimateBottomView;
 @property (nonatomic, strong) UIToolbar *tintView;
@@ -57,10 +50,6 @@
 @property (strong, nonatomic) IBOutlet UIView *settingsContainer;
 @property (strong, nonatomic) IBOutlet UIView *searchContainer;
 @property (nonatomic) bool isSearchingForPickup;
-@property (strong, nonatomic) IBOutlet UIImageView *temp_imageView;
-
-
-
 
 
 
@@ -84,6 +73,7 @@
 @property (nonatomic) BOOL isShowingAddresses;
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
+@property (strong, nonatomic) IBOutlet UIView *addressToolbar;
 
 @end
 
@@ -101,13 +91,8 @@
     
     // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
-
-    //NSTimer *bounceTimer;
-    //bounceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self
-    //                                      selector:@selector(bounce) userInfo:nil repeats:YES];
-    
-    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 353, 320, 138)];
-    [self.view addSubview:self.toolbar];
+    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 138)];
+    [self.addressToolbar addSubview:self.toolbar];
     
     UIToolbar *toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 68)];
     [self.additionalInfoView addSubview:toolbar2];
@@ -125,7 +110,6 @@
             [self.timerView bringSubviewToFront:subview];
     }
     
-    [self.view bringSubviewToFront:self.temp_imageView];
     [self.view bringSubviewToFront:self.pickupView];
     [self.view bringSubviewToFront:self.destinationView];
     [self.view bringSubviewToFront:self.additionalInfoView];
@@ -136,19 +120,7 @@
       [UIFont fontWithName:@"OpenSans" size:21],
       NSFontAttributeName, nil]];
     
-    [self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
-    
-    // Set up search views
-
-    /*
-    CGRect topTintFrame = CGRectMake(0, 0, 320, 64);
-    UIView *topTintView = [[UIView alloc] initWithFrame:topTintFrame];
-    [topTintView setBackgroundColor:[UIColor whiteColor]];
-    [topTintView setAlpha:0.9];
-    [self.view addSubview:topTintView];
-    
-    [self.view bringSubviewToFront:self.menuButton];
-     */
+    //[self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
     
     // In order to animate it later
     self.tintView = [[UIToolbar alloc] initWithFrame:self.view.bounds];
@@ -162,7 +134,11 @@
     [self.travelTimeLabel setAttributedText:[self attributedFontForValue:@"12" andUnit:@"min"]];
     [self.priceLabel setAttributedText:[self attributedFontForValue:@"240" andUnit:@"sek"]];
     
-    [self.pickupButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:18]];
+    [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:12]];
+
+    [self.pickupButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:20]];
+    [self.destinationButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:20]];
+
     //[self showCredentialsView];
 }
 
@@ -170,9 +146,8 @@
 {
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@""];
     UIFont *largeFont = [UIFont fontWithName:@"OpenSans" size:40];
-    UIFont *smallFont = [UIFont fontWithName:@"OpenSans-Light" size:22];
+    UIFont *smallFont = [UIFont fontWithName:@"OpenSans-Light" size:20];
     UIColor *color = [UIColor colorWithRed:46.0f/255.0f green:67.0f/255.0f blue:89.0f/255.0f alpha:1];
-    //UIColor *color = [UIColor colorWithRed:102.0f/255.0f green:115.0f/255.0f blue:129.0f/255.0f alpha:1];
     NSDictionary *largeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 largeFont, NSFontAttributeName,
                                 color, NSForegroundColorAttributeName,
@@ -229,15 +204,16 @@
     CLLocationCoordinate2D myCoord = {self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.longitude};
     [self setPickupLocation:myCoord];
     [self zoomToUserLocation];
-    [self calculateLocationAddress];
+    [self calculateUserAddress];
 }
 
-- (void)calculateLocationAddress
+- (void)calculateUserAddress
 {
     [self.activityIndicator startAnimating];
     [self.geoCoder reverseGeocodeLocation:self.mapView.userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        [self.pickupButton setTitle:[placemark.addressDictionary valueForKey:@"Name"] forState:UIControlStateNormal];
+        NSString *parsedAddress = [self parseAddress:[placemark.addressDictionary valueForKey:@"Name"]];
+        [self.pickupButton setTitle:parsedAddress forState:UIControlStateNormal];
         [self.activityIndicator stopAnimating];
         [self setPickupMapItem:[[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithPlacemark:placemark]]];
         [self setPickupLocation:placemark.location.coordinate];
@@ -245,26 +221,53 @@
     }];
 }
 
+- (void)calculatePinAddressForLocation:(CLLocation *)location andPinType:(NSString *)pinType
+{
+    if ([pinType isEqualToString:PICKUP_ANNOTATION]) {
+        [self.geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            NSString *parsedAddress = [self parseAddress:[placemark.addressDictionary valueForKey:@"Name"]];
+            [self.pickupButton setTitle:parsedAddress forState:UIControlStateNormal];
+            [self setPickupMapItem:[[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithPlacemark:placemark]]];
+            [self setPickupLocation:placemark.location.coordinate];
+        }];
+    } else if ([pinType isEqualToString:DESTINATION_ANNOTATION]) {
+        [self.geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            NSString *parsedAddress = [self parseAddress:[placemark.addressDictionary valueForKey:@"Name"]];
+            [self.destinationButton setTitle:parsedAddress forState:UIControlStateNormal];
+            [self setDestinationMapItem:[[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithPlacemark:placemark]]];
+            [self setDestination:placemark.location.coordinate];
+        }];
+    }
+}
+
 - (void)setPickupLocation:(CLLocationCoordinate2D)location
 {
     if (!self.pickupAnnotation)
-        self.pickupAnnotation = [[MKPointAnnotation alloc] init];
+        self.pickupAnnotation = [[MapAnnotation alloc] init];
+    self.pickupAnnotation.typeOfAnnotation = PICKUP_ANNOTATION;
     self.pickupAnnotation.coordinate = location;
     [self.mapView addAnnotation:self.pickupAnnotation];
+    [self zoomToLocation:PICKUP_ANNOTATION];
+    
     if (self.destinationMapItem) {
         [self generateRoute];
-        [self fitRegionToRoute];
+        //[self fitRegionToRoute];
     }
 }
 
 - (void)setDestination:(CLLocationCoordinate2D)location
 {
     if (!self.destinationAnnotation)
-        self.destinationAnnotation = [[MKPointAnnotation alloc] init];
+        self.destinationAnnotation = [[MapAnnotation alloc] init];
+    self.destinationAnnotation.typeOfAnnotation = DESTINATION_ANNOTATION;
     self.destinationAnnotation.coordinate = location;
     [self.mapView addAnnotation:self.destinationAnnotation];
+    [self zoomToLocation:DESTINATION_ANNOTATION];
+    
     [self generateRoute];
-    [self fitRegionToRoute];
+    //[self fitRegionToRoute];
 }
 
 - (void)zoomToUserLocation
@@ -298,6 +301,28 @@
     [self.mapView setRegion:region animated:YES];
 }
 
+- (void)zoomToLocation:(NSString *)locationType
+{
+    NSLog(@"ZoOOoming");
+    //MKCoordinateRegion region;
+    MKMapPoint annotationPoint;
+    if ([locationType isEqualToString:PICKUP_ANNOTATION]) {
+        //region.center = self.pickupAnnotation.coordinate;
+        annotationPoint = MKMapPointForCoordinate(self.pickupAnnotation.coordinate);
+    } else if ([locationType isEqualToString:DESTINATION_ANNOTATION]) {
+        //region.center = self.destinationAnnotation.coordinate;
+        annotationPoint = MKMapPointForCoordinate(self.destinationAnnotation.coordinate);
+    }
+    //region.span = MKCoordinateSpanMake(0.01, 0.01);
+    //region = [self.mapView regionThatFits:region];
+    
+    MKMapRect zoomRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 1, 1);
+
+    double inset = -zoomRect.size.width * 1;
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(40, 40, 450, 40);
+    [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) edgePadding:edgeInsets animated:YES];
+}
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     if (!self.initialLocation)
@@ -314,7 +339,7 @@
         } else if (region.span.latitudeDelta <= 0.0 || region.span.longitudeDelta <= 0.0) {
             NSLog(@"Invalid regions");
         } else {
-            [self calculateLocationAddress];
+            [self calculateUserAddress];
             self.initialLocation = userLocation.location;
             [mapView setRegion:region animated:YES];
             // Set initial pickup location to current position
@@ -323,55 +348,46 @@
     }
 }
 
-/*
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation
 {
-    NSLog(@"WE FUCKING GOT HERE");
-    if (![annotation isKindOfClass:[PickupAnnotation class]]) {
-        NSLog(@"AND HERE");
-        static NSString *identifier = @"Pickup";
-        MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (annotationView == nil) {
-            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            [annotationView setImage:[UIImage imageNamed:@"dot-circle"]];
-            annotationView.enabled = YES;
-            annotationView.canShowCallout = YES;
+    MKAnnotationView *customAnnotationView;
+    if ([annotation isKindOfClass:[MapAnnotation class]] ){
+        MapAnnotation *theAnnotation = (MapAnnotation*)annotation;
+        customAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
+        [customAnnotationView setDraggable:YES];
+        [customAnnotationView setCanShowCallout:NO];
+        UIImage *pinImage = nil;
+        if ([[theAnnotation typeOfAnnotation] isEqualToString:PICKUP_ANNOTATION]) {
+            pinImage = [UIImage imageNamed:@"green_pin"];
         } else {
-            annotationView.annotation = annotation;
+            pinImage = [UIImage imageNamed:@"green_pin"];
         }
-        return annotationView;
+        //[customAnnotationView setImage:pinImage];
+    } else {
+        return nil;
     }
-    return nil;
+    
+    return customAnnotationView;
 }
-*/
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"confirmationSegue"]){
-        ConfirmationViewController *controller = (ConfirmationViewController *)segue.destinationViewController;
-        controller.pickup = self.pickupMapItem;
-        controller.destination = self.destinationMapItem;
-        controller.pickupAnnotation = self.pickupAnnotation;
-        controller.destinationAnnotation = self.destinationAnnotation;
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState
+{
+    if (newState == MKAnnotationViewDragStateEnding)
+    {
+        MapAnnotation *theAnnotation = (MapAnnotation*)annotationView.annotation;
+        if ([theAnnotation.typeOfAnnotation isEqualToString:PICKUP_ANNOTATION]) {
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:theAnnotation.coordinate.latitude longitude:theAnnotation.coordinate.longitude];
+            [self calculatePinAddressForLocation:location andPinType:PICKUP_ANNOTATION];
+        } else if ([theAnnotation.typeOfAnnotation isEqualToString:DESTINATION_ANNOTATION]) {
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:theAnnotation.coordinate.latitude longitude:theAnnotation.coordinate.longitude];
+            [self calculatePinAddressForLocation:location andPinType:DESTINATION_ANNOTATION];
+        }
     }
-}
-
-- (void)addItemViewController:(SearchPickupViewController *)controller didFinishEnteringPickupLocation:(MKMapItem *)item {
-    [self setPickupMapItem:item];
-    [self setPickupLocation:item.placemark.location.coordinate];
-    [self.pickupLabel setTitle:item.name forState:UIControlStateNormal];
-}
-
-- (void)addItemViewController:(SearchDestinationViewController *)controller didFinishEnteringDestination:(MKMapItem *)item {
-    [self setDestinationMapItem:item];
-    [self setDestination:item.placemark.location.coordinate];
-    [self.destinationButton setTitle:item.name forState:UIControlStateNormal];
-    self.shouldAnimateBottomView = YES;
 }
 
 # pragma mark Directions
 
 - (void)generateRoute {
-    //NSLog(@"Fetching route between %@ and %@", [ );
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
     request.source = [MKMapItem mapItemForCurrentLocation];
 
@@ -395,11 +411,15 @@
 }
 
 - (void)showRoute:(MKDirectionsResponse *)response {
-    [self.mapView removeOverlays:self.mapView.overlays];
-    for (MKRoute *route in response.routes)
-    {
-        [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-    }
+    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        [self.mapView removeOverlays:self.mapView.overlays];
+        for (MKRoute *route in response.routes)
+        {
+            [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
     
     [UIView transitionWithView:self.additionalInfoView
                       duration:0.4
@@ -445,7 +465,8 @@
         zoomRect = MKMapRectUnion(zoomRect, pointRect);
     }
     double inset = -zoomRect.size.width * 1;
-    [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) animated:YES];
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(40, 40, 250, 40);
+    [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) edgePadding:edgeInsets animated:YES];
 }
 
 #pragma Animation
@@ -474,12 +495,6 @@
 	animation.autoreverses = NO;
     
 	return animation;
-}
-
-- (void)bounce
-{
-	CAKeyframeAnimation *animation = [self dockBounceAnimationWithIconHeight:20];
-	[self.bouncingCone.layer addAnimation:animation forKey:@"jumping"];
 }
 
 - (void)animateBottomView
@@ -531,7 +546,10 @@
 
 - (void)hideSettingsView {
     [self.view endEditing:YES];
-    [UIView animateWithDuration:0.4 animations:^(void) {
+    [UIView animateWithDuration:0.15 animations:^(void) {
+        
+        self.navigationController.navigationBar.alpha = 1.0;
+
         self.animatedBottomView.alpha = 1.0;
         self.settingsContainer.alpha = 0.0;
         self.tintView.alpha = 0.0;
@@ -541,10 +559,14 @@
 
 - (IBAction)showSettingsView {
     [self.view bringSubviewToFront:self.settingsContainer];
-    [UIView animateWithDuration:0.4 animations:^{
+    SettingsViewController *settingsViewController = (SettingsViewController *)self.childViewControllers[1];
+    [settingsViewController setUserLocation:self.mapView.userLocation.location.coordinate];
+    [UIView animateWithDuration:0.15 animations:^{
+        
+        self.navigationController.navigationBar.alpha = 0.0;
+        
         self.settingsContainer.alpha = 1.0;
-        self.tintView.alpha = 0.97;
-        //self.animatedBottomView.alpha = 0.0;
+        self.tintView.alpha = 1.0;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
 }
@@ -553,18 +575,22 @@
 
 - (void)showSearchView {
     [self.view bringSubviewToFront:self.searchContainer];
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
         self.searchContainer.alpha = 1.0;
+        self.tintView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         self.tintView.alpha = 0.97;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
     SearchViewController *searchViewController = (SearchViewController *)self.childViewControllers[2];
-    [searchViewController setActiveWithLabel:@"Tjena" andUserLocation:self.mapView.userLocation.coordinate];
+    if (self.isSearchingForPickup)
+        [searchViewController setActiveWithLabel:@"Upphämtning" andUserLocation:self.mapView.userLocation.coordinate];
+    else
+        [searchViewController setActiveWithLabel:@"Destination" andUserLocation:self.mapView.userLocation.coordinate];
 }
 
 - (void)hideSearchView {
     [self.view endEditing:YES];
-    [UIView animateWithDuration:0.25 animations:^(void) {
+    [UIView animateWithDuration:0.15 animations:^(void) {
         self.tintView.alpha = 0.0;
         self.searchContainer.alpha = 0.0;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -582,13 +608,15 @@
             [self setPickupMapItem:mapItem];
             [self setPickupLocation:placemark.location.coordinate];
         }];
-        [self.pickupLabel setTitle:parsedAddress forState:UIControlStateNormal];
+        [self.pickupButton setTitle:parsedAddress forState:UIControlStateNormal];
     } else {
+        [self.destinationActivityIndicator startAnimating];
         [mapItem resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
             MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
             MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
             [self setDestinationMapItem:mapItem];
             [self setDestination:placemark.location.coordinate];
+            [self.destinationActivityIndicator stopAnimating];
         }];
         [self.destinationButton setTitle:parsedAddress forState:UIControlStateNormal];
     }
@@ -596,7 +624,7 @@
 
 - (NSString *)parseAddress:(NSString *)address {
     NSArray *addressComponents = [address componentsSeparatedByString:@","];
-    NSString *parsedAddress = [NSString stringWithFormat:@"%@, %@", [addressComponents objectAtIndex:0], [addressComponents objectAtIndex:1]];
+    NSString *parsedAddress = [NSString stringWithFormat:@"%@", [addressComponents objectAtIndex:0]];
     return parsedAddress;
 }
 
@@ -687,15 +715,25 @@
         [self animateButtonsToLeft:1];
         [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
             self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, 100, 0);
-            self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, 100, 0);        } completion:^(BOOL finished) {
+            self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, 100, 0);
+        } completion:^(BOOL finished) {
             self.destinationButton.enabled = NO;
             self.pickupButton.enabled = NO;
         }];
+        [self fitRegionToRoute];
     }
 }
 
 - (IBAction)clickedMakeReservation:(id)sender {
     [self animateButtonsToLeft:1];
+    
+    for (id<MKAnnotation> annotation in self.mapView.annotations){
+        MKAnnotationView* view = [self.mapView viewForAnnotation: annotation];
+        if (view){
+            [view setDraggable:NO];
+        }
+    }
+    
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.toolbar.transform = CGAffineTransformMakeTranslation(0, 134);
         self.additionalInfoView.transform = CGAffineTransformMakeTranslation(0, 134);
@@ -714,6 +752,8 @@
                         } completion:^(BOOL finished) {
                         }];
     }];
+    
+    [self zoomToLocation:PICKUP_ANNOTATION];
 }
 
 - (IBAction)toggleInformation {
@@ -755,6 +795,8 @@
     [self.view bringSubviewToFront:self.editButton];
     [self.view bringSubviewToFront:self.cancelButton];
     [self.view bringSubviewToFront:self.continueButton];
+    [self.view bringSubviewToFront:self.searchContainer];
+    [self.view bringSubviewToFront:self.settingsContainer];
     
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * (-320), 0);
@@ -770,6 +812,8 @@
     [self.view bringSubviewToFront:self.editButton];
     [self.view bringSubviewToFront:self.cancelButton];
     [self.view bringSubviewToFront:self.continueButton];
+    [self.view bringSubviewToFront:self.searchContainer];
+    [self.view bringSubviewToFront:self.settingsContainer];
 
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * 320, 0);
@@ -782,6 +826,14 @@
 
 - (IBAction)clickedEdit:(id)sender {
     [self animateButtonsToRight:1];
+    
+    for (id<MKAnnotation> annotation in self.mapView.annotations){
+        MKAnnotationView* view = [self.mapView viewForAnnotation: annotation];
+        if (view){
+            [view setDraggable:YES];
+        }
+    }
+    
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, -100, 0);
         self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, -100, 0);
@@ -794,6 +846,13 @@
 
 - (IBAction)clickedCancel:(id)sender {
     [self animateButtonsToRight:2];
+    
+    for (id<MKAnnotation> annotation in self.mapView.annotations){
+        MKAnnotationView* view = [self.mapView viewForAnnotation: annotation];
+        if (view){
+            [view setDraggable:YES];
+        }
+    }
     
     if (self.isShowingAddresses)
         [self toggleInformation];
@@ -810,7 +869,16 @@
         self.timerView.hidden = YES;
         self.toggleInformationButton.hidden = YES;
     } completion:^(BOOL finished) {
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+            self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, -100, 0);
+            self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, -100, 0);
+        } completion:^(BOOL finished) {
+            self.destinationButton.enabled = YES;
+            self.pickupButton.enabled = YES;
+        }];
     }];
+    
+    [self fitRegionToRoute];
 }
 
 @end

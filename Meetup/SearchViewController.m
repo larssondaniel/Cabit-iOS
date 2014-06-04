@@ -20,6 +20,10 @@
 @property (nonatomic, strong) CLGeocoder *geoCoder;
 @property (nonatomic) CLLocationCoordinate2D userLocation;
 @property (nonatomic, strong) MainViewController *mainViewController;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (nonatomic) bool shouldAnimateCells;
+@property (nonatomic) bool isShowingHomeAddress;
+@property (nonatomic, strong) SPGooglePlacesAutocompletePlace *homeAddress;
 
 @end
 
@@ -28,10 +32,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.isShowingHomeAddress = NO;
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
     imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];
     imageView.alpha = 0.25;
     [self.view addSubview:imageView];
+    [self.view sendSubviewToBack:imageView];
+    
+    
     
     self.locationManager = [[CLLocationManager alloc] init];
 	self.locationManager.delegate = self;
@@ -53,6 +62,15 @@
     NSMutableArray *recentSearches = [NSMutableArray array];
     
     NSArray *dataRepresentingSavedArray = [currentDefaults objectForKey:@"searchHistory"];
+    NSData *dataRepresentingHomeAddress = [currentDefaults objectForKey:@"homeAddress"];
+    
+    if (dataRepresentingHomeAddress != nil) {
+        self.homeAddress = [NSKeyedUnarchiver unarchiveObjectWithData:dataRepresentingHomeAddress];
+        [self.places addObject:self.homeAddress];
+        self.isShowingHomeAddress = YES;
+    } else {
+        self.isShowingHomeAddress = NO;
+    }
     
     if (dataRepresentingSavedArray != nil)
     {
@@ -86,8 +104,12 @@
     }
 
     if (indexPath.row <= self.places.count -1 && self.places.count) {
-        SPGooglePlacesAutocompletePlace *place = (SPGooglePlacesAutocompletePlace *)[self.places objectAtIndex:indexPath.row];
-        cell.textLabel.text = [self parseAddress:place.name];
+        if (self.isShowingHomeAddress && indexPath.row == 0) {
+            cell.textLabel.text = @"Hem";
+        } else {
+            SPGooglePlacesAutocompletePlace *place = (SPGooglePlacesAutocompletePlace *)[self.places objectAtIndex:indexPath.row];
+            cell.textLabel.text = [self parseAddress:place.name];
+        }
         return cell;
     }
     return nil;
@@ -101,6 +123,8 @@
 
 -(void)issueLocalSearchLookup:(NSString *)searchString
 {
+    self.shouldAnimateCells = NO;
+
     SPGooglePlacesAutocompleteQuery *query = [[SPGooglePlacesAutocompleteQuery alloc] initWithApiKey:@"AIzaSyDxTyIXSAktcdcT8_l9AdjiUem8--zxw2Y"];
     query.input = searchString; // search key word
     query.location = self.userLocation;  // user's current location
@@ -124,8 +148,12 @@
 
 - (void)setActiveWithLabel:(NSString *)label andUserLocation:(CLLocationCoordinate2D)location
 {
+    self.shouldAnimateCells = YES;
+
     self.mainViewController = (MainViewController *)self.parentViewController;
     self.userLocation = location;
+    self.titleLabel.text = label;
+    
     [self.searchBar becomeFirstResponder];
     [self.searchBar setShowsCancelButton:YES animated:YES];
 }
@@ -199,6 +227,8 @@
 
 - (void)saveToRecentSearches:(SPGooglePlacesAutocompletePlace *)search
 {
+    if ([search.reference isEqualToString:self.homeAddress.reference])
+        return;
     NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *recentSearches = [NSMutableArray array];
     
@@ -210,9 +240,7 @@
 
     for (NSData *data in dataRepresentingSavedArray) {
         SPGooglePlacesAutocompletePlace *object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        //NSLog(@"Comparing \n\n%@ \n\n to %@", search, object);
-        if ([object.reference isEqualToString:search.reference]) {
-            NSLog(@"Removing data");
+        if ([object.reference isEqualToString:search.reference] || (self.homeAddress && [object.reference isEqualToString:self.homeAddress.reference])) {
             [recentSearches removeObject:data];
         }
     }
@@ -251,4 +279,21 @@
     [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.shouldAnimateCells) {
+        cell.alpha = 0.0;
+        CGAffineTransform initialTranslation = CGAffineTransformMakeTranslation(-20, 0);
+        cell.transform = initialTranslation;
+        
+        CGAffineTransform translation = CGAffineTransformTranslate(cell.transform, 20, 0);
+        
+        [UIView animateKeyframesWithDuration:0.3 delay:0 options:0 animations:^{
+            cell.alpha = 1.0;
+            cell.transform = translation;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+ 
 @end

@@ -25,7 +25,6 @@
 
 - (void)storeName:(NSString *)name
 {
-    NSLog(@"Storing name: %@", name);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:name forKey:@"name"];
     [defaults synchronize];
@@ -35,6 +34,14 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:number forKey:@"phoneNumber"];
+    [defaults synchronize];
+}
+
+- (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *encodedAddress = [NSKeyedArchiver archivedDataWithRootObject:address];
+    [defaults setValue:encodedAddress forKey:@"homeAddress"];
     [defaults synchronize];
 }
 

@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
-#import "SearchPickupViewController.h"
-#import "SearchDestinationViewController.h"
 #import "CredentialsViewController.h"
 
 #import <UIKit/UIKit.h>
@@ -18,8 +16,9 @@
 @property (strong, nonatomic) UISearchDisplayController *searchController;
 
 - (void)didFinishEnteringCredentials;
-- (void)hideSettingsView;
+- (void)showSearchView;
 - (void)hideSearchView;
+- (void)hideSettingsView;
 - (void)didFinishSearchWithAdress:(MKMapItem *)mapItem;
 
 @end

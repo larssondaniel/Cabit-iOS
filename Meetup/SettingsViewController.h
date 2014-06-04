@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPGooglePlacesAutocompleteQuery.h"
+#import <MapKit/MapKit.h>
 
 @interface SettingsViewController : UITableViewController
+
+@property (nonatomic) CLLocationCoordinate2D userLocation;
 
 @end

@@ -7,16 +7,19 @@
 //
 
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
+#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 #import "MainViewController.h"
 #import "CAKeyframeAnimation+AHEasing.h"
-#import "FXBlurView.h"
 #import "CredentialsViewController.h"
 #import "SettingsViewController.h"
 #import "SearchViewController.h"
 #import "SPGooglePlacesAutocomplete.h"
-#import "CSAnimation.h"
 #import "MapAnnotation.h"
+#import "TutorialViewController.h"
+#import "DACircularProgressView.h"
+#import "SettingsHelper.h"
+#import "VerificationViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -31,8 +34,6 @@
 @property (nonatomic, strong) CLGeocoder *geoCoder;
 
 @property (strong, nonatomic) IBOutlet UIView *animatedBottomView;
-@property (strong, nonatomic) IBOutlet UIButton *pickupLabel;
-@property (strong, nonatomic) IBOutlet UILabel *pickupStaticLabel;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewTopConstraint;
 @property (strong, nonatomic) IBOutlet UIButton *continueButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -49,9 +50,9 @@
 @property (strong, nonatomic) IBOutlet UIView *credentialsContainer;
 @property (strong, nonatomic) IBOutlet UIView *settingsContainer;
 @property (strong, nonatomic) IBOutlet UIView *searchContainer;
+@property (strong, nonatomic) IBOutlet UIView *tutorialContainer;
 @property (nonatomic) bool isSearchingForPickup;
-
-
+@property (strong, nonatomic) IBOutlet UIView *verificationsContainer1;
 
 
 @property (strong, nonatomic) IBOutlet UIView *destinationView;
@@ -74,31 +75,36 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 @property (strong, nonatomic) IBOutlet UIView *addressToolbar;
+@property (strong, nonatomic) IBOutlet UIView *timerProgressView;
+@property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) IBOutlet UILabel *timeLeftLabel;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (strong, nonatomic) IBOutlet UIView *statusView;
+@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end
 
 @implementation MainViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     [self.mapView setDelegate:self];
     self.data = [[NSMutableArray alloc] init];
-    
+
+    if(IS_OS_8_OR_LATER) {
+    }
+
     self.additionalInfoView.hidden = YES;
     self.timerView.hidden = YES;
     
-    // Reverse geolocate
     self.geoCoder = [[CLGeocoder alloc] init];
-    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 138)];
+    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 118)];
     [self.addressToolbar addSubview:self.toolbar];
     
     UIToolbar *toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 68)];
     [self.additionalInfoView addSubview:toolbar2];
-    
-    UIToolbar *toolbar3 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 85)];
-    [self.timerView addSubview:toolbar3];
     
     for (UIView *subview in self.additionalInfoView.subviews) {
         if (!([subview isKindOfClass:[UIToolbar class]]))
@@ -116,13 +122,8 @@
     
     
     [self.navigationController.navigationBar setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"OpenSans" size:21],
-      NSFontAttributeName, nil]];
-    
-    //[self setFontFamily:@"OpenSans" forView:self.view andSubViews:YES];
-    
-    // In order to animate it later
+     @{[UIFont fontWithName:@"OpenSans" size:21]: NSFontAttributeName}];
+
     self.tintView = [[UIToolbar alloc] initWithFrame:self.view.bounds];
     self.tintView.barTintColor = [UIColor colorWithRed:0.196 green:0.235 blue:0.313 alpha:0.6];
     self.tintView.autoresizingMask = self.view.autoresizingMask;
@@ -130,61 +131,68 @@
     [self.view addSubview:self.tintView];
     
     self.credentialsContainer.alpha = 0.0;
+    self.tutorialContainer.alpha = 0.0;
+    self.verificationsContainer1.alpha = 0.0;
 
-    [self.travelTimeLabel setAttributedText:[self attributedFontForValue:@"12" andUnit:@"min"]];
+    [self.travelTimeLabel setAttributedText:[self attributedFontForValue:@"13" andUnit:@"min"]];
     [self.priceLabel setAttributedText:[self attributedFontForValue:@"240" andUnit:@"sek"]];
     
     [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:12]];
 
-    [self.pickupButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:20]];
-    [self.destinationButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:20]];
+    [self.pickupButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.destinationButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.statusLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
 
-    //[self showCredentialsView];
+    self.tintView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+
+    if (![[SettingsHelper sharedSettingsHelper] checkVerifiedUser])
+        [self showVerificationViewReoccuring:NO];
+
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(didBeginTouchAtPickupButton) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.2 target:self selector:@selector(didBeginTouchAtDestinationButton) userInfo:nil repeats:NO];
 }
 
-- (NSAttributedString *)attributedFontForValue:(NSString *)value andUnit:(NSString *)unit
-{
+- (NSAttributedString *)attributedFontForValue:(NSString *)value andUnit:(NSString *)unit {
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@""];
-    UIFont *largeFont = [UIFont fontWithName:@"OpenSans" size:40];
-    UIFont *smallFont = [UIFont fontWithName:@"OpenSans-Light" size:20];
-    UIColor *color = [UIColor colorWithRed:46.0f/255.0f green:67.0f/255.0f blue:89.0f/255.0f alpha:1];
-    NSDictionary *largeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                largeFont, NSFontAttributeName,
-                                color, NSForegroundColorAttributeName,
-                                nil];
-    NSDictionary *smallAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     smallFont, NSFontAttributeName,
-                                     color, NSForegroundColorAttributeName,
-                                     nil];
+    UIFont *largeFont = [UIFont fontWithName:@"OpenSans-Light" size:36];
+    UIFont *smallFont = [UIFont fontWithName:@"OpenSans" size:16];
+    UIColor *color = [UIColor colorWithRed:69.0f/255.0f green:77.0f/255.0f blue:95.0f/255.0f alpha:1];
+
+    NSDictionary *largeAttributes = @{NSFontAttributeName: largeFont,
+                                      NSForegroundColorAttributeName: color};
+    NSDictionary *smallAttributes = @{NSFontAttributeName: smallFont,
+                                      NSForegroundColorAttributeName: color};
 
     NSAttributedString *subString = [[NSAttributedString alloc] initWithString:value attributes:largeAttributes];
     [string appendAttributedString:subString];
-    subString = [[NSAttributedString alloc] initWithString:unit attributes:smallAttributes];
-    [string appendAttributedString:subString];
+    NSAttributedString *subString2 = [[NSAttributedString alloc] initWithString:unit attributes:smallAttributes];
+    [string appendAttributedString:subString2];
     return string;
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self hideSearchView];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     self.mapView.delegate = self;
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
+-(void)viewWillDisappear:(BOOL)animated {
     self.mapView.delegate = nil;
 }
 
--(void)setFontFamily:(NSString*)fontFamily forView:(UIView*)view andSubViews:(BOOL)isSubViews
-{
-    if ([view isKindOfClass:[UILabel class]])
-    {
+/*
+-(void)setFontFamily:(NSString*)fontFamily forView:(UIView*)view andSubViews:(BOOL)isSubViews {
+
+    NSArray *fonts = @[@"OpenSans", @"OpenSans-Light", @"OpenSans-Semibold"];
+    if ([view isKindOfClass:[UILabel class]]) {
         UILabel *lbl = (UILabel *)view;
-        [lbl setFont:[UIFont fontWithName:fontFamily size:[[lbl font] pointSize]]];
+        [lbl setFont:[UIFont fontWithName:fonts[view.tag] size:sizes[view.tag]];
+        NSLog(@"%@ %f", fonts[view.tag], [[lbl font] pointSize]);
+    } else if ([view isKindOfClass:[UITextField class]]) {
+        UITextField *textField = (UITextField *)view;
+        [textField setFont:[UIFont fontWithName:fonts[view.tag] size:[textField.font pointSize]]];
     }
     
     if (isSubViews)
@@ -195,6 +203,7 @@
         }
     }
 }
+ */
 
 /*
  *  Not used at the moment. Is needed if there should be a locate button after the user changes to another origin adress.
@@ -303,7 +312,6 @@
 
 - (void)zoomToLocation:(NSString *)locationType
 {
-    NSLog(@"ZoOOoming");
     //MKCoordinateRegion region;
     MKMapPoint annotationPoint;
     if ([locationType isEqualToString:PICKUP_ANNOTATION]) {
@@ -559,7 +567,7 @@
 
 - (IBAction)showSettingsView {
     [self.view bringSubviewToFront:self.settingsContainer];
-    SettingsViewController *settingsViewController = (SettingsViewController *)self.childViewControllers[1];
+    SettingsViewController *settingsViewController = (SettingsViewController *)self.childViewControllers[2];
     [settingsViewController setUserLocation:self.mapView.userLocation.location.coordinate];
     [UIView animateWithDuration:0.15 animations:^{
         
@@ -571,13 +579,76 @@
     }];
 }
 
+#pragma tutorial
+
+- (void)hideTutorialView {
+    [UIView animateWithDuration:0.15 animations:^(void) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+        self.animatedBottomView.alpha = 1.0;
+        self.tutorialContainer.alpha = 0.0;
+        self.tintView.alpha = 0.0;
+    }];
+}
+
+- (IBAction)showTutorialView {
+    TutorialViewController *viewController = (TutorialViewController *)self.childViewControllers[3];
+    [viewController beginAnimations];
+
+    [self.view bringSubviewToFront:self.tutorialContainer];
+    [UIView animateWithDuration:0.15 animations:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+
+        self.navigationController.navigationBar.alpha = 0.0;
+        self.animatedBottomView.alpha = 0.0;
+        self.tutorialContainer.alpha = 1.0;
+        self.tintView.alpha = 1.0;
+    }];
+}
+
+#pragma verification
+
+- (IBAction)showVerificationViewReoccuring:(bool)reoccuring {
+    VerificationViewController *viewController = (VerificationViewController *)self.childViewControllers[0];
+    if (reoccuring) {
+        [viewController setMessage:@"Snart där..."];
+    }
+    [self.view bringSubviewToFront:self.verificationsContainer1];
+    [UIView animateWithDuration:0.15 animations:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+        
+        self.navigationController.navigationBar.alpha = 0.0;
+        self.animatedBottomView.alpha = 0.0;
+        self.verificationsContainer1.alpha = 1.0;
+        self.tintView.alpha = 1.0;
+    }];
+}
+
+- (void)hideVerificationView {
+    [self.view endEditing:YES];
+
+    if ([self isFirstRun]) {
+        [UIView animateWithDuration:0.15 animations:^(void) {
+            self.animatedBottomView.alpha = 1.0;
+            self.verificationsContainer1.alpha = 0.0;
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+        [self showTutorialView];
+    } else {
+        [UIView animateWithDuration:0.15 animations:^(void) {
+            self.animatedBottomView.alpha = 1.0;
+            self.verificationsContainer1.alpha = 0.0;
+            self.tintView.alpha = 0.0;
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    }
+}
+
 #pragma search
 
 - (void)showSearchView {
     [self.view bringSubviewToFront:self.searchContainer];
     [UIView animateWithDuration:0.15 animations:^{
         self.searchContainer.alpha = 1.0;
-        self.tintView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         self.tintView.alpha = 0.97;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
@@ -709,10 +780,15 @@
 }
 
 - (IBAction)clickedContinue {
+    if (![[SettingsHelper sharedSettingsHelper] checkVerifiedUser]) {
+        [self showVerificationViewReoccuring:YES];
+        return;
+    }
     if (!(self.pickupMapItem && self.destinationMapItem)) {
         [self performShakeAnimationOnView:self.destinationStaticLabel duration:0.3 delay:0];
     } else {
         [self animateButtonsToLeft:1];
+        [self setStatus:@"requesting"];
         [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
             self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, 100, 0);
             self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, 100, 0);
@@ -720,27 +796,24 @@
             self.destinationButton.enabled = NO;
             self.pickupButton.enabled = NO;
         }];
-        [self fitRegionToRoute];
+        //[self fitRegionToRoute];
     }
-}
 
-- (IBAction)clickedMakeReservation:(id)sender {
-    [self animateButtonsToLeft:1];
-    
     for (id<MKAnnotation> annotation in self.mapView.annotations){
         MKAnnotationView* view = [self.mapView viewForAnnotation: annotation];
         if (view){
             [view setDraggable:NO];
         }
     }
-    
+
+    /*
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.toolbar.transform = CGAffineTransformMakeTranslation(0, 134);
         self.additionalInfoView.transform = CGAffineTransformMakeTranslation(0, 134);
         self.pickupView.transform = CGAffineTransformMakeTranslation(0, 134);
         self.destinationView.transform = CGAffineTransformMakeTranslation(0, 134);
     } completion:^(BOOL finished) {
-        self.isShowingAddresses = NO;
+        //self.isShowingAddresses = NO;
         self.destinationArrow.hidden = YES;
         self.pickupArrow.hidden = YES;
         [UIView transitionWithView:self.timerView
@@ -752,8 +825,12 @@
                         } completion:^(BOOL finished) {
                         }];
     }];
-    
+     */
+
     [self zoomToLocation:PICKUP_ANNOTATION];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self setStatus:@"ready"];
+    });
 }
 
 - (IBAction)toggleInformation {
@@ -791,35 +868,27 @@
 }
 
 - (void)animateButtonsToLeft:(int)steps {
-    [self.view bringSubviewToFront:self.makeReservationButton];
-    [self.view bringSubviewToFront:self.editButton];
-    [self.view bringSubviewToFront:self.cancelButton];
     [self.view bringSubviewToFront:self.continueButton];
+    [self.view bringSubviewToFront:self.statusView];
     [self.view bringSubviewToFront:self.searchContainer];
     [self.view bringSubviewToFront:self.settingsContainer];
     
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * (-320), 0);
-        self.makeReservationButton.transform = CGAffineTransformTranslate(self.makeReservationButton.transform, steps * (-320), 0);
-        self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, steps * (-320), 0);
-        self.editButton.transform = CGAffineTransformTranslate(self.editButton.transform, steps * (-320), 0);
+        self.statusView.transform = CGAffineTransformTranslate(self.statusView.transform, steps * (-320), 0);
     } completion:^(BOOL finished) {
     }];
 }
 
 - (void)animateButtonsToRight:(int)steps {
-    [self.view bringSubviewToFront:self.makeReservationButton];
-    [self.view bringSubviewToFront:self.editButton];
-    [self.view bringSubviewToFront:self.cancelButton];
     [self.view bringSubviewToFront:self.continueButton];
+    [self.view bringSubviewToFront:self.statusView];
     [self.view bringSubviewToFront:self.searchContainer];
     [self.view bringSubviewToFront:self.settingsContainer];
 
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * 320, 0);
-        self.makeReservationButton.transform = CGAffineTransformTranslate(self.makeReservationButton.transform, steps * 320, 0);
-        self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, steps * 320, 0);
-        self.editButton.transform = CGAffineTransformTranslate(self.editButton.transform, steps * 320, 0);
+        self.statusView.transform = CGAffineTransformTranslate(self.editButton.transform, steps * 320, 0);
     } completion:^(BOOL finished) {
     }];
 }
@@ -879,6 +948,42 @@
     }];
     
     [self fitRegionToRoute];
+}
+
+- (bool)isFirstRun
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"isFirstRun"])
+    {
+        return NO;
+    }
+
+    [defaults setObject:[NSDate date] forKey:@"isFirstRun"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    return YES;
+}
+
+- (void)setStatus:(NSString *)status {
+    NSString *statusText = @"";
+    UIColor *statusColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
+    if ([status isEqualToString:@"requesting"]) {
+        statusText = @"Letar efter en bil";
+        statusColor = [UIColor colorWithRed:240.0f/255.0f green:179.0f/255.0f blue:43.0f/255.0f alpha:1];
+    } else if ([status isEqualToString:@"ready"]) {
+        statusText = @"En bil från Taxi Göteborg är på väg";
+        statusColor = [UIColor colorWithRed:0.0f/255.0f green:181.0f/255.0f blue:106.0f/255.0f alpha:1];
+    }
+    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+        self.statusView.backgroundColor = statusColor;
+        self.statusLabel.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        self.statusLabel.text = statusText;
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+            self.statusView.backgroundColor = statusColor;
+            self.statusLabel.alpha = 1.0;
+        } completion:^(BOOL finished) {}];
+    }];
 }
 
 @end

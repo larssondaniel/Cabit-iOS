@@ -16,5 +16,6 @@
 - (void)storeName:(NSString *)name;
 - (void)storePhoneNumber:(NSString *)number;
 - (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address;
+- (bool)checkVerifiedUser;
 
 @end

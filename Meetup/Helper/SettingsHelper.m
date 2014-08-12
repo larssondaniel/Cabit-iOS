@@ -45,4 +45,12 @@
     [defaults synchronize];
 }
 
+- (bool)checkVerifiedUser {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:@"phoneNumber"]) {
+        return NO;
+    }
+    return YES;
+}
+
 @end

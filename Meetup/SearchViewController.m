@@ -40,8 +40,6 @@
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
     
-    
-    
     self.locationManager = [[CLLocationManager alloc] init];
 	self.locationManager.delegate = self;
 	[self.locationManager startUpdatingLocation];
@@ -56,8 +54,7 @@
     [self.searchDisplayController.searchResultsTableView setBackgroundColor:[UIColor clearColor]];
 }
 
-- (void)loadSearchHistory
-{
+- (void)loadSearchHistory {
     NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *recentSearches = [NSMutableArray array];
     
@@ -66,8 +63,10 @@
     
     if (dataRepresentingHomeAddress != nil) {
         self.homeAddress = [NSKeyedUnarchiver unarchiveObjectWithData:dataRepresentingHomeAddress];
-        [self.places addObject:self.homeAddress];
-        self.isShowingHomeAddress = YES;
+        if (self.homeAddress != nil) {
+            [self.places addObject:self.homeAddress];
+            self.isShowingHomeAddress = YES;
+        }
     } else {
         self.isShowingHomeAddress = NO;
     }
@@ -117,12 +116,13 @@
 
 - (NSString *)parseAddress:(NSString *)address {
     NSArray *addressComponents = [address componentsSeparatedByString:@","];
+    if (addressComponents.count < 2)
+        return nil;
     NSString *parsedAddress = [NSString stringWithFormat:@"%@, %@", [addressComponents objectAtIndex:0], [addressComponents objectAtIndex:1]];
     return parsedAddress;
 }
 
--(void)issueLocalSearchLookup:(NSString *)searchString
-{
+-(void)issueLocalSearchLookup:(NSString *)searchString {
     self.shouldAnimateCells = NO;
 
     SPGooglePlacesAutocompleteQuery *query = [[SPGooglePlacesAutocompleteQuery alloc] initWithApiKey:@"AIzaSyDxTyIXSAktcdcT8_l9AdjiUem8--zxw2Y"];
@@ -134,20 +134,17 @@
     
     [query fetchPlaces:^(NSArray *places, NSError *error) {
         [self.places removeAllObjects];
-        //NSLog(@"Results for %@: %i", searchString, places.count);
         [self.places addObjectsFromArray:places];
         [self.searchDisplayController.searchResultsTableView reloadData];
     }];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self.mainViewController hideSearchView];
     [self resetTableView];
 }
 
-- (void)setActiveWithLabel:(NSString *)label andUserLocation:(CLLocationCoordinate2D)location
-{
+- (void)setActiveWithLabel:(NSString *)label andUserLocation:(CLLocationCoordinate2D)location {
     self.shouldAnimateCells = YES;
 
     self.mainViewController = (MainViewController *)self.parentViewController;
@@ -158,8 +155,7 @@
     [self.searchBar setShowsCancelButton:YES animated:YES];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     
     // check to see if Location Services is enabled, there are two state possibilities:
@@ -168,7 +164,7 @@
     NSString *causeStr = nil;
     
     // check whether location services are enabled on the device
-    if ([CLLocationManager locationServicesEnabled] == NO)
+    if (![CLLocationManager locationServicesEnabled])
     {
         causeStr = @"device";
     }
@@ -196,15 +192,13 @@
     }
 }
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     if (searchString != nil && ![searchString isEqual: @""])
         [self issueLocalSearchLookup:searchString];
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // pass the new bounding region to the map destination view controller
     //self.mainViewController.boundingRegion = self.boundingRegion;
     
@@ -217,16 +211,14 @@
     [self resetTableView];
 }
 
-- (void)resetTableView
-{
+- (void)resetTableView {
     [self.places removeAllObjects];
     [self.searchBar setText:@""];
     [self.searchDisplayController.searchResultsTableView reloadData];
     [self.searchDisplayController setActive:NO];
 }
 
-- (void)saveToRecentSearches:(SPGooglePlacesAutocompletePlace *)search
-{
+- (void)saveToRecentSearches:(SPGooglePlacesAutocompletePlace *)search {
     if ([search.reference isEqualToString:self.homeAddress.reference])
         return;
     NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
@@ -270,9 +262,7 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
-    NSLog(@"Did hide search view");
-    if (self.searchDisplayController.active == YES) {
-        NSLog(@"Did hide");
+    if (self.searchDisplayController.active) {
         [self removeTableViewOverlay];
         tableView.hidden = NO;
     }

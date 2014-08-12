@@ -12,6 +12,7 @@
 #import <MapKit/MapKit.h>
 
 @interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate>
+
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) UISearchDisplayController *searchController;
 
@@ -19,6 +20,8 @@
 - (void)showSearchView;
 - (void)hideSearchView;
 - (void)hideSettingsView;
+- (void)hideTutorialView;
+- (void)hideVerificationView;
 - (void)didFinishSearchWithAdress:(MKMapItem *)mapItem;
 
 @end

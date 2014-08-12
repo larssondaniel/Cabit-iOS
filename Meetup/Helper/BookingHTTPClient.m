@@ -7,9 +7,10 @@
 //
 
 #import "BookingHTTPClient.h"
+#import "AFNetworking.h"
 
 // static NSString * const WorldWeatherOnlineAPIKey = @"PASTE YOUR API KEY HERE";
-static NSString * const BaseURLString = @"http://cabit.nodejitsu.com/";
+static NSString * const BaseURLString = @"http://cabit-mobile:VeCRebreva67@cabit.jit.su/";
 
 @implementation BookingHTTPClient
 
@@ -37,14 +38,11 @@ static NSString * const BaseURLString = @"http://cabit.nodejitsu.com/";
     return self;
 }
 
-- (void)requestReservationWithOrigin:(CLLocation *)origin andDestination:(CLLocation *)destination
-{
+- (void)requestReservationWithOrigin:(CLLocation *)origin andDestination:(CLLocation *)destination {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     parameters[@"origin"] = [NSString stringWithFormat:@"%f,%f",origin.coordinate.latitude,origin.coordinate.longitude];
     parameters[@"destination"] = [NSString stringWithFormat:@"%f,%f",destination.coordinate.latitude,destination.coordinate.longitude];
-    // parameters[@"format"] = @"json";
-    // parameters[@"key"] = WorldWeatherOnlineAPIKey;
     
     [self POST:@"booking" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([self.delegate respondsToSelector:@selector(bookingHTTPClient:didBeginReservation:)]) {
@@ -55,6 +53,18 @@ static NSString * const BaseURLString = @"http://cabit.nodejitsu.com/";
         if ([self.delegate respondsToSelector:@selector(bookingHTTPClient:didFailWithError:)]) {
             [self.delegate bookingHTTPClient:self didFailWithError:error];
         }
+    }];
+}
+
+- (void)getPhoneNumberVerificationWithNumber:(NSString *)number {
+    [self GET:[NSString stringWithFormat:@"%@validate/14156843580", self.baseURL] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"Resonse is %@", responseObject);
+        NSString *code = [responseObject valueForKey:@"code"];
+        if ([self.delegate respondsToSelector:@selector(bookingHTTPClient:didRecieveVerificationCode:)]) {
+            [self.delegate bookingHTTPClient:self didRecieveVerificationCode:code];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Failed to post with task %@ and failure %@", task, error);
     }];
 }
 

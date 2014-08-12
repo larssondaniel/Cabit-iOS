@@ -18,6 +18,7 @@
 + (BookingHTTPClient *)sharedBookingHTTPClient;
 - (instancetype)initWithBaseURL:(NSURL *)url;
 - (void)requestReservationWithOrigin:(CLLocation *)origin andDestination:(CLLocation *)destination;
+- (void)getPhoneNumberVerificationWithNumber:(NSString *)number;
 
 @end
 
@@ -25,4 +26,5 @@
 @optional
 -(void)bookingHTTPClient:(BookingHTTPClient *)client didBeginReservation:(id)reservation;
 -(void)bookingHTTPClient:(BookingHTTPClient *)client didFailWithError:(NSError *)error;
+-(void)bookingHTTPClient:(BookingHTTPClient *)client didRecieveVerificationCode:(NSString *)code;
 @end

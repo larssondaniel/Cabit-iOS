@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad]; 
+    [super viewDidLoad];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
     imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];
@@ -44,7 +44,6 @@
 
 - (IBAction)doneClicked:(id)sender
 {
-    NSLog(@"Done Clicked.");
     [self.view endEditing:YES];
 }
 

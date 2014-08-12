@@ -84,3 +84,9 @@
 #define COCOAPODS_VERSION_MINOR_TWMessageBarManager 3
 #define COCOAPODS_VERSION_PATCH_TWMessageBarManager 2
 
+// libPhoneNumber-iOS
+#define COCOAPODS_POD_AVAILABLE_libPhoneNumber_iOS
+#define COCOAPODS_VERSION_MAJOR_libPhoneNumber_iOS 0
+#define COCOAPODS_VERSION_MINOR_libPhoneNumber_iOS 7
+#define COCOAPODS_VERSION_PATCH_libPhoneNumber_iOS 2
+

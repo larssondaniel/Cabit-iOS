@@ -21,6 +21,15 @@ PODS:
   - APLKeyboardControls (0.1.2):
     - NSData+Base64 (~> 1.0.0)
   - Canvas (0.1.1)
+  - CocoaLumberjack (2.0.0-beta):
+    - CocoaLumberjack/CLI
+    - CocoaLumberjack/Core
+    - CocoaLumberjack/Extensions
+  - CocoaLumberjack/CLI (2.0.0-beta):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Core (2.0.0-beta)
+  - CocoaLumberjack/Extensions (2.0.0-beta):
+    - CocoaLumberjack/Core
   - DACircularProgress (2.2.0)
   - libPhoneNumber-iOS (0.7.2)
   - NSData+Base64 (1.0.0)
@@ -31,6 +40,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.2.3)
   - APLKeyboardControls
   - Canvas
+  - CocoaLumberjack
   - DACircularProgress (~> 2.2.0)
   - libPhoneNumber-iOS
   - PulsingHalo
@@ -40,10 +50,11 @@ SPEC CHECKSUMS:
   AFNetworking: 47947303319594706f48a55185ea95a95159ab94
   APLKeyboardControls: e2e61708b87ce24bb7daeb06b03888f54a97a67a
   Canvas: 45356a2e61087a776bfde5090676d290cf67f7f2
+  CocoaLumberjack: aadc76d7bd6c839ca84b38ed50cbf89d7cf8c693
   DACircularProgress: 3b41941891a56dc6aa17971f5322a9a38a6f446e
   libPhoneNumber-iOS: 207db9b19395d5ba8898398626620568282fa2bc
   NSData+Base64: aae92a2e3f0bd88b29fe6093551ded3f5c062548
   PulsingHalo: 4f5fbc25f9efb9f949e4ddad05ca885a11667aa0
   TWMessageBarManager: 73193bf47b14fb1cde2a4153746ec540b6ad4501
 
-COCOAPODS: 0.32.1
+COCOAPODS: 0.33.1

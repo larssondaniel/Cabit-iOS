@@ -7,11 +7,12 @@
 //
 
 #import "CredentialsViewController.h"
+#import "BookingHTTPClient.h"
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, BookingHTTPClientDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) UISearchDisplayController *searchController;
@@ -22,6 +23,8 @@
 - (void)hideSettingsView;
 - (void)hideTutorialView;
 - (void)hideVerificationView;
+- (void)hideConnectionLossView;
+- (void)showConnectionLossView;
 - (void)didFinishSearchWithAdress:(MKMapItem *)mapItem;
 
 @end

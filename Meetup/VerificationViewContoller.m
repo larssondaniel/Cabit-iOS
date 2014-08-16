@@ -14,6 +14,8 @@
 #import "NBAsYouTypeFormatter.h"
 #import "SettingsHelper.h"
 
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+
 @interface VerificationViewController ()
 
 @property (nonatomic, strong) MainViewController *mainViewController;
@@ -159,10 +161,8 @@
 - (IBAction)clickedSend {
     [[BookingHTTPClient sharedBookingHTTPClient] setDelegate:self];
 
-
-
-    [[BookingHTTPClient sharedBookingHTTPClient] getPhoneNumberVerificationWithNumber:self.phoneLBL.text];
     self.phoneLBL.text = self.phoneTF.text;
+    [[BookingHTTPClient sharedBookingHTTPClient] getPhoneNumberVerificationWithNumber:self.phoneTF.text];
     CGAffineTransform containerTranslation = CGAffineTransformTranslate(self.uiContainer.transform, -320, 0);
     CGAffineTransform rightContainerTranslation = CGAffineTransformTranslate(self.rightContainer.transform, -320, 0);
     
@@ -212,7 +212,11 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    CGAffineTransform translation = CGAffineTransformTranslate(self.uiContainer.transform, 0, -20);
+    CGAffineTransform translation;
+    if (IS_IPHONE_5)
+        translation = CGAffineTransformTranslate(self.uiContainer.transform, 0, -20);
+    else
+        translation = CGAffineTransformTranslate(self.uiContainer.transform, 0, -100);
     [UIView animateKeyframesWithDuration:0.2 delay:0 options:0 animations:^{
         self.uiContainer.transform = translation;
     } completion:^(BOOL finished) {}];
@@ -220,7 +224,12 @@
 
 -(void)keyboardWillHide:(NSNotification *)notification
 {
-    CGAffineTransform translation = CGAffineTransformTranslate(self.uiContainer.transform, 0, 20);
+    CGAffineTransform translation;
+    if (IS_IPHONE_5)
+        translation = CGAffineTransformTranslate(self.uiContainer.transform, 0, 20);
+    else
+        translation = CGAffineTransformTranslate(self.uiContainer.transform, 0, 100);
+
     [UIView animateKeyframesWithDuration:0.2 delay:0 options:0 animations:^{
         self.uiContainer.transform = translation;
     } completion:^(BOOL finished) {}];

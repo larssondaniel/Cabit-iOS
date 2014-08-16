@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CocoaLumberjack.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-DACircularProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1513920290A6408BB5B6A94C</key>
+		<key>129F45CA37464366AC3F434A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C0C4FEB02D64982943C1EC1</key>
+		<key>1A4972F90CD84B4886E0A06B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>54CC1F7715F5415F9215D52B</key>
+		<key>1FE51ECBA6C348679A5448F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9CAE9A59A0984CE792EA66B8</key>
+		<key>45AE3661CBBF45539E11CDA2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C56D5E754E69486F8BBE346C</key>
+		<key>47FB871BFB034216B7F2865C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D61CD6173D02441D8CEFAD74</key>
+		<key>4D1E4F59149C4043B75AABD6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DED23CB3E2EC4B07967EF61A</key>
+		<key>60605F668DEF4022BF5623DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DFD7809999864482A8A923BC</key>
+		<key>6CE65B42210E48ABBCB90BAE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E0E85BA439EE463D9AFB50F4</key>
+		<key>79A31E73820F4F3BAA034DBA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8924F87AD1C440859C05C8D2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

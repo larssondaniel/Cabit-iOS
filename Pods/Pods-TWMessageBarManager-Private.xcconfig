@@ -1,5 +1,5 @@
 #include "Pods-TWMessageBarManager.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/TWMessageBarManager" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/APLKeyboardControls" "${PODS_ROOT}/Headers/Canvas" "${PODS_ROOT}/Headers/DACircularProgress" "${PODS_ROOT}/Headers/NSData+Base64" "${PODS_ROOT}/Headers/PulsingHalo" "${PODS_ROOT}/Headers/TWMessageBarManager" "${PODS_ROOT}/Headers/libPhoneNumber-iOS"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/TWMessageBarManager" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/APLKeyboardControls" "${PODS_ROOT}/Headers/Canvas" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/DACircularProgress" "${PODS_ROOT}/Headers/NSData+Base64" "${PODS_ROOT}/Headers/PulsingHalo" "${PODS_ROOT}/Headers/TWMessageBarManager" "${PODS_ROOT}/Headers/libPhoneNumber-iOS"
 OTHER_LDFLAGS = -ObjC
 PODS_ROOT = ${SRCROOT}

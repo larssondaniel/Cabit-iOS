@@ -30,6 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.homeAddressTextField.delegate = self;
+    self.nameTextField.delegate = self;
+    self.phoneTextField.delegate = self;
+
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self.view addGestureRecognizer:tap];
+
     [self.navBarTitleLBL setFont:[UIFont fontWithName:@"OpenSans" size:20]];
     [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     [self.phoneTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
@@ -43,12 +50,13 @@
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
     
-    // Load credentials
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [self.nameTextField setText:[defaults objectForKey:@"name"]];
-    [self.phoneTextField setText:[defaults objectForKey:@"phoneNumber"]];
+    [self.nameTextField setText:[[SettingsHelper sharedSettingsHelper] name]];
+    [self.phoneTextField setText:[[SettingsHelper sharedSettingsHelper] phoneNumber]];
+    [self.homeAddressTextField setText:[[SettingsHelper sharedSettingsHelper] homeAddressShort]];
 
-    /*
+
+
+/*
     NSData *hej = [defaults objectForKey:@"homeAddress"];
     NSString *strData = [[NSString alloc]initWithData:hej encoding:NSUTF8StringEncoding];
     NSLog(@"%@", strData);
@@ -60,7 +68,10 @@
         NSLog(@"Went wrong");
     }
     @finally {}
-    */
+*/
+
+
+
     
     [self.okButton.titleLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     
@@ -146,6 +157,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"Got called");
     [self.view endEditing:YES];
 }
 
@@ -157,7 +169,7 @@
     query.language = @"se"; // optional
     query.types = SPPlaceTypeGeocode; // Only return geocoding (address) results.
     [query fetchPlaces:^(NSArray *places, NSError *error) {
-        [[SettingsHelper sharedSettingsHelper] storeHomeAddress:places.firstObject];
+        [[SettingsHelper sharedSettingsHelper] storeHomeAddress:places.firstObject withShortVersion:searchString];
     }];
 }
 
@@ -168,6 +180,18 @@
         [self.phoneTextField setText:[self.numberFormatter removeLastDigit]];
     }
     self.currentPhoneNumber = self.phoneTextField.text;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+
+    return YES;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)recognizer {
+    NSLog(@"Handling tap");
+    [self.view endEditing:YES];
 }
 
 @end

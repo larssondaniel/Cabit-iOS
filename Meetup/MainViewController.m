@@ -6,8 +6,15 @@
 //  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
+#define kBaseURL @"Normalfan"
+
+#ifdef DEBUG
+    #define kBaseURL @"Basfan"
+#endif
+
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
 #import "MainViewController.h"
 #import "CAKeyframeAnimation+AHEasing.h"
@@ -19,6 +26,7 @@
 #import "TutorialViewController.h"
 #import "DACircularProgressView.h"
 #import "SettingsHelper.h"
+#import "Reachability.h"
 #import "VerificationViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
@@ -82,6 +90,11 @@
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (strong, nonatomic) IBOutlet UIView *statusView;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet UIView *connection_loss_container;
+@property (nonatomic) Reachability *hostReachability;
+@property (nonatomic, strong) NSString *reservationId;
+@property (nonatomic, strong) NSTimer *updateTimer;
+@property (nonatomic, strong) NSTimer *updateTimerAfterwards;
 
 @end
 
@@ -90,11 +103,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [[BookingHTTPClient sharedBookingHTTPClient] setDelegate:self];
     [self.mapView setDelegate:self];
     self.data = [[NSMutableArray alloc] init];
-
-    if(IS_OS_8_OR_LATER) {
-    }
 
     self.additionalInfoView.hidden = YES;
     self.timerView.hidden = YES;
@@ -133,9 +144,7 @@
     self.credentialsContainer.alpha = 0.0;
     self.tutorialContainer.alpha = 0.0;
     self.verificationsContainer1.alpha = 0.0;
-
-    [self.travelTimeLabel setAttributedText:[self attributedFontForValue:@"13" andUnit:@"min"]];
-    [self.priceLabel setAttributedText:[self attributedFontForValue:@"240" andUnit:@"sek"]];
+    self.connection_loss_container.alpha = 0.0;
     
     [self.destinationStaticLabel setFont:[UIFont fontWithName:@"OpenSans" size:12]];
 
@@ -150,6 +159,11 @@
 
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(didBeginTouchAtPickupButton) userInfo:nil repeats:NO];
     [NSTimer scheduledTimerWithTimeInterval:1.2 target:self selector:@selector(didBeginTouchAtDestinationButton) userInfo:nil repeats:NO];
+
+    /*
+     Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the method reachabilityChanged will be called.
+     */
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 }
 
 - (NSAttributedString *)attributedFontForValue:(NSString *)value andUnit:(NSString *)unit {
@@ -262,7 +276,8 @@
     
     if (self.destinationMapItem) {
         [self generateRoute];
-        //[self fitRegionToRoute];
+        [[BookingHTTPClient sharedBookingHTTPClient] getPriceFrom:self.pickupMapItem.placemark.coordinate to:self.destinationMapItem.placemark.coordinate];
+        [self.priceLabel setAttributedText:[self attributedFontForValue:@"" andUnit:@"Beräknar pris..."]];
     }
 }
 
@@ -276,7 +291,8 @@
     [self zoomToLocation:DESTINATION_ANNOTATION];
     
     [self generateRoute];
-    //[self fitRegionToRoute];
+    [[BookingHTTPClient sharedBookingHTTPClient] getPriceFrom:self.pickupMapItem.placemark.coordinate to:self.destinationMapItem.placemark.coordinate];
+    [self.priceLabel setAttributedText:[self attributedFontForValue:@"" andUnit:@"Beräknar pris..."]];
 }
 
 - (void)zoomToUserLocation
@@ -413,6 +429,9 @@
              NSLog(@"Error is %@", error);
              // Handle error
          } else {
+             NSTimeInterval expectedTravelTime = [response.routes[0] expectedTravelTime];
+             int minutes = floor(expectedTravelTime/60);
+             self.travelTimeLabel.attributedText = [self attributedFontForValue:[NSString stringWithFormat:@"%d", minutes] andUnit:@"min"];
              [self showRoute:response];
          }
      }];
@@ -421,6 +440,8 @@
 - (void)showRoute:(MKDirectionsResponse *)response {
     [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
         [self.mapView removeOverlays:self.mapView.overlays];
+
+        // TODO: is this right?
         for (MKRoute *route in response.routes)
         {
             [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
@@ -473,7 +494,12 @@
         zoomRect = MKMapRectUnion(zoomRect, pointRect);
     }
     double inset = -zoomRect.size.width * 1;
-    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(40, 40, 250, 40);
+    UIEdgeInsets edgeInsets;
+    if (IS_IPHONE_5)
+        edgeInsets = UIEdgeInsetsMake(40, 40, 250, 40);
+    else
+        edgeInsets = UIEdgeInsetsMake(40, 40, 450, 40);
+
     [self.mapView setVisibleMapRect:MKMapRectInset(zoomRect, inset, inset) edgePadding:edgeInsets animated:YES];
 }
 
@@ -572,7 +598,7 @@
     [UIView animateWithDuration:0.15 animations:^{
         
         self.navigationController.navigationBar.alpha = 0.0;
-        
+        self.animatedBottomView.alpha = 0.0;
         self.settingsContainer.alpha = 1.0;
         self.tintView.alpha = 1.0;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -605,6 +631,29 @@
     }];
 }
 
+#pragma connection_loss
+
+- (void)hideConnectionLossView {
+    [UIView animateWithDuration:0.15 animations:^(void) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+        self.animatedBottomView.alpha = 1.0;
+        self.connection_loss_container.alpha = 0.0;
+        self.tintView.alpha = 0.0;
+    }];
+}
+
+- (IBAction)showConnectionLossView {
+    [self.view bringSubviewToFront:self.connection_loss_container];
+    [UIView animateWithDuration:0.15 animations:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+
+        self.navigationController.navigationBar.alpha = 0.0;
+        self.animatedBottomView.alpha = 0.0;
+        self.connection_loss_container.alpha = 1.0;
+        self.tintView.alpha = 1.0;
+    }];
+}
+
 #pragma verification
 
 - (IBAction)showVerificationViewReoccuring:(bool)reoccuring {
@@ -632,7 +681,8 @@
             self.verificationsContainer1.alpha = 0.0;
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         }];
-        [self showTutorialView];
+        if (IS_IPHONE_5)
+            [self showTutorialView];
     } else {
         [UIView animateWithDuration:0.15 animations:^(void) {
             self.animatedBottomView.alpha = 1.0;
@@ -671,7 +721,6 @@
 - (void)didFinishSearchWithAdress:(SPGooglePlacesAutocompletePlace *)mapItem
 {
     NSString *parsedAddress = [self parseAddress:mapItem.name];
-
     if (self.isSearchingForPickup) {
         [mapItem resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
             MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
@@ -786,9 +835,10 @@
     }
     if (!(self.pickupMapItem && self.destinationMapItem)) {
         [self performShakeAnimationOnView:self.destinationStaticLabel duration:0.3 delay:0];
+        return;
     } else {
         [self animateButtonsToLeft:1];
-        [self setStatus:@"requesting"];
+        [self setStatus:@"Pending"];
         [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
             self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, 100, 0);
             self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, 100, 0);
@@ -798,6 +848,8 @@
         }];
         //[self fitRegionToRoute];
     }
+
+    [[BookingHTTPClient sharedBookingHTTPClient] requestReservationWithParameters:[self constructRequestDictionary]];
 
     for (id<MKAnnotation> annotation in self.mapView.annotations){
         MKAnnotationView* view = [self.mapView viewForAnnotation: annotation];
@@ -828,9 +880,60 @@
      */
 
     [self zoomToLocation:PICKUP_ANNOTATION];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self setStatus:@"ready"];
-    });
+}
+
+- (NSMutableDictionary *)constructRequestDictionary {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    NSArray *seperatedPickupAddress = [self.pickupButton.titleLabel.text componentsSeparatedByCharactersInSet:
+                                       [NSCharacterSet whitespaceCharacterSet]];
+    NSString *pickupNumber = [seperatedPickupAddress lastObject];
+
+    for(int i = 0; i < [pickupNumber length]; i ++){
+        NSLog(@"%hu", [pickupNumber characterAtIndex:i]);
+        if([pickupNumber characterAtIndex:i] == 8211){
+            pickupNumber = [pickupNumber substringToIndex:i];
+        }
+    }
+
+    NSString *pickupStreet = [[self.pickupButton.titleLabel.text componentsSeparatedByCharactersInSet:
+                               [[NSCharacterSet letterCharacterSet] invertedSet]] objectAtIndex:0];
+    parameters[@"fromStreetName"] = pickupStreet;
+    parameters[@"fromStreetNumber"] = pickupNumber;
+
+    NSArray *seperatedDestinationAddress = [self.destinationButton.titleLabel.text componentsSeparatedByCharactersInSet:
+                                            [NSCharacterSet whitespaceCharacterSet]];
+    NSString *destinationNumber = [seperatedDestinationAddress lastObject];
+
+    for(int i = 0; i < [destinationNumber length]; i ++){
+        NSLog(@"%hu", [destinationNumber characterAtIndex:i]);
+        if([destinationNumber characterAtIndex:i] == 8211){
+            destinationNumber = [destinationNumber substringToIndex:i];
+        }
+    }
+
+    NSString *destinationStreet = [[self.destinationButton.titleLabel.text componentsSeparatedByCharactersInSet:
+                                    [[NSCharacterSet letterCharacterSet] invertedSet]] objectAtIndex:0];
+
+    parameters[@"toStreetName"] = destinationStreet;
+    parameters[@"toStreetNumber"] = destinationNumber;
+
+    parameters[@"fromLatitude"] = [NSString stringWithFormat:@"%f", self.pickupMapItem.placemark.coordinate.latitude];
+    parameters[@"fromLongitude"] = [NSString stringWithFormat:@"%f", self.pickupMapItem.placemark.coordinate.longitude];
+    parameters[@"toLatitude"] = [NSString stringWithFormat:@"%f", self.destinationMapItem.placemark.coordinate.latitude];
+    parameters[@"toLongitude"] = [NSString stringWithFormat:@"%f", self.pickupMapItem.placemark.coordinate.longitude];
+    parameters[@"provider"] = @"TAXINET";
+    parameters[@"passengerName"] = [NSString stringWithFormat:@"%@", [[SettingsHelper sharedSettingsHelper] name]];
+    parameters[@"passengerPhone"] = [NSString stringWithFormat:@"0%@", [[SettingsHelper sharedSettingsHelper] phoneNumber]];
+
+    NSDateFormatter *dateformate=[[NSDateFormatter alloc]init];
+    [dateformate setDateFormat:@"YYYY/MM/dd HH:mm:ss"];
+    NSDate *date = [NSDate date];
+    date = [date dateByAddingTimeInterval:300];
+    NSString *date_string=[dateformate stringFromDate:date];
+    parameters[@"pickupTime"] = [NSString stringWithFormat:@"%@", date_string];
+
+    return parameters;
 }
 
 - (IBAction)toggleInformation {
@@ -872,7 +975,8 @@
     [self.view bringSubviewToFront:self.statusView];
     [self.view bringSubviewToFront:self.searchContainer];
     [self.view bringSubviewToFront:self.settingsContainer];
-    
+    [self.view bringSubviewToFront:self.connection_loss_container];
+
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * (-320), 0);
         self.statusView.transform = CGAffineTransformTranslate(self.statusView.transform, steps * (-320), 0);
@@ -885,6 +989,7 @@
     [self.view bringSubviewToFront:self.statusView];
     [self.view bringSubviewToFront:self.searchContainer];
     [self.view bringSubviewToFront:self.settingsContainer];
+    [self.view bringSubviewToFront:self.connection_loss_container];
 
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.continueButton.transform = CGAffineTransformTranslate(self.continueButton.transform, steps * 320, 0);
@@ -967,13 +1072,39 @@
 - (void)setStatus:(NSString *)status {
     NSString *statusText = @"";
     UIColor *statusColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
-    if ([status isEqualToString:@"requesting"]) {
-        statusText = @"Letar efter en bil";
+    if ([status isEqualToString:@"Pending"]) {
+        statusText = @"Letar efter taxibilar i närheten...";
         statusColor = [UIColor colorWithRed:240.0f/255.0f green:179.0f/255.0f blue:43.0f/255.0f alpha:1];
-    } else if ([status isEqualToString:@"ready"]) {
-        statusText = @"En bil från Taxi Göteborg är på väg";
+    } else if ([status isEqualToString:@"Confirmed"]) {
+        self.updateTimerAfterwards = [NSTimer scheduledTimerWithTimeInterval:300.0
+                                                            target:self
+                                                          selector:@selector(updateReservation)
+                                                          userInfo:nil
+                                                           repeats:YES];
+        [self.updateTimer invalidate];
+        statusText = @"En bil från Taxi Göteborg är på väg till upphämtningsplatsen.";
         statusColor = [UIColor colorWithRed:0.0f/255.0f green:181.0f/255.0f blue:106.0f/255.0f alpha:1];
+    } else if ([status isEqualToString:@"Finished"]) {
+        [self.updateTimer invalidate];
+        [self.updateTimerAfterwards invalidate];
+        statusText = @"En bil från Taxi Göteborg är på väg till upphämtningsplatsen.";
+        statusColor = [UIColor colorWithRed:240.0f/255.0f green:179.0f/255.0f blue:43.0f/255.0f alpha:1];
+        [self animateButtonsToRight:1];
+        self.pickupButton.titleLabel.text = @"";
+        self.destinationButton.titleLabel.text = @"";
+        self.priceLabel.text = @"";
+        self.travelTimeLabel.text = @"";
+
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
+            self.destinationArrow.transform = CGAffineTransformTranslate(self.destinationArrow.transform, -100, 0);
+            self.pickupArrow.transform = CGAffineTransformTranslate(self.pickupArrow.transform, -100, 0);
+        } completion:^(BOOL finished) {
+            self.destinationButton.enabled = YES;
+            self.pickupButton.enabled = YES;
+        }];
+
     }
+
     [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
         self.statusView.backgroundColor = statusColor;
         self.statusLabel.alpha = 0.0;
@@ -984,6 +1115,45 @@
             self.statusLabel.alpha = 1.0;
         } completion:^(BOOL finished) {}];
     }];
+}
+
+/*
+ * Called by Reachability whenever status changes.
+ */
+- (void)reachabilityChanged:(NSNotification *)note
+{
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    if (netStatus == NotReachable) {
+        [self hideSearchView];
+        [self hideSettingsView];
+        [self hideTutorialView];
+        [self hideVerificationView];
+        [self showConnectionLossView];
+    }
+}
+
+- (void)bookingHTTPClient:(BookingHTTPClient *)client didReceivePrice:(NSString *)price {
+    NSLog(@"Got price: %@", price);
+    [self.priceLabel setAttributedText:[self attributedFontForValue:price andUnit:@"sek"]];
+}
+
+- (void)bookingHTTPClient:(BookingHTTPClient *)client didBeginReservation:(id)reservation {
+    self.reservationId = reservation;
+    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                     target:self
+                                   selector:@selector(updateReservation)
+                                   userInfo:nil
+                                    repeats:YES];
+}
+
+- (void)bookingHTTPClient:(BookingHTTPClient *)client didUpdateStatus:(NSString *)status {
+    [self setStatus:status];
+}
+
+- (void)updateReservation {
+    [[BookingHTTPClient sharedBookingHTTPClient] getStatusForReservation:self.reservationId];
 }
 
 @end

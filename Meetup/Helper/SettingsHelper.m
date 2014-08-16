@@ -23,6 +23,24 @@
     return sharedInstance;
 }
 
+- (NSString *)name
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:@"name"];
+}
+
+- (NSString *)phoneNumber
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:@"phoneNumber"];
+}
+
+- (NSString *)homeAddressShort
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:@"homeAddressShort"];
+}
+
 - (void)storeName:(NSString *)name
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -37,11 +55,11 @@
     [defaults synchronize];
 }
 
-- (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address
-{
+- (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address withShortVersion:(NSString *)shortVersion {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *encodedAddress = [NSKeyedArchiver archivedDataWithRootObject:address];
     [defaults setValue:encodedAddress forKey:@"homeAddress"];
+    [defaults setObject:shortVersion forKey:@"homeAddressShort"];
     [defaults synchronize];
 }
 

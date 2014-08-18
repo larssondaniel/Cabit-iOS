@@ -14,13 +14,13 @@
 CGFloat const kTWMessageBarStyleSheetMessageBarAlpha = 0.96f;
 
 // Numerics (TWMessageView)
-CGFloat const kTWMessageViewBarPadding = 4.0f;
+CGFloat const kTWMessageViewBarPadding = 10.0f;
 CGFloat const kTWMessageViewIconSize = 36.0f;
 CGFloat const kTWMessageViewTextOffset = 2.0f;
 NSUInteger const kTWMessageViewiOS7Identifier = 7;
 
 // Numerics (TWMessageBarManager)
-CGFloat const kTWMessageBarManagerDisplayDelay = 7.0f;
+CGFloat const kTWMessageBarManagerDisplayDelay = 3.0f;
 CGFloat const kTWMessageBarManagerDismissAnimationDuration = 0.25f;
 CGFloat const kTWMessageBarManagerPanVelocity = 0.2f;
 CGFloat const kTWMessageBarManagerPanAnimationDuration = 0.0002f;

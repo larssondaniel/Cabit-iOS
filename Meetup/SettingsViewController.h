@@ -1,13 +1,17 @@
 //
 //  SettingsViewController.h
-//  Meetup
+//  Cabit
 //
-//  Created by Daniel Larsson on 2014-02-14.
-//  Copyright (c) 2014 Meetup. All rights reserved.
+//  Created by Daniel Larsson on 2014-03-02.
+//  Copyright (c) 2014 Cabit. All rights reserved.
 //
 
-#import "PBFlatGroupedTableViewController.h"
+#import <UIKit/UIKit.h>
+#import "SPGooglePlacesAutocompleteQuery.h"
+#import <MapKit/MapKit.h>
 
-@interface SettingsViewController : PBFlatGroupedTableViewController
+@interface SettingsViewController : UITableViewController<UITextFieldDelegate>
+
+@property(nonatomic) CLLocationCoordinate2D userLocation;
 
 @end

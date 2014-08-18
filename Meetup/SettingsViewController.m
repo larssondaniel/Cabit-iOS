@@ -1,148 +1,229 @@
 //
 //  SettingsViewController.m
-//  Meetup
+//  Cabit
 //
-//  Created by Daniel Larsson on 2014-02-14.
-//  Copyright (c) 2014 Meetup. All rights reserved.
+//  Created by Daniel Larsson on 2014-03-02.
+//  Copyright (c) 2014 Cabit. All rights reserved.
 //
 
 #import "SettingsViewController.h"
-#import "PBFlatRoundedImageView.h"
-#import <QuartzCore/QuartzCore.h>
-
+#import "SettingsHelper.h"
+#import "MainViewController.h"
+#import "NBAsYouTypeFormatter.h"
 
 @interface SettingsViewController ()
+@property(strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property(strong, nonatomic) IBOutlet UITextField *phonePrefixTextField;
+@property(strong, nonatomic) IBOutlet UITextField *phoneTextField;
+@property(strong, nonatomic) IBOutlet UITextField *homeAddressTextField;
+@property(strong, nonatomic) IBOutlet UILabel *pushFooterLabel;
+@property(strong, nonatomic) IBOutlet UIButton *okButton;
+@property(strong, nonatomic) IBOutlet UILabel *navBarTitleLBL;
+
+@property(strong, nonatomic) NBAsYouTypeFormatter *numberFormatter;
+@property(nonatomic, strong) NSString *currentPhoneNumber;
 
 @end
 
 @implementation SettingsViewController
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.homeAddressTextField.delegate = self;
+    self.nameTextField.delegate = self;
+    self.phoneTextField.delegate = self;
+
+    UITapGestureRecognizer *tap =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(handleTap:)];
+    [self.view addGestureRecognizer:tap];
+
+    [self.navBarTitleLBL setFont:[UIFont fontWithName:@"OpenSans" size:20]];
+    [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.phoneTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.phonePrefixTextField
+        setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.homeAddressTextField
+        setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.pushFooterLabel setFont:[UIFont fontWithName:@"OpenSans" size:12]];
+
+    UIImageView *imageView =
+        [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.image = [UIImage imageNamed:@"blurBackground.jpg"];
+    imageView.alpha = 0.25;
+    [self.view addSubview:imageView];
+    [self.view sendSubviewToBack:imageView];
+
+    [self.nameTextField setText:[[SettingsHelper sharedSettingsHelper] name]];
+    [self.phoneTextField
+        setText:[[SettingsHelper sharedSettingsHelper] phoneNumber]];
+    [self.homeAddressTextField
+        setText:[[SettingsHelper sharedSettingsHelper] homeAddressShort]];
+
+    /*
+        NSData *hej = [defaults objectForKey:@"homeAddress"];
+        NSString *strData = [[NSString alloc]initWithData:hej
+       encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", strData);
+
+        @try {
+            NSLog(@"%@", [NSKeyedUnarchiver unarchiveObjectWithData:hej]);
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Went wrong");
+        }
+        @finally {}
+    */
+
+    [self.okButton.titleLabel
+        setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+
+    // if (hej != nil)
+    //[self.homeAddressTextField setText:[NSKeyedUnarchiver
+    //unarchiveObjectWithData:hej]];
+
+    /*
+    [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.phoneTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.homeAddressTextField setFont:[UIFont fontWithName:@"OpenSans"
+    size:16]];
+
+    [self.pushLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
+    [self.pushFooterLabel setFont:[UIFont fontWithName:@"OpenSans" size:12]];
+     */
+
+    [self.nameTextField setValue:[UIColor colorWithRed:220.0 / 255.0
+                                                 green:220.0 / 255.0
+                                                  blue:220.0 / 255.0
+                                                 alpha:1.0]
+                      forKeyPath:@"_placeholderLabel.textColor"];
+    [self.phoneTextField setValue:[UIColor colorWithRed:220.0 / 255.0
+                                                  green:220.0 / 255.0
+                                                   blue:220.0 / 255.0
+                                                  alpha:1.0]
+                       forKeyPath:@"_placeholderLabel.textColor"];
+    [self.homeAddressTextField setValue:[UIColor colorWithRed:220.0 / 255.0
+                                                        green:220.0 / 255.0
+                                                         blue:220.0 / 255.0
+                                                        alpha:1.0]
+                             forKeyPath:@"_placeholderLabel.textColor"];
+
+    self.tableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.4];
+
+    self.numberFormatter =
+        [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"SE"];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
     return 2;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
     switch (section) {
         case 0:
-            return 1;
+            return 2;
         case 1:
-            return 6;
+            return 1;
         default:
             return 0;
             break;
     }
 }
 
--(void)configureCell:(PBFlatGroupedStyleCell *)cell forIndexPath:(NSIndexPath *)indexPath {
-    NSInteger section = indexPath.section;
-    NSString *text = @"";
-    
-    switch (section) {
-        case 0:
-            text = @"Storbil (4+ personer)";
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    text = @"Taxi Göteborg";
-                    break;
-                case 1:
-                    text = @"Minitaxi";
-                    break;
-                case 2:
-                    text = @"Taxi 020";
-                    break;
-                case 3:
-                    text = @"Taxi Kurir";
-                    break;
-                case 4:
-                    text = @"Easy Cab";
-                    break;
-                case 5:
-                    text = @"City Cab";
-                    break;
-            }
+- (void)viewWillDisappear:(BOOL)animated {
+    [[SettingsHelper sharedSettingsHelper] storeName:self.nameTextField.text];
+    [[SettingsHelper sharedSettingsHelper]
+        storePhoneNumber:self.phoneTextField.text];
+    if (self.homeAddressTextField.text) {
+        [self issueLocalSearchLookup:self.homeAddressTextField.text];
     }
-    
-    [cell.textLabel setText:text];
-    
-    //[cell setIconImage:[[self exampleIcons] objectAtIndex:index]];
-    [cell setCellAccessoryView:[self exampleAccessoryViewForIndexPath:indexPath]];
-    
-    if (section == 2) {
-        
-        switch (indexPath.row) {
-            case 0: {
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"js"]]];
-                break;
-            }
-            case 1: {
-                
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"tl"]]];
-                break;
-            }
-            case 2: {
-                
-                [cell setIconImageView:[PBFlatRoundedImageView contactImageViewWithImage:[UIImage imageNamed:@"cn"]]];
-                break;
-            }
-            default:
-                break;
-        }
-        
-    }
-    
+
+    [super viewWillDisappear:animated];
 }
- 
-- (UIView *)exampleAccessoryViewForIndexPath:(NSIndexPath *)indexPath {
-    
-    UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
 
-    [mySwitch setBackgroundColor:[UIColor clearColor]];
-    //mySwitch.onTintColor = [UIColor colorWithRed:67 green:67 blue:67 alpha:1];
-    [mySwitch setOnTintColor:[UIColor colorWithHue:0 saturation:0 brightness:0.26 alpha:1]];
-
-    /*
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    [label setTextColor:[UIColor darkGrayColor]];
-    [label setFont:[[[PBFlatSettings sharedInstance] font] fontWithSize:12.0f]];
-    [label setBackgroundColor:[UIColor clearColor]];
-     */
-    
-    switch (indexPath.section) {
-        case 0:
-            [mySwitch setOn:NO animated:YES];
-            return mySwitch;
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 1:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 2:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-                case 3:
-                    [mySwitch setOn:YES animated:YES];
-                    return mySwitch;
-                    break;
-                case 4:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-                case 5:
-                    [mySwitch setOn:NO animated:YES];
-                    return mySwitch;
-                    break;
-            }
+- (UIView *)tableView:(UITableView *)tableView
+    viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionTitle =
+        [self tableView:tableView titleForHeaderInSection:section];
+    if (sectionTitle == nil) {
+        return nil;
     }
-    return nil;
+
+    UILabel *label = [[UILabel alloc] init];
+    if (section == 0)
+        label.frame = CGRectMake(20, 24, tableView.bounds.size.width, 20);
+    else
+        label.frame = CGRectMake(20, 8, tableView.bounds.size.width, 20);
+
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont fontWithName:@"OpenSans" size:17];
+    label.text = sectionTitle;
+
+    UIView *view = [[UIView alloc] init];
+    [view addSubview:label];
+
+    return view;
+}
+
+- (IBAction)clickedOk {
+    MainViewController *mainViewController =
+        (MainViewController *)self.parentViewController;
+    [self viewWillDisappear:YES];
+    [mainViewController hideSettingsView];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"Got called");
+    [self.view endEditing:YES];
+}
+
+- (void)issueLocalSearchLookup:(NSString *)searchString {
+    SPGooglePlacesAutocompleteQuery *query =
+        [[SPGooglePlacesAutocompleteQuery alloc]
+            initWithApiKey:@"AIzaSyDxTyIXSAktcdcT8_l9AdjiUem8--zxw2Y"];
+    query.input = searchString;          // search key word
+    query.location = self.userLocation;  // user's current location
+    query.radius = 100.0;                // search addresses close to user
+    query.language = @"se";              // optional
+    query.types =
+        SPPlaceTypeGeocode;  // Only return geocoding (address) results.
+    [query fetchPlaces:^(NSArray *places, NSError *error) {
+        [[SettingsHelper sharedSettingsHelper]
+            storeHomeAddress:places.firstObject
+            withShortVersion:searchString];
+    }];
+}
+
+- (IBAction)formatPhoneNumber:(UITextField *)sender {
+    if (self.phoneTextField.text.length > self.currentPhoneNumber.length) {
+        [self.phoneTextField
+            setText:[self.numberFormatter
+                        inputDigit:[self.phoneTextField.text
+                                       substringFromIndex:self.phoneTextField
+                                                              .text.length -
+                                                          1]]];
+    } else {
+        [self.phoneTextField setText:[self.numberFormatter removeLastDigit]];
+    }
+    self.currentPhoneNumber = self.phoneTextField.text;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+
+    return YES;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)recognizer {
+    NSLog(@"Handling tap");
+    [self.view endEditing:YES];
 }
 
 @end

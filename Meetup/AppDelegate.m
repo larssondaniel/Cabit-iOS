@@ -1,17 +1,46 @@
 //
 //  AppDelegate.m
-//  Meetup
+//  Cabit
 //
 //  Created by Daniel Larsson on 2013-11-18.
-//  Copyright (c) 2013 Meetup. All rights reserved.
+//  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "AFNetworkActivityLogger.h"
+#import "CocoaLumberjack.h"
+
+
+// Debug levels: off, error, warn, info, verbose
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+    UIColor *pink = [UIColor colorWithRed:(118/255.0) green:(214/255.0) blue:(84/255.0) alpha:1.0];
+    [[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];
+
+#ifdef DEBUG
+    DDLogInfo(@"Launching in debug mode");
+#else
+    DDLogWarn(@"Launching in release mode");
+#endif
+
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [[AFNetworkActivityLogger sharedLogger] startLogging];
+
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:@"OpenSans" size:14]];
+
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIFont fontWithName:@"OpenSans" size:18] forKey:NSFontAttributeName];
+    [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
+    
     // Override point for customization after application launch.
     return YES;
 }

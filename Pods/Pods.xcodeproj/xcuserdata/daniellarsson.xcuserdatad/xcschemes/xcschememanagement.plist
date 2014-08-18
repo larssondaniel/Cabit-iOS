@@ -4,22 +4,47 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-ADDropDownMenuView.xcscheme</key>
+		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-PBFlatUI.xcscheme</key>
+		<key>Pods-APLKeyboardControls.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-SIAlertView.xcscheme</key>
+		<key>Pods-Canvas.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CocoaLumberjack.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-DACircularProgress.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-NSData+Base64.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-PulsingHalo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-TWMessageBarManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-libPhoneNumber-iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,27 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>094DB918B6AF4452B775F990</key>
+		<key>129F45CA37464366AC3F434A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>73DF63D14B5F4B8582F0A2E7</key>
+		<key>1A4972F90CD84B4886E0A06B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>80791DF44D27402EB6ACAD2C</key>
+		<key>1FE51ECBA6C348679A5448F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8DC1FDEA9C334AB892DD1CF3</key>
+		<key>45AE3661CBBF45539E11CDA2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DF590C3F451943DF9BC0E84D</key>
+		<key>47FB871BFB034216B7F2865C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D1E4F59149C4043B75AABD6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>60605F668DEF4022BF5623DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CE65B42210E48ABBCB90BAE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79A31E73820F4F3BAA034DBA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8924F87AD1C440859C05C8D2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

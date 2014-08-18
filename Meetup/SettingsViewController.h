@@ -10,8 +10,8 @@
 #import "SPGooglePlacesAutocompleteQuery.h"
 #import <MapKit/MapKit.h>
 
-@interface SettingsViewController : UITableViewController <UITextFieldDelegate>
+@interface SettingsViewController : UITableViewController<UITextFieldDelegate>
 
-@property (nonatomic) CLLocationCoordinate2D userLocation;
+@property(nonatomic) CLLocationCoordinate2D userLocation;
 
 @end

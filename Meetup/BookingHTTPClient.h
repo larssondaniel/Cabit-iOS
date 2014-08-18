@@ -13,24 +13,32 @@
 @protocol BookingHTTPClientDelegate;
 
 @interface BookingHTTPClient : AFHTTPSessionManager
-@property (nonatomic, weak) id<BookingHTTPClientDelegate>delegate;
+@property(nonatomic, weak) id<BookingHTTPClientDelegate> delegate;
 
 + (BookingHTTPClient *)sharedBookingHTTPClient;
 - (instancetype)initWithBaseURL:(NSURL *)url;
 - (void)requestReservationWithParameters:(NSMutableDictionary *)parameters;
 - (void)getPhoneNumberVerificationWithNumber:(NSString *)number;
-- (void)getPriceFrom:(CLLocationCoordinate2D)origin to:(CLLocationCoordinate2D)destination;
+- (void)getPriceFrom:(CLLocationCoordinate2D)origin
+                  to:(CLLocationCoordinate2D)destination;
 - (void)getStatusForReservation:(NSString *)reservationId;
 
 @end
 
-@protocol BookingHTTPClientDelegate <NSObject>
+@protocol BookingHTTPClientDelegate<NSObject>
 @optional
-- (void)bookingHTTPClient:(BookingHTTPClient *)client didBeginReservation:(id)reservation;
-- (void)bookingHTTPClient:(BookingHTTPClient *)client didFailWithError:(NSError *)error;
-- (void)bookingHTTPClient:(BookingHTTPClient *)client didRecieveVerificationCode:(NSString *)code;
-- (void)bookingHTTPClient:(BookingHTTPClient *)client didReceivePrice:(NSString *)price;
-- (void)bookingHTTPClient:(BookingHTTPClient *)client didUpdateStatus:(NSString *)status;
-- (void)bookingHTTPClient:(BookingHTTPClient *)client didVerifyAddress:(CLLocationCoordinate2D)address withResults:(BOOL)validity;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+      didBeginReservation:(id)reservation;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+         didFailWithError:(NSError *)error;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+    didRecieveVerificationCode:(NSString *)code;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+          didReceivePrice:(NSString *)price;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+          didUpdateStatus:(NSString *)status;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+         didVerifyAddress:(CLLocationCoordinate2D)address
+              withResults:(BOOL)validity;
 
 @end

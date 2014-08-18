@@ -13,8 +13,8 @@
 #import <Foundation/Foundation.h>
 
 @interface ConnectionLossViewController ()
-@property (strong, nonatomic) IBOutlet UILabel *messageLabel;
-@property (nonatomic) Reachability *hostReachability;
+@property(strong, nonatomic) IBOutlet UILabel *messageLabel;
+@property(nonatomic) Reachability *hostReachability;
 
 @end
 
@@ -24,7 +24,8 @@
     [super viewDidLoad];
     [self.messageLabel setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     NSString *remoteHostName = @"www.apple.com";
-    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
+    self.hostReachability =
+        [Reachability reachabilityWithHostName:remoteHostName];
     [self.hostReachability startNotifier];
 }
 
@@ -32,7 +33,8 @@
     NetworkStatus netStatus = [self.hostReachability currentReachabilityStatus];
     if (!netStatus == NotReachable) {
         NSLog(@"Seems fine");
-        MainViewController *mainViewController = (MainViewController *)self.parentViewController;
+        MainViewController *mainViewController =
+            (MainViewController *)self.parentViewController;
         [self viewWillDisappear:YES];
         [mainViewController hideConnectionLossView];
     }

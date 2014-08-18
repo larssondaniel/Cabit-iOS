@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "BookingHTTPClient.h"
 
-@interface VerificationViewController : UIViewController <UITextFieldDelegate, BookingHTTPClientDelegate>
+@interface VerificationViewController
+    : UIViewController<UITextFieldDelegate, BookingHTTPClientDelegate>
 
 - (void)setMessage:(NSString *)message;
 

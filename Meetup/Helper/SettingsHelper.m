@@ -10,54 +10,50 @@
 
 @implementation SettingsHelper
 
-+ (id)sharedSettingsHelper
-{
++ (id)sharedSettingsHelper {
     static SettingsHelper *sharedInstance = nil;
     static dispatch_once_t pred;
-    
+
     dispatch_once(&pred, ^{
         sharedInstance = [SettingsHelper alloc];
         sharedInstance = [sharedInstance init];
     });
-    
+
     return sharedInstance;
 }
 
-- (NSString *)name
-{
+- (NSString *)name {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:@"name"];
 }
 
-- (NSString *)phoneNumber
-{
+- (NSString *)phoneNumber {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:@"phoneNumber"];
 }
 
-- (NSString *)homeAddressShort
-{
+- (NSString *)homeAddressShort {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:@"homeAddressShort"];
 }
 
-- (void)storeName:(NSString *)name
-{
+- (void)storeName:(NSString *)name {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:name forKey:@"name"];
     [defaults synchronize];
 }
 
-- (void)storePhoneNumber:(NSString *)number
-{
+- (void)storePhoneNumber:(NSString *)number {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:number forKey:@"phoneNumber"];
     [defaults synchronize];
 }
 
-- (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address withShortVersion:(NSString *)shortVersion {
+- (void)storeHomeAddress:(SPGooglePlacesAutocompletePlace *)address
+        withShortVersion:(NSString *)shortVersion {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *encodedAddress = [NSKeyedArchiver archivedDataWithRootObject:address];
+    NSData *encodedAddress =
+        [NSKeyedArchiver archivedDataWithRootObject:address];
     [defaults setValue:encodedAddress forKey:@"homeAddress"];
     [defaults setObject:shortVersion forKey:@"homeAddressShort"];
     [defaults synchronize];

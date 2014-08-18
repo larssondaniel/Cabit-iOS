@@ -12,8 +12,7 @@
 #define PICKUP_ANNOTATION @"PICKUP_ANNOTATION"
 #define DESTINATION_ANNOTATION @"DESTINATION_ANNOTATION"
 
-@interface MapAnnotation : NSObject <MKAnnotation> {
-    
+@interface MapAnnotation : NSObject<MKAnnotation> {
     CLLocationCoordinate2D _coordinate;
 }
 

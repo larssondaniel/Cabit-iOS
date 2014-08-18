@@ -12,8 +12,9 @@
 
 @synthesize title;
 
-- (id)initWithCarID:(NSString *)vehicleID andCoordinate:(CLLocationCoordinate2D)coordinate;
- {
+- (id)initWithCarID:(NSString *)vehicleID
+      andCoordinate:(CLLocationCoordinate2D)coordinate;
+{
     if ((self = [super init])) {
         self.vehicleID = vehicleID;
         self.coordinate = coordinate;
@@ -33,10 +34,10 @@
 //    return self.coordinate;
 //}
 
-- (MKMapItem*)mapItem {
+- (MKMapItem *)mapItem {
     MKMapItem *mapItem = [[MKMapItem alloc] init];
     mapItem.name = self.title;
-    
+
     return mapItem;
 }
 

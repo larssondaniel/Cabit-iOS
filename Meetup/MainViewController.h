@@ -12,10 +12,12 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UIToolbarDelegate, BookingHTTPClientDelegate>
+@interface MainViewController
+    : UIViewController<MKMapViewDelegate, UIToolbarDelegate,
+                       BookingHTTPClientDelegate>
 
-@property (strong, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) UISearchDisplayController *searchController;
+@property(strong, nonatomic) IBOutlet MKMapView *mapView;
+@property(strong, nonatomic) UISearchDisplayController *searchController;
 
 - (void)didFinishEnteringCredentials;
 - (void)showSearchView;

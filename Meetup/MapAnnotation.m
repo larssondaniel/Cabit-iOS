@@ -10,23 +10,20 @@
 
 @implementation MapAnnotation
 
-@synthesize coordinate=_coordinate;
+@synthesize coordinate = _coordinate;
 @synthesize typeOfAnnotation;
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate
-{
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
     self = [super init];
-    
-    if (self != nil)
-    {
+
+    if (self != nil) {
         _coordinate = coordinate;
     }
-    
+
     return self;
 }
 
-- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
-{
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
     _coordinate = newCoordinate;
 }
 

@@ -9,17 +9,17 @@
 
 @interface UIView (Glow)
 
-@property (nonatomic, readonly) UIView* glowView;
+@property(nonatomic, readonly) UIView* glowView;
 
 // Fade up, then down.
-- (void) glowOnce;
+- (void)glowOnce;
 
 // Useful for indicating "this object should be over there"
-- (void) glowOnceAtLocation:(CGPoint)point inView:(UIView*)view;
+- (void)glowOnceAtLocation:(CGPoint)point inView:(UIView*)view;
 
-- (void) startGlowing;
-- (void) startGlowingWithColor:(UIColor*)color intensity:(CGFloat)intensity;
+- (void)startGlowing;
+- (void)startGlowingWithColor:(UIColor*)color intensity:(CGFloat)intensity;
 
-- (void) stopGlowing;
+- (void)stopGlowing;
 
 @end

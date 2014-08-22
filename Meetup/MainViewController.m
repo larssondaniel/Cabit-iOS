@@ -6,12 +6,6 @@
 //  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
-#define kBaseURL @"Normalfan"
-
-#ifdef DEBUG
-#define kBaseURL @"Basfan"
-#endif
-
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 #define IS_OS_8_OR_LATER \
     ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -21,7 +15,6 @@
 
 #import "MainViewController.h"
 #import "CAKeyframeAnimation+AHEasing.h"
-#import "CredentialsViewController.h"
 #import "SettingsViewController.h"
 #import "SearchViewController.h"
 #import "SPGooglePlacesAutocomplete.h"
@@ -44,9 +37,6 @@
 @property(nonatomic, retain) CLLocation *initialLocation;
 @property(nonatomic, strong) CLGeocoder *geoCoder;
 
-@property(strong, nonatomic) IBOutlet UIView *animatedBottomView;
-@property(strong, nonatomic)
-    IBOutlet NSLayoutConstraint *bottomViewTopConstraint;
 @property(strong, nonatomic) IBOutlet UIButton *continueButton;
 @property(strong, nonatomic)
     IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -80,17 +70,10 @@
 
 @property(strong, nonatomic) IBOutlet UILabel *travelTimeLabel;
 @property(strong, nonatomic) IBOutlet UILabel *priceLabel;
-@property(strong, nonatomic) IBOutlet UIButton *makeReservationButton;
-@property(strong, nonatomic) IBOutlet UIView *timerView;
 @property(strong, nonatomic) UIToolbar *toolbar;
-@property(strong, nonatomic) IBOutlet UIButton *toggleInformationButton;
 @property(nonatomic) BOOL isShowingAddresses;
-@property(strong, nonatomic) IBOutlet UIButton *cancelButton;
-@property(strong, nonatomic) IBOutlet UIButton *editButton;
 @property(strong, nonatomic) IBOutlet UIView *addressToolbar;
-@property(strong, nonatomic) IBOutlet UIView *timerProgressView;
 @property(strong, nonatomic) NSTimer *timer;
-@property(strong, nonatomic) IBOutlet UILabel *timeLeftLabel;
 
 @property(nonatomic, strong) CLLocationManager *locationManager;
 @property(strong, nonatomic) IBOutlet UIView *statusView;
@@ -113,7 +96,6 @@
     self.data = [[NSMutableArray alloc] init];
 
     self.additionalInfoView.hidden = YES;
-    self.timerView.hidden = YES;
 
     self.geoCoder = [[CLGeocoder alloc] init];
     self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 118)];
@@ -126,11 +108,6 @@
     for (UIView *subview in self.additionalInfoView.subviews) {
         if (!([subview isKindOfClass:[UIToolbar class]]))
             [self.additionalInfoView bringSubviewToFront:subview];
-    }
-
-    for (UIView *subview in self.timerView.subviews) {
-        if (!([subview isKindOfClass:[UIToolbar class]]))
-            [self.timerView bringSubviewToFront:subview];
     }
 
     [self.view bringSubviewToFront:self.pickupView];
@@ -291,7 +268,6 @@ size:[textField.font pointSize]]];
                                    [[MKPlacemark alloc]
                                        initWithPlacemark:placemark]]];
                  [self setPickupLocation:placemark.location.coordinate];
-                 [self animateBottomView];
              }];
 }
 
@@ -641,27 +617,6 @@ size:[textField.font pointSize]]];
     return animation;
 }
 
-- (void)animateBottomView {
-    CAAnimation *animation = [CAKeyframeAnimation
-        animationWithKeyPath:@"position"
-                    function:ExponentialEaseOut
-                   fromPoint:CGPointMake(self.animatedBottomView.center.x,
-                                         self.animatedBottomView.center.y)
-                     toPoint:CGPointMake(
-                                 self.animatedBottomView.center.x,
-                                 self.animatedBottomView.center.y - 60)];
-    animation.duration = 1;
-    [self.animatedBottomView.layer addAnimation:animation forKey:@"easing"];
-    [self.animatedBottomView
-        setCenter:CGPointMake(self.animatedBottomView.center.x,
-                              self.animatedBottomView.center.y - 60)];
-    [self.animatedBottomView setFrame:CGRectMake(0, 370, 320, 120)];
-    [self.bottomViewTopConstraint setConstant:370];
-    [self.view layoutIfNeeded];
-
-    self.shouldAnimateBottomView = NO;
-}
-
 - (IBAction)showPickupSearchView {
     self.isSearchingForPickup = YES;
     [self showSearchView];
@@ -670,32 +625,6 @@ size:[textField.font pointSize]]];
 - (IBAction)showDestinationSearchView {
     self.isSearchingForPickup = NO;
     [self showSearchView];
-}
-
-#pragma credentials
-
-- (void)showCredentialsView {
-    [self.view bringSubviewToFront:self.credentialsContainer];
-    [UIView animateWithDuration:0.4
-                     animations:^{
-                         self.credentialsContainer.alpha = 1.0;
-                         self.tintView.alpha = 0.97;
-                         self.animatedBottomView.alpha = 0.0;
-                     }];
-    CredentialsViewController *credentialsViewController =
-        (CredentialsViewController *)self.childViewControllers[0];
-    [credentialsViewController beginAnimations];
-}
-
-- (void)didFinishEnteringCredentials {
-    [UIView animateWithDuration:0.4
-                     animations:^(void) {
-                         self.animatedBottomView.alpha = 1.0;
-                         self.tintView.alpha = 0.0;
-                         [self.credentialsContainer setAlpha:0.0];
-                         [[UIApplication sharedApplication]
-                             setStatusBarStyle:UIStatusBarStyleDefault];
-                     }];
 }
 
 #pragma settings
@@ -707,7 +636,6 @@ size:[textField.font pointSize]]];
 
                          self.navigationController.navigationBar.alpha = 1.0;
 
-                         self.animatedBottomView.alpha = 1.0;
                          self.settingsContainer.alpha = 0.0;
                          self.tintView.alpha = 0.0;
                          [[UIApplication sharedApplication]
@@ -725,7 +653,6 @@ size:[textField.font pointSize]]];
                      animations:^{
 
                          self.navigationController.navigationBar.alpha = 0.0;
-                         self.animatedBottomView.alpha = 0.0;
                          self.settingsContainer.alpha = 1.0;
                          self.tintView.alpha = 1.0;
                          [[UIApplication sharedApplication]
@@ -741,7 +668,6 @@ size:[textField.font pointSize]]];
                          [[UIApplication sharedApplication]
                              setStatusBarHidden:NO
                                   withAnimation:UIStatusBarAnimationSlide];
-                         self.animatedBottomView.alpha = 1.0;
                          self.tutorialContainer.alpha = 0.0;
                          self.tintView.alpha = 0.0;
                      }];
@@ -760,7 +686,6 @@ size:[textField.font pointSize]]];
                                   withAnimation:UIStatusBarAnimationSlide];
 
                          self.navigationController.navigationBar.alpha = 0.0;
-                         self.animatedBottomView.alpha = 0.0;
                          self.tutorialContainer.alpha = 1.0;
                          self.tintView.alpha = 1.0;
                      }];
@@ -774,7 +699,6 @@ size:[textField.font pointSize]]];
                          [[UIApplication sharedApplication]
                              setStatusBarHidden:NO
                                   withAnimation:UIStatusBarAnimationSlide];
-                         self.animatedBottomView.alpha = 1.0;
                          self.connection_loss_container.alpha = 0.0;
                          self.tintView.alpha = 0.0;
                      }];
@@ -789,7 +713,6 @@ size:[textField.font pointSize]]];
                                   withAnimation:UIStatusBarAnimationSlide];
 
                          self.navigationController.navigationBar.alpha = 0.0;
-                         self.animatedBottomView.alpha = 0.0;
                          self.connection_loss_container.alpha = 1.0;
                          self.tintView.alpha = 1.0;
                      }];
@@ -811,7 +734,6 @@ size:[textField.font pointSize]]];
                                   withAnimation:UIStatusBarAnimationSlide];
 
                          self.navigationController.navigationBar.alpha = 0.0;
-                         self.animatedBottomView.alpha = 0.0;
                          self.verificationsContainer1.alpha = 1.0;
                          self.tintView.alpha = 1.0;
                      }];
@@ -823,7 +745,6 @@ size:[textField.font pointSize]]];
     if ([self isFirstRun]) {
         [UIView animateWithDuration:0.15
                          animations:^(void) {
-                             self.animatedBottomView.alpha = 1.0;
                              self.verificationsContainer1.alpha = 0.0;
                              [[UIApplication sharedApplication]
                                  setStatusBarStyle:UIStatusBarStyleDefault];
@@ -832,7 +753,6 @@ size:[textField.font pointSize]]];
     } else {
         [UIView animateWithDuration:0.15
                          animations:^(void) {
-                             self.animatedBottomView.alpha = 1.0;
                              self.verificationsContainer1.alpha = 0.0;
                              self.tintView.alpha = 0.0;
                              [[UIApplication sharedApplication]
@@ -1177,66 +1097,6 @@ size:[textField.font pointSize]]];
     return parameters;
 }
 
-- (IBAction)toggleInformation {
-    if (self.isShowingAddresses) {
-        [UIView animateKeyframesWithDuration:0.25
-            delay:0
-            options:0
-            animations:^{
-                CGAffineTransform rotation2 = CGAffineTransformRotate(
-                    self.toggleInformationButton.transform,
-                    DEGREES_TO_RADIANS(1080));
-                CGAffineTransform translation2 =
-                    CGAffineTransformMakeTranslation(0, 134);
-                self.toggleInformationButton.transform =
-                    CGAffineTransformConcat(rotation2, translation2);
-                [self.toggleInformationButton
-                    setImage:[UIImage imageNamed:@"plus"]
-                    forState:UIControlStateNormal];
-
-                self.toolbar.transform =
-                    CGAffineTransformTranslate(self.toolbar.transform, 0, 134);
-                self.additionalInfoView.transform = CGAffineTransformTranslate(
-                    self.additionalInfoView.transform, 0, 134);
-                self.pickupView.transform = CGAffineTransformTranslate(
-                    self.pickupView.transform, 0, 134);
-                self.destinationView.transform = CGAffineTransformTranslate(
-                    self.destinationView.transform, 0, 134);
-                self.timerView.transform = CGAffineTransformTranslate(
-                    self.timerView.transform, 0, 134);
-            }
-            completion:^(BOOL finished) { self.isShowingAddresses = NO; }];
-    } else {
-        [UIView animateKeyframesWithDuration:0.25
-            delay:0
-            options:0
-            animations:^{
-                CGAffineTransform rotation = CGAffineTransformRotate(
-                    self.toggleInformationButton.transform,
-                    DEGREES_TO_RADIANS(1080));
-                CGAffineTransform translation = CGAffineTransformTranslate(
-                    self.toggleInformationButton.transform, 0, -134);
-                self.toggleInformationButton.transform =
-                    CGAffineTransformConcat(rotation, translation);
-                [self.toggleInformationButton
-                    setImage:[UIImage imageNamed:@"minus"]
-                    forState:UIControlStateNormal];
-
-                self.toolbar.transform =
-                    CGAffineTransformTranslate(self.toolbar.transform, 0, -134);
-                self.additionalInfoView.transform = CGAffineTransformTranslate(
-                    self.additionalInfoView.transform, 0, -134);
-                self.pickupView.transform = CGAffineTransformTranslate(
-                    self.pickupView.transform, 0, -134);
-                self.destinationView.transform = CGAffineTransformTranslate(
-                    self.destinationView.transform, 0, -134);
-                self.timerView.transform = CGAffineTransformTranslate(
-                    self.timerView.transform, 0, -134);
-            }
-            completion:^(BOOL finished) { self.isShowingAddresses = YES; }];
-    }
-}
-
 - (void)animateButtonsToLeft:(int)steps {
     [self.view bringSubviewToFront:self.continueButton];
     [self.view bringSubviewToFront:self.statusView];
@@ -1270,7 +1130,7 @@ size:[textField.font pointSize]]];
             self.continueButton.transform = CGAffineTransformTranslate(
                 self.continueButton.transform, steps * 320, 0);
             self.statusView.transform = CGAffineTransformTranslate(
-                self.editButton.transform, steps * 320, 0);
+                self.statusView.transform, steps * 320, 0);
         }
         completion:^(BOOL finished) {}];
 }
@@ -1298,57 +1158,6 @@ size:[textField.font pointSize]]];
             self.destinationButton.enabled = YES;
             self.pickupButton.enabled = YES;
         }];
-}
-
-- (IBAction)clickedCancel:(id)sender {
-    [self animateButtonsToRight:2];
-
-    for (id<MKAnnotation> annotation in self.mapView.annotations) {
-        MKAnnotationView *view = [self.mapView viewForAnnotation:annotation];
-        if (view) {
-            [view setDraggable:YES];
-        }
-    }
-
-    if (self.isShowingAddresses) [self toggleInformation];
-
-    [UIView animateKeyframesWithDuration:0.25
-        delay:0
-        options:0
-        animations:^{
-
-            self.toolbar.transform =
-                CGAffineTransformTranslate(self.toolbar.transform, 0, -134);
-            self.additionalInfoView.transform = CGAffineTransformTranslate(
-                self.additionalInfoView.transform, 0, -134);
-            self.pickupView.transform =
-                CGAffineTransformTranslate(self.pickupView.transform, 0, -134);
-            self.destinationView.transform = CGAffineTransformTranslate(
-                self.destinationView.transform, 0, -134);
-            self.isShowingAddresses = NO;
-            self.destinationArrow.hidden = NO;
-            self.pickupArrow.hidden = NO;
-            self.timerView.hidden = YES;
-            self.toggleInformationButton.hidden = YES;
-        }
-        completion:^(BOOL finished) {
-            [UIView animateKeyframesWithDuration:0.25
-                delay:0
-                options:0
-                animations:^{
-                    self.destinationArrow.transform =
-                        CGAffineTransformTranslate(
-                            self.destinationArrow.transform, -100, 0);
-                    self.pickupArrow.transform = CGAffineTransformTranslate(
-                        self.pickupArrow.transform, -100, 0);
-                }
-                completion:^(BOOL finished) {
-                    self.destinationButton.enabled = YES;
-                    self.pickupButton.enabled = YES;
-                }];
-        }];
-
-    [self fitRegionToRoute];
 }
 
 - (bool)isFirstRun {

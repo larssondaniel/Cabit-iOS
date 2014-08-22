@@ -143,7 +143,7 @@
             initWithApiKey:@"AIzaSyDxTyIXSAktcdcT8_l9AdjiUem8--zxw2Y"];
     query.input = searchString;          // search key word
     query.location = self.userLocation;  // user's current location
-    query.radius = 100.0;                // search addresses close to user
+    query.radius = 50000.0;              // search addresses close to user
     query.language = @"se";              // optional
     query.types =
         SPPlaceTypeGeocode;  // Only return geocoding (address) results.

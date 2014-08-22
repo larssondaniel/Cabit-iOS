@@ -31,6 +31,7 @@ PODS:
   - CocoaLumberjack/Extensions (2.0.0-beta):
     - CocoaLumberjack/Core
   - DACircularProgress (2.2.0)
+  - KLCPopup (1.0)
   - libPhoneNumber-iOS (0.7.2)
   - NSData+Base64 (1.0.0)
   - PulsingHalo (0.0.1)
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - Canvas
   - CocoaLumberjack
   - DACircularProgress (~> 2.2.0)
+  - KLCPopup
   - libPhoneNumber-iOS
   - PulsingHalo
   - TWMessageBarManager (~> 1.3.2)
@@ -52,6 +54,7 @@ SPEC CHECKSUMS:
   Canvas: 45356a2e61087a776bfde5090676d290cf67f7f2
   CocoaLumberjack: aadc76d7bd6c839ca84b38ed50cbf89d7cf8c693
   DACircularProgress: 3b41941891a56dc6aa17971f5322a9a38a6f446e
+  KLCPopup: 23548d0454ca156b0eb684f791f234b9c2134369
   libPhoneNumber-iOS: 207db9b19395d5ba8898398626620568282fa2bc
   NSData+Base64: aae92a2e3f0bd88b29fe6093551ded3f5c062548
   PulsingHalo: 4f5fbc25f9efb9f949e4ddad05ca885a11667aa0

@@ -13,7 +13,6 @@
 
 @interface SettingsViewController ()
 @property(strong, nonatomic) IBOutlet UITextField *nameTextField;
-@property(strong, nonatomic) IBOutlet UITextField *phonePrefixTextField;
 @property(strong, nonatomic) IBOutlet UITextField *phoneTextField;
 @property(strong, nonatomic) IBOutlet UITextField *homeAddressTextField;
 @property(strong, nonatomic) IBOutlet UILabel *pushFooterLabel;
@@ -42,8 +41,6 @@
     [self.navBarTitleLBL setFont:[UIFont fontWithName:@"OpenSans" size:20]];
     [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     [self.phoneTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];
-    [self.phonePrefixTextField
-        setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     [self.homeAddressTextField
         setFont:[UIFont fontWithName:@"OpenSans" size:16]];
     [self.pushFooterLabel setFont:[UIFont fontWithName:@"OpenSans" size:12]];
@@ -81,7 +78,7 @@
 
     // if (hej != nil)
     //[self.homeAddressTextField setText:[NSKeyedUnarchiver
-    //unarchiveObjectWithData:hej]];
+    // unarchiveObjectWithData:hej]];
 
     /*
     [self.nameTextField setFont:[UIFont fontWithName:@"OpenSans" size:16]];

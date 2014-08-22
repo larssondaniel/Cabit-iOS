@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Cabit. All rights reserved.
 //
 
-#import "CredentialsViewController.h"
 #import "BookingHTTPClient.h"
 
 #import <UIKit/UIKit.h>
@@ -19,7 +18,6 @@
 @property(strong, nonatomic) IBOutlet MKMapView *mapView;
 @property(strong, nonatomic) UISearchDisplayController *searchController;
 
-- (void)didFinishEnteringCredentials;
 - (void)showSearchView;
 - (void)hideSearchView;
 - (void)hideSettingsView;

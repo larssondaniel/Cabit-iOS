@@ -22,6 +22,7 @@
 - (void)getPriceFrom:(CLLocationCoordinate2D)origin
                   to:(CLLocationCoordinate2D)destination;
 - (void)getStatusForReservation:(NSString *)reservationId;
+- (void)validateAddress:(MKPlacemark *)address isOrigin:(BOOL)isOrigin;
 
 @end
 
@@ -36,9 +37,14 @@
 - (void)bookingHTTPClient:(BookingHTTPClient *)client
           didReceivePrice:(NSString *)price;
 - (void)bookingHTTPClient:(BookingHTTPClient *)client
-          didUpdateStatus:(NSString *)status;
+          didUpdateStatus:(NSString *)status
+              withVehicle:(NSString *)vehicle;
 - (void)bookingHTTPClient:(BookingHTTPClient *)client
          didVerifyAddress:(CLLocationCoordinate2D)address
               withResults:(BOOL)validity;
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
+       didValidateAddress:(MKPlacemark *)address
+               withResult:(NSString *)result
+                forOrigin:(BOOL)origin;
 
 @end

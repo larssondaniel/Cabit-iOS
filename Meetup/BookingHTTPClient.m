@@ -94,12 +94,16 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                          reservationId]
         parameters:nil
         success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"Resonse is %@", responseObject);
+            NSLog(@"Response is %@", responseObject);
             NSString *status = [responseObject valueForKey:@"status"];
+            NSString *vehicle = [responseObject valueForKey:@"vehicle"];
             if ([self.delegate
                     respondsToSelector:@selector(bookingHTTPClient:
-                                                   didUpdateStatus:)]) {
-                [self.delegate bookingHTTPClient:self didUpdateStatus:status];
+                                                   didUpdateStatus:
+                                                       withVehicle:)]) {
+                [self.delegate bookingHTTPClient:self
+                                 didUpdateStatus:status
+                                     withVehicle:vehicle];
             }
         }
         failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -141,8 +145,38 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                       valueForKey:@"fixedPrice"] stringValue]];
         }
         failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"Request is: \n\n%@",
-                  task.currentRequest.allHTTPHeaderFields);
+            NSLog(@"Error is: \n\n%@", error);
+            if ([self.delegate
+                    respondsToSelector:@selector(bookingHTTPClient:
+                                                  didFailWithError:)]) {
+                [self.delegate bookingHTTPClient:self didFailWithError:error];
+            }
+        }];
+}
+
+- (void)validateAddress:(MKPlacemark *)address isOrigin:(BOOL)isOrigin {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    parameters[@"latitude"] =
+        [NSString stringWithFormat:@"%f", address.coordinate.latitude];
+    parameters[@"longitude"] =
+        [NSString stringWithFormat:@"%f", address.coordinate.longitude];
+    parameters[@"provider"] = @"TAXINET";
+
+    [self POST:[NSString stringWithFormat:@"%@addresses/validate", self.baseURL]
+        parameters:parameters
+        success:^(NSURLSessionDataTask *task, id responseObject) {
+            DDLogInfo(@"Received validation: %@",
+                      [responseObject valueForKey:@"valid"]);
+            [self.delegate
+                 bookingHTTPClient:self
+                didValidateAddress:address
+                        withResult:[[responseObject
+                                       valueForKey:@"valid"] stringValue]
+                         forOrigin:isOrigin];
+        }
+        failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"Error is: \n\n%@", error);
             if ([self.delegate
                     respondsToSelector:@selector(bookingHTTPClient:
                                                   didFailWithError:)]) {

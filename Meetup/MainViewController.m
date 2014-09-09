@@ -24,8 +24,11 @@
 #import "SettingsHelper.h"
 #import "Reachability.h"
 #import "VerificationViewController.h"
+#import "KLCPopup.h"
+#import "PopupViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface MainViewController ()
 
@@ -83,6 +86,15 @@
 @property(nonatomic, strong) NSString *reservationId;
 @property(nonatomic, strong) NSTimer *updateTimer;
 @property(nonatomic, strong) NSTimer *updateTimerAfterwards;
+@property(strong, nonatomic) IBOutlet UIView *popupContainer;
+@property(strong, nonatomic) KLCPopup *popup;
+@property(strong, nonatomic) NSString *message;
+@property(strong, nonatomic) PopupViewController *popupViewController;
+@property(strong, nonatomic) NSString *vehicleNbr;
+@property(strong, nonatomic) UIView *popupContainer2;
+@property(nonatomic) BOOL haveRecievedPrice;
+@property(nonatomic) BOOL isValidOrigin;
+@property(nonatomic) BOOL isValidDestination;
 
 @end
 
@@ -91,6 +103,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.isValidOrigin = NO;
+    self.isValidDestination = NO;
+    self.haveRecievedPrice = NO;
     [[BookingHTTPClient sharedBookingHTTPClient] setDelegate:self];
     [self.mapView setDelegate:self];
     self.data = [[NSMutableArray alloc] init];
@@ -162,11 +177,22 @@
      Observe the kNetworkReachabilityChangedNotification. When that notification
      is posted, the method reachabilityChanged will be called.
      */
-    [[NSNotificationCenter defaultCenter]
+    /*[[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(reachabilityChanged:)
                name:kReachabilityChangedNotification
              object:nil];
+*/
+
+    self.popup = [KLCPopup popupWithContentView:self.popupContainer
+                                       showType:KLCPopupShowTypeBounceIn
+                                    dismissType:KLCPopupDismissTypeBounceOut
+                                       maskType:KLCPopupMaskTypeDimmed
+                       dismissOnBackgroundTouch:NO
+                          dismissOnContentTouch:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
 }
 
 - (NSAttributedString *)attributedFontForValue:(NSString *)value
@@ -211,31 +237,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     self.mapView.delegate = nil;
 }
-
-/*
--(void)setFontFamily:(NSString*)fontFamily forView:(UIView*)view
-andSubViews:(BOOL)isSubViews {
-
-    NSArray *fonts = @[@"OpenSans", @"OpenSans-Light", @"OpenSans-Semibold"];
-    if ([view isKindOfClass:[UILabel class]]) {
-        UILabel *lbl = (UILabel *)view;
-        [lbl setFont:[UIFont fontWithName:fonts[view.tag] size:sizes[view.tag]];
-        NSLog(@"%@ %f", fonts[view.tag], [[lbl font] pointSize]);
-    } else if ([view isKindOfClass:[UITextField class]]) {
-        UITextField *textField = (UITextField *)view;
-        [textField setFont:[UIFont fontWithName:fonts[view.tag]
-size:[textField.font pointSize]]];
-    }
-
-    if (isSubViews)
-    {
-        for (UIView *sview in view.subviews)
-        {
-            [self setFontFamily:fontFamily forView:sview andSubViews:YES];
-        }
-    }
-}
- */
 
 /*
  *  Not used at the moment. Is needed if there should be a locate button after
@@ -802,10 +803,9 @@ size:[textField.font pointSize]]];
                                       NSString *addressString, NSError *error) {
             MKPlacemark *mkPlacemark =
                 [[MKPlacemark alloc] initWithPlacemark:placemark];
-            MKMapItem *mapItem =
-                [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
-            [self setPickupMapItem:mapItem];
-            [self setPickupLocation:placemark.location.coordinate];
+            [[BookingHTTPClient sharedBookingHTTPClient]
+                validateAddress:mkPlacemark
+                       isOrigin:YES];
         }];
         [self.pickupButton setTitle:parsedAddress
                            forState:UIControlStateNormal];
@@ -815,11 +815,9 @@ size:[textField.font pointSize]]];
                                       NSString *addressString, NSError *error) {
             MKPlacemark *mkPlacemark =
                 [[MKPlacemark alloc] initWithPlacemark:placemark];
-            MKMapItem *mapItem =
-                [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
-            [self setDestinationMapItem:mapItem];
-            [self setDestination:placemark.location.coordinate];
-            [self.destinationActivityIndicator stopAnimating];
+            [[BookingHTTPClient sharedBookingHTTPClient]
+                validateAddress:mkPlacemark
+                       isOrigin:NO];
         }];
         [self.destinationButton setTitle:parsedAddress
                                 forState:UIControlStateNormal];
@@ -954,6 +952,7 @@ size:[textField.font pointSize]]];
     self.isSearchingForPickup = NO;
     [self showSearchView];
 }
+
 - (IBAction)clickedPickup {
     self.isSearchingForPickup = YES;
     [self showSearchView];
@@ -969,59 +968,20 @@ size:[textField.font pointSize]]];
                                  duration:0.3
                                     delay:0];
         return;
+    }
+    if (!self.haveRecievedPrice) {
+        NSLog(@"Incorrect addresses!");
+        return;
     } else {
-        [self animateButtonsToLeft:1];
-        [self setStatus:@"Pending"];
-        [UIView animateKeyframesWithDuration:0.25
-            delay:0
-            options:0
-            animations:^{
-                self.destinationArrow.transform = CGAffineTransformTranslate(
-                    self.destinationArrow.transform, 100, 0);
-                self.pickupArrow.transform = CGAffineTransformTranslate(
-                    self.pickupArrow.transform, 100, 0);
-            }
-            completion:^(BOOL finished) {
-                self.destinationButton.enabled = NO;
-                self.pickupButton.enabled = NO;
-            }];
-        //[self fitRegionToRoute];
+        KLCPopupLayout layout = KLCPopupLayoutMake(
+            KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutAboveCenter);
+        self.popupViewController =
+            (PopupViewController *)self.childViewControllers[5];
+        [self.popupViewController
+                 setOrigin:self.pickupButton.titleLabel.text
+            andDestination:self.destinationButton.titleLabel.text];
+        [self.popup showWithLayout:layout];
     }
-
-    [[BookingHTTPClient sharedBookingHTTPClient]
-        requestReservationWithParameters:[self constructRequestDictionary]];
-
-    for (id<MKAnnotation> annotation in self.mapView.annotations) {
-        MKAnnotationView *view = [self.mapView viewForAnnotation:annotation];
-        if (view) {
-            [view setDraggable:NO];
-        }
-    }
-
-    /*
-    [UIView animateKeyframesWithDuration:0.25 delay:0 options:0 animations:^{
-        self.toolbar.transform = CGAffineTransformMakeTranslation(0, 134);
-        self.additionalInfoView.transform = CGAffineTransformMakeTranslation(0,
-    134);
-        self.pickupView.transform = CGAffineTransformMakeTranslation(0, 134);
-        self.destinationView.transform = CGAffineTransformMakeTranslation(0,
-    134);
-    } completion:^(BOOL finished) {
-        //self.isShowingAddresses = NO;
-        self.destinationArrow.hidden = YES;
-        self.pickupArrow.hidden = YES;
-        [UIView transitionWithView:self.timerView
-                          duration:0.25
-                           options:UIViewAnimationOptionTransitionFlipFromBottom
-                        animations:^{
-                            self.timerView.hidden = NO;
-                            self.toggleInformationButton.hidden = NO;
-                        } completion:^(BOOL finished) {
-                        }];
-    }];
-     */
-
-    [self zoomToLocation:PICKUP_ANNOTATION];
 }
 
 - (NSMutableDictionary *)constructRequestDictionary {
@@ -1093,6 +1053,12 @@ size:[textField.font pointSize]]];
     date = [date dateByAddingTimeInterval:300];
     NSString *date_string = [dateformate stringFromDate:date];
     parameters[@"pickupTime"] = [NSString stringWithFormat:@"%@", date_string];
+
+    if (self.message) {
+        parameters[@"message"] = self.message;
+    } else {
+        parameters[@"message"] = @"";
+    }
 
     return parameters;
 }
@@ -1173,6 +1139,7 @@ size:[textField.font pointSize]]];
 }
 
 - (void)setStatus:(NSString *)status {
+    NSLog(@"Setting status to %@", status);
     NSString *statusText = @"";
     UIColor *statusColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
     if ([status isEqualToString:@"Pending"]) {
@@ -1189,8 +1156,17 @@ size:[textField.font pointSize]]];
                                            userInfo:nil
                                             repeats:YES];
         [self.updateTimer invalidate];
-        statusText =
-            @"En bil från Taxi Göteborg är på väg till upphämtningsplatsen.";
+        if (self.vehicleNbr) {
+            statusText = [NSString
+                stringWithFormat:@"Bil %@ från Taxi Göteborg är på väg "
+                                 @"till upphämtningsplatsen.",
+                                 self.vehicleNbr];
+        } else {
+            statusText =
+                [NSString stringWithFormat:@"En bil från Taxi Göteborg är på "
+                          @"väg till upphämtningsplatsen."];
+        }
+
         statusColor = [UIColor colorWithRed:0.0f / 255.0f
                                       green:181.0f / 255.0f
                                        blue:106.0f / 255.0f
@@ -1198,8 +1174,8 @@ size:[textField.font pointSize]]];
     } else if ([status isEqualToString:@"Finished"]) {
         [self.updateTimer invalidate];
         [self.updateTimerAfterwards invalidate];
-        statusText =
-            @"En bil från Taxi Göteborg är på väg till upphämtningsplatsen.";
+        statusText = @"En bil från Taxi Göteborg är på väg till "
+            @"upphämtningsplatsen.";
         statusColor = [UIColor colorWithRed:240.0f / 255.0f
                                       green:179.0f / 255.0f
                                        blue:43.0f / 255.0f
@@ -1262,8 +1238,110 @@ size:[textField.font pointSize]]];
 }
 
 - (void)bookingHTTPClient:(BookingHTTPClient *)client
+       didValidateAddress:(MKPlacemark *)address
+               withResult:(NSString *)result
+                forOrigin:(BOOL)origin {
+    if (origin) {
+        if ([result isEqualToString:@"1"]) {
+            MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:address];
+            [self setPickupMapItem:mapItem];
+            [self setPickupLocation:address.location.coordinate];
+        } else {
+            self.pickupButton.titleLabel.text = @"";
+        }
+    } else {
+        [self.destinationActivityIndicator stopAnimating];
+        if ([result isEqualToString:@"1"]) {
+            MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:address];
+            [self setDestinationMapItem:mapItem];
+            [self setDestination:address.location.coordinate];
+        } else {
+            self.destinationButton.titleLabel.text = @"";
+        }
+    }
+
+    if (![result isEqualToString:@"1"]) {
+        // Generate content view to present
+        UIView *contentView = [[UIView alloc] init];
+        contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        contentView.backgroundColor = [UIColor whiteColor];
+        contentView.layer.cornerRadius = 12.0;
+
+        UILabel *dismissLabel = [[UILabel alloc] init];
+        dismissLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        dismissLabel.backgroundColor = [UIColor clearColor];
+        dismissLabel.textColor = [UIColor colorWithWhite:0.267 alpha:1.000];
+        dismissLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
+        dismissLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        dismissLabel.numberOfLines = 0;
+        if (origin) {
+            dismissLabel.text =
+                @"Upphämtningsplats stöds tyvärr inte för tillfället.";
+        } else {
+            dismissLabel.text =
+                @"Destinationen stöds tyvärr inte för tillfället.";
+        }
+
+        UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
+        dismissButton.backgroundColor =
+            [UIColor colorWithRed:0.043 green:0.565 blue:0.827 alpha:1.000];
+        [dismissButton setTitleColor:[UIColor whiteColor]
+                            forState:UIControlStateNormal];
+        [dismissButton
+            setTitleColor:[[dismissButton
+                              titleColorForState:UIControlStateNormal]
+                              colorWithAlphaComponent:0.5]
+                 forState:UIControlStateHighlighted];
+        dismissButton.titleLabel.font =
+            [UIFont fontWithName:@"OpenSans" size:16];
+        [dismissButton setTitle:@"OK" forState:UIControlStateNormal];
+        dismissButton.layer.cornerRadius = 6.0;
+        [dismissButton addTarget:self
+                          action:@selector(dismissButtonPressed:)
+                forControlEvents:UIControlEventTouchUpInside];
+
+        [contentView addSubview:dismissLabel];
+        [contentView addSubview:dismissButton];
+
+        NSDictionary *views = NSDictionaryOfVariableBindings(
+            contentView, dismissButton, dismissLabel);
+
+        [contentView
+            addConstraints:
+                [NSLayoutConstraint
+                    constraintsWithVisualFormat:
+                        @"V:|-(16)-[dismissLabel]-(10)-[dismissButton]-(24)-|"
+                                        options:NSLayoutFormatAlignAllCenterX
+                                        metrics:nil
+                                          views:views]];
+
+        [contentView addConstraints:[NSLayoutConstraint
+                                        constraintsWithVisualFormat:
+                                            @"H:|-(36)-[dismissLabel]-(36)-|"
+                                                            options:0
+                                                            metrics:nil
+                                                              views:views]];
+
+        // Show in popup
+        KLCPopupLayout layout = KLCPopupLayoutMake(
+            KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutCenter);
+
+        KLCPopup *popup =
+            [KLCPopup popupWithContentView:contentView
+                                  showType:KLCPopupShowTypeGrowIn
+                               dismissType:KLCPopupDismissTypeBounceOut
+                                  maskType:KLCPopupMaskTypeDimmed
+                  dismissOnBackgroundTouch:YES
+                     dismissOnContentTouch:NO];
+        [popup showWithLayout:layout];
+    }
+}
+
+- (void)bookingHTTPClient:(BookingHTTPClient *)client
           didReceivePrice:(NSString *)price {
-    NSLog(@"-------------------- JA");
+    self.haveRecievedPrice = YES;
     [self.priceLabel
         setAttributedText:[self attributedFontForValue:price andUnit:@"sek"]];
 }
@@ -1280,13 +1358,56 @@ size:[textField.font pointSize]]];
 }
 
 - (void)bookingHTTPClient:(BookingHTTPClient *)client
-          didUpdateStatus:(NSString *)status {
+          didUpdateStatus:(NSString *)status
+              withVehicle:(NSString *)vehicle {
     [self setStatus:status];
+    self.vehicleNbr = vehicle;
 }
 
 - (void)updateReservation {
     [[BookingHTTPClient sharedBookingHTTPClient]
         getStatusForReservation:self.reservationId];
+}
+
+- (void)dismissButtonPressed:(id)sender {
+    if ([sender isKindOfClass:[UIView class]]) {
+        [(UIView *)sender dismissPresentingPopup];
+    }
+}
+
+- (void)makeConfirmationWithMessage:(NSString *)message {
+    self.message = message;
+    [self animateButtonsToLeft:1];
+    [self setStatus:@"Pending"];
+    [UIView animateKeyframesWithDuration:0.25
+        delay:0
+        options:0
+        animations:^{
+            self.destinationArrow.transform = CGAffineTransformTranslate(
+                self.destinationArrow.transform, 100, 0);
+            self.pickupArrow.transform =
+                CGAffineTransformTranslate(self.pickupArrow.transform, 100, 0);
+        }
+        completion:^(BOOL finished) {
+            self.destinationButton.enabled = NO;
+            self.pickupButton.enabled = NO;
+        }];
+
+    [[BookingHTTPClient sharedBookingHTTPClient]
+        requestReservationWithParameters:[self constructRequestDictionary]];
+
+    for (id<MKAnnotation> annotation in self.mapView.annotations) {
+        MKAnnotationView *view = [self.mapView viewForAnnotation:annotation];
+        if (view) {
+            [view setDraggable:NO];
+        }
+    }
+
+    [self zoomToLocation:PICKUP_ANNOTATION];
+}
+
+- (void)hidePopupView {
+    [self.popup dismiss:YES];
 }
 
 @end

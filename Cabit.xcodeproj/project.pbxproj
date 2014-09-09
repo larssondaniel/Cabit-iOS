@@ -29,6 +29,8 @@
 		6B2F493B199E857E00EE191B /* BookingHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2F493A199E857E00EE191B /* BookingHTTPClient.m */; };
 		6B2F61ED1996FEAD009EE27F /* heart-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B2F61EB1996FEAD009EE27F /* heart-small.png */; };
 		6B2F61EE1996FEAD009EE27F /* heart-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B2F61EC1996FEAD009EE27F /* heart-small@2x.png */; };
+		6B3FDE3E19B042F300DE7DBE /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3FDE3D19B042F300DE7DBE /* close@2x.png */; };
+		6B3FDE4119B0445100DE7DBE /* PopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3FDE4019B0445100DE7DBE /* PopupViewController.m */; };
 		6B479584190192510007E874 /* BBCyclingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B479583190192510007E874 /* BBCyclingLabel.m */; };
 		6B4795B0190197EF0007E874 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4795AF190197EF0007E874 /* UIImage+animatedGIF.m */; };
 		6B4795B419019A710007E874 /* loading@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6B4795B319019A710007E874 /* loading@2x.gif */; };
@@ -42,6 +44,7 @@
 		6B47963519081E4D0007E874 /* cancelButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B47963319081E4D0007E874 /* cancelButton@2x.png */; };
 		6B479638190820540007E874 /* editButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B479636190820540007E874 /* editButton.png */; };
 		6B479639190820540007E874 /* editButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B479637190820540007E874 /* editButton@2x.png */; };
+		6B68DCFC19A8297E00A036CB /* MessagePopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B68DCFB19A8297E00A036CB /* MessagePopupView.xib */; };
 		6B85A3E318D3AA1600158849 /* bottomGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */; };
 		6BA30BEB18C20100008D0BD9 /* bouncingCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BE918C20100008D0BD9 /* bouncingCircle.png */; };
 		6BA30BEC18C20100008D0BD9 /* bouncingCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */; };
@@ -184,6 +187,9 @@
 		6B2F493A199E857E00EE191B /* BookingHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookingHTTPClient.m; sourceTree = "<group>"; };
 		6B2F61EB1996FEAD009EE27F /* heart-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-small.png"; path = "Graphics/heart-small.png"; sourceTree = "<group>"; };
 		6B2F61EC1996FEAD009EE27F /* heart-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-small@2x.png"; path = "Graphics/heart-small@2x.png"; sourceTree = "<group>"; };
+		6B3FDE3D19B042F300DE7DBE /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close@2x.png"; path = "Graphics/close@2x.png"; sourceTree = "<group>"; };
+		6B3FDE3F19B0445100DE7DBE /* PopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupViewController.h; sourceTree = "<group>"; };
+		6B3FDE4019B0445100DE7DBE /* PopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupViewController.m; sourceTree = "<group>"; };
 		6B479582190192510007E874 /* BBCyclingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BBCyclingLabel.h; path = ../../BBCyclingLabel.h; sourceTree = "<group>"; };
 		6B479583190192510007E874 /* BBCyclingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BBCyclingLabel.m; path = ../../BBCyclingLabel.m; sourceTree = "<group>"; };
 		6B4795AE190197EF0007E874 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "../UIImage+animatedGIF.h"; sourceTree = "<group>"; };
@@ -199,6 +205,7 @@
 		6B47963319081E4D0007E874 /* cancelButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cancelButton@2x.png"; path = "Graphics/cancelButton@2x.png"; sourceTree = "<group>"; };
 		6B479636190820540007E874 /* editButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = editButton.png; path = Graphics/editButton.png; sourceTree = "<group>"; };
 		6B479637190820540007E874 /* editButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "editButton@2x.png"; path = "Graphics/editButton@2x.png"; sourceTree = "<group>"; };
+		6B68DCFB19A8297E00A036CB /* MessagePopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagePopupView.xib; sourceTree = "<group>"; };
 		6B85A3E218D3AA1600158849 /* bottomGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottomGradient@2x.png"; path = "Graphics/bottomGradient@2x.png"; sourceTree = "<group>"; };
 		6BA30BE918C20100008D0BD9 /* bouncingCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bouncingCircle.png; path = Graphics/bouncingCircle.png; sourceTree = "<group>"; };
 		6BA30BEA18C20100008D0BD9 /* bouncingCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bouncingCircle@2x.png"; path = "Graphics/bouncingCircle@2x.png"; sourceTree = "<group>"; };
@@ -402,6 +409,8 @@
 				6BBE740A1940591E004CBF11 /* TutorialViewController.m */,
 				6B0EF022198EF10F0018D579 /* VerificationViewController.h */,
 				6B0EF020198EF0DA0018D579 /* VerificationViewContoller.m */,
+				6B3FDE3F19B0445100DE7DBE /* PopupViewController.h */,
+				6B3FDE4019B0445100DE7DBE /* PopupViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -411,6 +420,7 @@
 			children = (
 				6B0625331933A25800A7845D /* MapAnnotation.h */,
 				6B0625341933A25800A7845D /* MapAnnotation.m */,
+				6B68DCFB19A8297E00A036CB /* MessagePopupView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -518,6 +528,7 @@
 		6BABF545183AA71000A6988B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6B3FDE3D19B042F300DE7DBE /* close@2x.png */,
 				6B16018B199BB12000EC92A2 /* connectionLoss@2x.png */,
 				6BD261FB1999AC6400CDD15D /* additionalInfo.png */,
 				6B2F61EB1996FEAD009EE27F /* heart-small.png */,
@@ -826,6 +837,8 @@
 				6BE867821909AD5F0046B9F2 /* dot-circle-white@2x.png in Resources */,
 				6BC93DD5192D28490083A156 /* olle@2x.png in Resources */,
 				6BA613B718BD0F4C00B61A6E /* taxiAnnotation.png in Resources */,
+				6B68DCFC19A8297E00A036CB /* MessagePopupView.xib in Resources */,
+				6B3FDE3E19B042F300DE7DBE /* close@2x.png in Resources */,
 				6BB2DD9B1848039000BBA9A8 /* Arrow.png in Resources */,
 				6BD261FC1999AC6400CDD15D /* additionalInfo.png in Resources */,
 				6BF15A5818C3868400183C52 /* phone.png in Resources */,
@@ -914,6 +927,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B479584190192510007E874 /* BBCyclingLabel.m in Sources */,
+				6B3FDE4119B0445100DE7DBE /* PopupViewController.m in Sources */,
 				6B0EF021198EF0DA0018D579 /* VerificationViewContoller.m in Sources */,
 				6BFFD989192AB03800B7591B /* SPGooglePlacesPlaceDetailQuery.m in Sources */,
 				6BABF522183A9EB900A6988B /* MainViewController.m in Sources */,

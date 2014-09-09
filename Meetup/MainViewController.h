@@ -25,6 +25,8 @@
 - (void)hideVerificationView;
 - (void)hideConnectionLossView;
 - (void)showConnectionLossView;
+- (void)makeConfirmationWithMessage:(NSString *)message;
+- (void)hidePopupView;
 - (void)didFinishSearchWithAdress:(MKMapItem *)mapItem;
 
 @end

@@ -57,6 +57,9 @@
         setBackgroundColor:[UIColor clearColor]];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+}
+
 - (void)loadSearchHistory {
     NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *recentSearches = [NSMutableArray array];

@@ -231,6 +231,14 @@
                                     <segue destination="hmu-rF-NfN" kind="embed" id="U13-iu-QrQ"/>
                                 </connections>
                             </containerView>
+                            <containerView appearanceType="aqua" contentMode="scaleToFill" id="Q6W-6a-qaq" userLabel="Popup_container">
+                                <rect key="frame" x="20" y="-765" width="288" height="240"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="Y3G-fI-Y6X" kind="embed" id="3Nv-83-530"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -253,6 +261,7 @@
                         <outlet property="pickupArrow" destination="YIy-ER-T1z" id="5P4-r4-chZ"/>
                         <outlet property="pickupButton" destination="LfZ-46-ORT" id="GhR-4f-lC4"/>
                         <outlet property="pickupView" destination="zwV-ol-l8Q" id="zJo-12-Hl3"/>
+                        <outlet property="popupContainer" destination="Q6W-6a-qaq" id="bPr-4w-vwm"/>
                         <outlet property="priceLabel" destination="ym9-NN-GCW" id="V2W-4e-2sJ"/>
                         <outlet property="searchContainer" destination="kle-Kl-DIO" id="PML-kJ-L1l"/>
                         <outlet property="searchDisplayController" destination="5CI-ee-ffK" id="hSy-qO-fWh"/>
@@ -300,6 +309,109 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2977" y="-10"/>
+        </scene>
+        <!--Popup View Controller-->
+        <scene sceneID="h0V-Vj-Pyg">
+            <objects>
+                <viewController id="Y3G-fI-Y6X" customClass="PopupViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="af9-WL-2t1">
+                        <rect key="frame" x="0.0" y="0.0" width="288" height="240"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField appearanceType="aqua" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Skriv ett meddelande till föraren här..." minimumFontSize="17" id="R8u-Lt-F2p">
+                                <rect key="frame" x="20" y="151" width="248" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textField>
+                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GIY-NR-8q1">
+                                <rect key="frame" x="0.0" y="180" width="288" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.043137254899999998" green="0.56470588239999997" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Bekräfta bokning">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickedMakeReservation" destination="Y3G-fI-Y6X" eventType="touchUpInside" id="ZRR-1o-x8k"/>
+                                </connections>
+                            </button>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bekräfta" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jzt-dg-kAi">
+                                <rect key="frame" x="20" y="20" width="92" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Från:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Drr-qq-o9v">
+                                <rect key="frame" x="20" y="55" width="38" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Till:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ac1-oA-oHL">
+                                <rect key="frame" x="20" y="79" width="38" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I6K-z3-KPb">
+                                <rect key="frame" x="60" y="55" width="208" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0iX-UK-uig">
+                                <rect key="frame" x="60" y="79" width="208" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En bekräftad bokning går inte att avbryta." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pe6-d9-3TI">
+                                <rect key="frame" x="20" y="107" width="248" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView appearanceType="aqua" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator.png" id="3KM-Oz-VRD">
+                                <rect key="frame" x="40" y="141" width="208" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xzl-1P-xrC">
+                                <rect key="frame" x="246" y="20" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="close.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickedClose" destination="Y3G-fI-Y6X" eventType="touchUpInside" id="lLW-7t-Pu5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="288" height="240"/>
+                    <connections>
+                        <outlet property="destinationTextField" destination="0iX-UK-uig" id="zJs-ro-k5a"/>
+                        <outlet property="fromTextField" destination="I6K-z3-KPb" id="nb6-Ip-058"/>
+                        <outlet property="messageTextField" destination="R8u-Lt-F2p" id="2Uy-IB-drg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="px5-Fv-yyc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2999" y="-507"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="tMZ-i6-652">
@@ -353,7 +465,7 @@
                         <sections>
                             <tableViewSection headerTitle="Kontaktinformation" footerTitle="" id="jcF-Dc-nqX">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="Vly-ZM-W3t" customClass="SettingsCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="Vly-ZM-W3t">
                                         <rect key="frame" x="0.0" y="119" width="321" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vly-ZM-W3t" id="EBW-WO-wIo">
@@ -404,7 +516,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Hemadress" id="x25-T0-96x">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="PmT-zp-CFu" customClass="SettingsCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="PmT-zp-CFu">
                                         <rect key="frame" x="0.0" y="267" width="321" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PmT-zp-CFu" id="vyC-ID-W4z">
@@ -927,6 +1039,7 @@
     <resources>
         <image name="additionalInfo.png" width="320" height="61"/>
         <image name="clock.png" width="50" height="50"/>
+        <image name="close.png" width="22" height="22"/>
         <image name="connectionLoss.png" width="256" height="256"/>
         <image name="heart-small.png" width="22" height="22"/>
         <image name="heart.png" width="50" height="50"/>
